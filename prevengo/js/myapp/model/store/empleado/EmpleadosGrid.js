@@ -1,0 +1,30 @@
+Ext.define('myapp.model.store.empleado.EmpleadosGrid', { 
+   extend: 'Ext.data.Model',
+    idProperty: 'cedula',
+    fields: [
+        { name: 'nacionalidad'},
+        { name: 'cedula'}, 
+        { name: 'nombre'},
+        { name: 'dnombre'},
+        { name: 'apellido'},
+        { name: 'foto'},
+        { name: 'telefono1'},
+        { name: 'telefono2'},
+        {name: 'nombres',          type: 'string'},
+        {name: 'apellidos',        type: 'string'},
+        {name: 'fechanacimiento',  type: 'string'},
+        {name: 'direccion',        type: 'string'},
+        {name: 'codTlf1',          type: 'string'},
+        {name: 'movil',            type: 'string'},
+        {name: 'codTlf2',          type: 'string'},
+        {name: 'local',            type: 'string'},
+        {name: 'sexo',             type: 'string'},
+        {name: 'correo',           type: 'string'},
+        { name: 'foto',            type: 'string' },
+        { name: 'status' ,         type: 'string'},
+        { name: 'fotoo' ,          type: 'string'},
+        { name: 'cmbtiponomina',   type: 'int' },
+        { name: 'cmbcargo' ,       type: 'int'},
+        { name: 'cmbdepartamento', type: 'int'}
+    ] 
+});

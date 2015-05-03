@@ -1,0 +1,59 @@
+Ext.define('myapp.controller.actividad.ListaActividadController', {
+    extend: 'Ext.app.Controller',
+    views: ['actividad.ListaActividad',
+             'actividad.WinPlanEvento'
+             
+            ],
+     requires: [
+        'myapp.util.Util'
+        
+    ],
+   
+    refs: [
+           {
+              ref: 'ListaActividad',
+              selector: 'listaActividad'
+             },
+              {
+              ref: 'ListaPlanEvento',
+              selector: 'listaPlanEvento'
+             },
+             
+            
+           ],
+    
+    init: function(application) {
+        this.control({
+            "listaActividad":{
+                itemdblclick: this.onClickVerPlan
+            },
+            "winActividad checkbox[name=cbfDepende]":{
+                selection: this.cargarActividad
+            }
+        }); 
+    },   
+
+   
+
+
+
+ onClickVerPlan: function (record, item, index, e, eOpts ){
+    
+    var win = Ext.create('myapp.view.actividad.WinPlanEvento'); 
+          
+     newGrid=this.getListaPlanEvento();
+      store= newGrid.getStore();      
+      store.proxy.extraParams.id=item.data.id;
+      store.load();
+      newGrid.down("label[name=lblIdEvento]").setText(item.data.id);
+      win.setTitle("Plan de Accion para el Evento: "+ item.data.evento);
+      win.show();
+      
+  },
+  
+  
+  
+});
+
+
+
