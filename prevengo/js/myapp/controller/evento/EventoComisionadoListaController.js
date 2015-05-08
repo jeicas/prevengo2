@@ -89,7 +89,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
    
      // ====================funciones de la ventana listaComisionadoEvento================
     onClickNuevoComisionado: function (button, e, options) {
-         console.log("jjjjjj");
+       
             win= Ext.create('myapp.view.evento.WinAsignarComisionado');
             win.setTitle("Nuevo Comisionado");
             win.show();         
@@ -159,7 +159,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
        // if (nuevo){     
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
-
+             
         record = grid.getSelectionModel().getSelection();
         record1 = grid2.getSelectionModel().getSelection(); 
            
@@ -167,8 +167,8 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
             url: BASE_URL + 'comisionado/comisionado/registrarComisionado',
             method: 'POST',
             params: {
-                idEvent: record[0].get('idEv'),
-                idUsuar: record1[0].get('id')
+                idEv: record[0].get('idEv'),
+                idUs: record1[0].get('idEmpl')
             },
             success:  function(result, request){
                    result=Ext.JSON.decode(result.responseText);

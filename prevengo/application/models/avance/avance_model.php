@@ -121,8 +121,9 @@ class Avance_model extends CI_Model {
 
     
           $sql = "SELECT bdgenerica.usuario.id,
-	               bdgenerica.usuario.nacionalidad,
+	                    bdgenerica.usuario.nacionalidad,
                         bdgenerica.usuario.cedula,
+                        bdgenerica.empleado.id as empl,
                         bdgenerica.persona.foto,
                         bdgenerica.persona.nombre,
                         bdgenerica.persona.apellido,

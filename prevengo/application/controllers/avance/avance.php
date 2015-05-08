@@ -316,6 +316,7 @@ class Avance extends CI_Controller {
                 $data[] = array(
                     'id'=>$row['id'],
                     'cedula'=>$row['nacionalidad']."-".$row['cedula'],
+                    'idEmpl'=>$row['empl'],
                     'foto' => $row['foto'],
                     'nombrecompleto' => $row['nombre'] . " " . $row['apellido'],
                     'ente' => $row['ente'],

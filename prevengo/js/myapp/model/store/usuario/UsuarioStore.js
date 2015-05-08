@@ -4,13 +4,13 @@ Ext.define('myapp.model.store.usuario.UsuarioStore', {
     fields: [    
         { name: 'id' }, 
         { name: 'cedula' },
+         { name: 'idEmpl' },
         { name: 'foto' },
         { name: 'nombrecompleto' },
         { name: 'apellido' },
         { name: 'ente' },
         { name: 'division' },
         { name: 'tipousuario' },
-      
-      
+ 
     ] 
 });

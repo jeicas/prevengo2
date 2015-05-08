@@ -23,6 +23,7 @@ class Comisionado extends CI_Controller {
             foreach ($comisionado->result_array() as $row) {
 
                 $data[] = array(
+                    'idCom' => $row['idCom'],
                     'idUs' => $row['idEmpl'],
                     'idEv' => $row['idEv'],
                     'nombrecompleto' => $row['nombre']." ".$row['apellido'],
@@ -51,8 +52,8 @@ class Comisionado extends CI_Controller {
  
     public function registrarComisionado() {
 
-        $idEvento = $this->input->post('idEvent');
-        $idUsuario = $this->input->post('idUsuar');
+        $idEvento = $this->input->post('idEv');
+        $idUsuario = $this->input->post('idUs');
         $estatus =1;
         
         $data = array(
