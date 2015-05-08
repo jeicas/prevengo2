@@ -13,7 +13,7 @@ Ext.define('myapp.view.evento.ListaAsignarComisionado', {
         local: true
 	}], 
     store: Ext.create('myapp.store.usuario.UsuarioStore'),
-    emptyText: 'No hay empleado(s) asignado(s) a esta actividad',
+    emptyText: 'No hay comisionado asignado(s) a este Evento',
     columnLines: true,
     initComponent: function () {
         var me = this;

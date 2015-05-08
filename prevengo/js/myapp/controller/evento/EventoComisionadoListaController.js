@@ -3,6 +3,7 @@ var nuevorespo = false;
 Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
     extend: 'Ext.app.Controller',
     views: ['evento.ListaEventosComisionados',
+             'evento.ListaComisionadoEvento',
   
     ],
     requires: [
@@ -40,7 +41,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
             "listaEventosComisionados":{
                 itemdblclick: this.onClickVerComisionado
             },   
-             "listaComisionadoEvento button[name=btnAsignarComisionado]": {
+             "listaComisionadoEvento button[name=btnNuevoComisionado]": {
                 click: this.onClickNuevoComisionado
             },
              "listaComisionadoEvento button[name=btnEliminarComisionado]": {
@@ -88,7 +89,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
    
      // ====================funciones de la ventana listaComisionadoEvento================
     onClickNuevoComisionado: function (button, e, options) {
-      
+         console.log("jjjjjj");
             win= Ext.create('myapp.view.evento.WinAsignarComisionado');
             win.setTitle("Nuevo Comisionado");
             win.show();         
@@ -151,23 +152,23 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
    
        onClickGuardarComisionado: function (button, e, options) {
            
-          grid = this.getlistaEventosComisionados();
-          grid2 = this.getListaistaComisionadoEvento();
+          grid = this.getListaEventosComisionados();
+          grid2 = this.getListaAsignarComisionado ();
           grid3 =this.getListaComisionadoEvento();
-          winU= this.getWinListaComisionadoEvento();
+          winU= this.getWinAsignarComisionado();
        // if (nuevo){     
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
 
         record = grid.getSelectionModel().getSelection();
         record1 = grid2.getSelectionModel().getSelection(); 
-        
+           
          Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'lineamiento/lineamiento/registrarComisionado',
+            url: BASE_URL + 'comisionado/comisionado/registrarComisionado',
             method: 'POST',
             params: {
-                idEvento: record[0].get('idEv'),
-                idUsuario: record1[0].get('idEv')
+                idEvent: record[0].get('idEv'),
+                idUsuar: record1[0].get('id')
             },
             success:  function(result, request){
                    result=Ext.JSON.decode(result.responseText);

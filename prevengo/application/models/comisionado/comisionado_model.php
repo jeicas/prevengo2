@@ -9,8 +9,11 @@ class Comisionado_model extends CI_Model {
     public function cargarListaComisionado($id) {
 
         $query = $this->db->query("select prevengo.comisionado.empleado as idEmpl,
+                                    prevengo.comisionado.evento AS idEv,
                                     bdgenerica.persona.nombre as nombre,
-                                    bdgenerica.persona.apellido as apellido
+                                    bdgenerica.persona.apellido as apellido,
+                                    bdgenerica.persona.foto as foto,
+                                    prevengo.comisionado.estatus as estatus
 
                                     from prevengo.comisionado 
                                     inner join bdgenerica.empleado

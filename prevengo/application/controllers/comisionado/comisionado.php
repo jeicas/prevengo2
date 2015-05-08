@@ -11,21 +11,22 @@ class Comisionado extends CI_Controller {
         $this->load->helper('url');
         $this->load->database();
         $this->load->library('session');
-        $this->load->model('lineamiento/lineamiento_model');
+        $this->load->model('comisionado/comisionado_model');
     }
 
     public function listaComisionado() {
         $id = $this->input->get('id');
-        $lineamiento= $this->lineamiento_model->cargarListaComisionado($id);
+        $comisionado= $this->comisionado_model->cargarListaComisionado($id);
 
-        if ($lineamiento->num_rows() > 0) {
+        if ($comisionado->num_rows() > 0) {
 
-            foreach ($lineamiento->result_array() as $row) {
+            foreach ($comisionado->result_array() as $row) {
 
                 $data[] = array(
-                    'idLin' => $row['idLin'],
+                    'idUs' => $row['idEmpl'],
                     'idEv' => $row['idEv'],
-                    'descripcion' => $row['descripcion'],
+                    'nombrecompleto' => $row['nombre']." ".$row['apellido'],
+                    'foto' => $row['foto'],
                     'estatus' => $row['estatus'],
                 );
             }
@@ -50,20 +51,18 @@ class Comisionado extends CI_Controller {
  
     public function registrarComisionado() {
 
-        $idEvento = $this->input->post('idEvento');
-        $descripcion = $this->input->post('descripcion');
-        $fecha= Date('Y-m-d');
-        $estatus= 1;
-
+        $idEvento = $this->input->post('idEvent');
+        $idUsuario = $this->input->post('idUsuar');
+        $estatus =1;
+        
         $data = array(
             'evento' => $idEvento,
-            'descripcion' => $descripcion,
-            'fecha' => $fecha,
+            'empleado' => $idUsuario,
             'estatus' => $estatus,
         );
 
 
-        $result = $this->lineamiento_model->guardarComisionado($data);
+        $result = $this->comisionado_model->guardarComisionado($data);
 
         if ($result) {
             echo json_encode(array(
