@@ -1,15 +1,15 @@
-Ext.define('myapp.view.evento.ListaComisionadoEvento', {
+Ext.define('myapp.view.evento.ListaReincidenciaEvento', {
     extend: 'Ext.grid.Panel',
-    alias: 'widget.listaComisionadoEvento',
-    itemId: 'listaComisionadoEvento',
+    alias: 'widget.listaReincidenciaEvento',
+    itemId: 'listaReincidenciaEvento',
     requires: [
         'Ext.selection.CellModel',
         'Ext.selection.CheckboxModel',
         'Ext.ux.ajax.SimManager',
     ],
     
-    store: Ext.create('myapp.store.comisionado.ComisionadoEventoStore'),
-    emptyText: 'No hay comisionado(s) asignado(s) a este evento',
+    store: Ext.create('myapp.store.reincidencia.ReincidenciaEventoStore'),
+    emptyText: 'No hay Reincidencia(s) asignado(s) a este evento',
     columnLines: true,
     initComponent: function () {
         var me = this;
@@ -18,19 +18,19 @@ Ext.define('myapp.view.evento.ListaComisionadoEvento', {
         me.callParent();
     },
     buildColumns: function () {
-        return [ {
-			text:'Foto',
-			dataIndex:'foto',
-			flex: 0.3,
-			renderer: function(value, metadata, record){
-				return '<img width="50" height="50" src="../../empleados/_DSC'+ value +'">';
-		   }
-		},{
-			flex: 0.8,
-			dataIndex: 'nombrecompleto',
-			text: 'Nombre y apellido',
-			
-		}
+        return [ 
+			 {
+                dataIndex: 'descripcion',
+                flex: 1.5,
+                text: 'Descripcion',
+              
+            },
+             {
+                dataIndex: 'fecha',
+                flex: 1.5,
+                text: 'Fecha',
+              
+            },
             ]
     },
    
@@ -43,13 +43,13 @@ Ext.define('myapp.view.evento.ListaComisionadoEvento', {
                   items:[
                      {  
                         xtype: 'button',
-                        name: 'btnNuevoComisionado',
-                        text: 'Asignar Comisionado',
+                        name: 'btnNuevoReincidencia',
+                        text: 'Nueva Reincidencia',
                         iconCls: 'editar'
                     },{  
                         xtype: 'button',
-                        name: 'btnEliminarComisionado',
-                        text: 'Eliminar Comisionado',
+                        name: 'btnEliminarReincidencia',
+                        text: 'Eliminar Reincidencia',
                         iconCls: 'editar'
                     },
                     
