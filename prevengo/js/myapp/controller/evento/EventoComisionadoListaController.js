@@ -96,7 +96,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
     },
   
     onClickEliminarComisionado: function (button, e, options) {
-        var grid = this.getListaComisionadoPorEvento();
+        var grid = this.getListaComisionadoEvento();
         record = grid.getSelectionModel().getSelection();
         
         if (record[0]) {
@@ -111,8 +111,8 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
                         url: BASE_URL+'comisionado/comisionado/eliminarComisionado',
                     method: 'POST',
                     params: {
-                        lin:record[0].get('idEv'),
-                        usu:record[0].get('idUsu')
+                        idComi:record[0].get('idCom'),
+                       
                     },
                     
                      success: function(result, request){

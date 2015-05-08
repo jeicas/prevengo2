@@ -21,7 +21,7 @@ class Comisionado_model extends CI_Model {
                                       on prevengo.comisionado.empleado= bdgenerica.empleado.id
                                     inner join bdgenerica.persona
                                         on bdgenerica.persona.cedula= bdgenerica.empleado.cedula
-                                    where  prevengo.comisionado.evento=$id
+                                    where  prevengo.comisionado.evento=$id and prevengo.comisionado.estatus=1
                                  ");
        
             return $query;

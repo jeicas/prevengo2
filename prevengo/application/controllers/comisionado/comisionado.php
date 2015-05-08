@@ -113,29 +113,29 @@ class Comisionado extends CI_Controller {
 
 public function eliminarComisionado() {
 
-        $idLineam = $this->input->post('lin');
+        $idComi = $this->input->post('idComi');
       
         $estatus=0;
     
 
         $data = array(
-            'id' => $idLineam,
+            'id' => $idComi,
             'estatus' => $estatus,
         );
 
 
-        $result = $this->lineamiento_model->eliminarComisionado($data);
+        $result = $this->comisionado_model->eliminarComisionado($data);
 
         if ($result) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se  elimino con Éxito el lineamiento." //modificado en la base de datos
+                "msg" => "Se  elimino con Éxito el Comisionado." //modificado en la base de datos
             ));
         } else {
 
             echo json_encode(array(
                 "success" => false,
-                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+                "msg" => "No se pudo Eliminar, por favor verifique los datos suministrados" //no se modifico en la base de datos
             ));
         }
     }

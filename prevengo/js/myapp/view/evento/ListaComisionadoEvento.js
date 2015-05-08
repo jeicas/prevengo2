@@ -62,6 +62,15 @@ Ext.define('myapp.view.evento.ListaComisionadoEvento', {
                        
                     }
                 ]
+            },
+                {
+                xtype: 'pagingtoolbar',
+                dock: 'bottom',
+                store: this.store,
+                displayInfo: true,
+                  items:[
+                   
+                ]
             }
         
         ];
