@@ -1,4 +1,4 @@
-Ext.define('myapp.view.avance.ListaAvanceFinal', {
+Ext.define('myapp.view.consultar.ListaAvanceFinal', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.listaAvanceFinal',
     //itemId: 'listaAvanceFinal',

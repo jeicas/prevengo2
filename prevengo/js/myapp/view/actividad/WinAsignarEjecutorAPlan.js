@@ -1,13 +1,13 @@
 Ext.define('myapp.view.actividad.WinAsignarEjecutorAPlan', {
 extend: 'Ext.window.Window',
-  alias: 'widget.winPlanEvento',
-  itemId: 'winPlanEvento',
+  alias: 'widget.winAsignarEjecutorAPlan',
+  itemId: 'winAsignarEjecutorAPlan',
   title:'Plan de Accion',
   height: 450,
-  width: 850,
+  width: 490,
   modal:true,
   requires: [
-   'myapp.view.actividad.ListaAsignarEjecutorAPlan'
+   'myapp.view.actividad.ListaEmpleadoPlan'
   ],
   layout: {
    	type: 'fit'
@@ -20,7 +20,7 @@ extend: 'Ext.window.Window',
   },
   buildItem : function(){
     return [{
-      xtype: 'listaAsignarEjecutorAPlan',
+      xtype: 'listaEmpleadoPlan',
     }]
   },
   buildDockedItems : function(){

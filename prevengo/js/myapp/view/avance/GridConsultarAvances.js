@@ -1,4 +1,4 @@
-Ext.define('myapp.view.avance.GridConsultarAvances', {
+Ext.define('myapp.view.consultar.GridConsultarAvances', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.gridConsultarAvances',
 	

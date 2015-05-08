@@ -1,8 +1,8 @@
 Ext.define('myapp.controller.avance.AvanceController', {
     extend: 'Ext.app.Controller',
-    views: ['registrar.Avance',
-        'registrar.GridListaAvance',
-        'registrar.Gridbuscar',
+    views: ['avance.Avance',
+        'avance.GridListaAvance',
+        'avance.Gridbuscar',
     ],
     requires: [
         'myapp.util.Util'

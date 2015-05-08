@@ -1,6 +1,6 @@
-Ext.define('myapp.view.evento.ListaSinIniciarEventos', {
+Ext.define('myapp.view.evento.ListaEventoResponsable', {
 	extend: 'Ext.grid.Panel',
-	alias: 'widget.listaSinIniciarEventos',
+	alias: 'widget.listaEventoResponsable',
 	
 	requires: [
         'Ext.selection.CellModel', 
@@ -14,7 +14,7 @@ Ext.define('myapp.view.evento.ListaSinIniciarEventos', {
 	}], 
     
 
-     store: Ext.create('myapp.store.evento.EventoSinIniciarStore'),
+     store: Ext.create('myapp.store.evento.EventoResponsableStore'),
      emptyText: 'No hay Eventos registrados',
 	viewConfig: {
     	 		
@@ -31,7 +31,7 @@ Ext.define('myapp.view.evento.ListaSinIniciarEventos', {
 	buildColumns: function(){
 		return [
        {
-			dataIndex: 'id',
+			dataIndex: 'idEv',
 			flex: 1.5,
 			text: 'id',
 			hidden:true,
@@ -135,6 +135,32 @@ Ext.define('myapp.view.evento.ListaSinIniciarEventos', {
 				    buffer: 500
 				}
 			}
+		},
+                { 
+			dataIndex: 'nombrecompleto',
+			flex: 0.5,
+			text: 'Responsable',
+			items    : {
+				xtype: 'textfield',
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+				    keyup: function() {
+			           	var store = this.up('grid').store;
+			           	store.clearFilter();
+			            if (this.value) {
+		                   	store.filter({
+		                        property     : 'nombrecompleto',
+		                        value         : this.value,
+		                        anyMatch      : true,
+		                        caseSensitive : false
+		                    });
+			            }
+				    },
+				    buffer: 500
+				}
+			}
 		},{
 			flex: 0.5,
 			dataIndex: 'estatus',
@@ -170,20 +196,9 @@ Ext.define('myapp.view.evento.ListaSinIniciarEventos', {
 	                displayInfo: true,
 	                items: [
 	                    ]
-                  },
-                  {       
-	                xtype: 'toolbar',
-	                dock: 'top',
-	                store: this.store,
-	                displayInfo: true,
-	                items: [
-	                     {
-	                        xtype: 'button',
-	                        name: 'btnNuevo',
-	                        text: 'Asignar Ejecutor',
-	                        iconCls: 'useradd'
-	                    }
-	                    ]
-                }];
+                  }
+                 ];
 	}
 });
+
+

@@ -43,13 +43,26 @@ Ext.define('myapp.controller.actividad.ListaActividadController', {
           
      newGrid=this.getListaPlanEvento();
       store= newGrid.getStore();      
-      store.proxy.extraParams.id=item.data.id;
+      store.proxy.extraParams.id=item.data.idEvento;
       store.load();
-      newGrid.down("label[name=lblIdEvento]").setText(item.data.id);
+      newGrid.down("label[name=lblIdEvento]").setText(item.data.idEvento);
       win.setTitle("Plan de Accion para el Evento: "+ item.data.evento);
       win.show();
       
   },
+   onClickVerPlan2: function (record, item, index, e, eOpts ){
+    
+    var win = Ext.create('myapp.view.actividad.WinPlanEvento'); 
+          
+     newGrid=this.getListaPlanEvento();
+      store= newGrid.getStore();      
+      store.proxy.extraParams.id=item.data.idEvento;
+      store.load();
+      newGrid.down("label[name=lblIdEvento]").setText(item.data.idEvento);
+      win.setTitle("Plan de Accion para el Evento: "+ item.data.evento);
+      win.show();
+      
+  }
   
   
   

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-04-2015 a las 22:24:58
+-- Tiempo de generación: 30-04-2015 a las 23:46:14
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -258,11 +258,11 @@ CREATE TABLE IF NOT EXISTS `menu` (
 
 INSERT INTO `menu` (`id`, `text`, `iconCls`, `className`, `controller`, `padre`) VALUES
 (1, 'Registros Básicos', '', NULL, '', NULL),
-(2, 'Eventos', '', NULL, '', NULL),
+(2, 'Eventos', 'lista', NULL, '', NULL),
 (3, 'Reportes', '', NULL, '', NULL),
 (4, 'Sesión', '', NULL, '', NULL),
 (5, 'Usuario', 'registro1', 'usuario', 'registrar.UsuarioController', 1),
-(6, 'Registrar Evento', 'registro1', 'evento', 'registrar.EventoController', 2),
+(6, 'Registrar Evento', 'registro1', 'listaEventos', 'evento.EventoListaController', 2),
 (7, 'Registrar Lineamientos', 'registro1', 'autorizados', 'consultar.AutorizadosController', 2),
 (8, 'Registrar Comisionados', 'registro1', 'empleado', 'registrar.EmpleadoController', 2),
 (9, 'Cambio de clave', 'registro1', 'contrasena', 'registrar.ContrasenaController', 4),
@@ -270,14 +270,14 @@ INSERT INTO `menu` (`id`, `text`, `iconCls`, `className`, `controller`, `padre`)
 (11, 'Asignar Responsables', 'registro1', 'consultarautorizados', 'consultar.ConsultarAutorizadosController', 2),
 (12, 'Registrar Reincidencias', 'registro1', 'procesadas', 'consultar.ProcesadosController', 2),
 (13, 'Listados', 'registro1', 'reportegen', 'reportes.Reportegeneral', 3),
-(14, 'Plan de Acción', '', NULL, NULL, NULL),
+(14, 'Plan de Acción', 'plan', NULL, NULL, NULL),
 (15, 'Avances', '', NULL, NULL, NULL),
-(16, 'Registrar Actividad', 'registro1', NULL, NULL, 14),
-(17, 'Asignar Ejecutor', 'registro1', NULL, NULL, 14),
+(16, 'Registrar Actividad', 'registro1', 'listaActividad', 'actividad.ListaActividadController', 14),
+(17, 'Asignar Ejecutor', 'registro1', 'listaPlanEventoAsignarEjecutor', 'actividad.ListaPlanEventoAsignarEjecutorController', 14),
 (18, 'Evaluar Avances', 'registro1', 'listaAvanceFinal', 'consultar.AvanceListaController', 14),
 (19, 'Consultar Avances', 'registro1', 'gridConsultarAvances', 'consultar.AvanceListaController', 14),
 (20, 'Consultar Eventos', 'registro1', '', '', 3),
-(21, 'Registrar Avance', 'registro1', 'avance', 'avance.AvanceController', 15),
+(21, '', 'registro1', 'avance', 'avance.AvanceController', 15),
 (22, 'Avances ', 'registro1', 'gridListaAvance', 'avance.AvanceController', 15);
 
 -- --------------------------------------------------------
@@ -381,7 +381,6 @@ INSERT INTO `permiso` (`tipousuario`, `menu`, `observacion`) VALUES
 (2, 18, 'No posee descripcion'),
 (2, 19, 'No posee descripcion'),
 (2, 20, 'No posee descripcion'),
-(2, 21, 'No posee descripcion'),
 (3, 4, 'No posee descripcion'),
 (3, 10, 'No posee descripcion'),
 (3, 15, 'No posee descripcion'),

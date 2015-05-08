@@ -6,6 +6,8 @@ class Actividad_model extends CI_Model{
 		parent::__construct();
 	}
     
+        
+        
         public function guardarActividad($dataActividad){
         return $this->db->insert('actividad',$dataActividad);
     }
@@ -50,10 +52,19 @@ public function  cambiarEstatus($data){
          return  $this->db->update('actividad');
     }
  
+    
+  public function  actualizarActividad($data){         
+         $this->db->set('usuario',$data['usuario']);
+         $this->db->where('evento',$data['evento']);
+         return  $this->db->update('actividad');
+    }  
+    
+    
+    
  public function cargarEventosConPlandeAccion(){
       
     
-        $sql="SELECT ev.id AS id,
+        $sql="SELECT ev.id AS idEvento,
                      ev.titulo AS evento,
                      ev.descripcion AS descripcion,
                      ev.fechatope AS fecha,
@@ -66,18 +77,43 @@ public function  cambiarEstatus($data){
                 INNER JOIN actividad 
                 ON actividad.evento= ev.id
                 WHERE ev.estatus IN (1,2)
-                      AND  actividad.usuario=1
+                     AND  actividad.usuario=1
+                     
                       
                        
                       
-                ORDER BY fecha, ev.estatus  ASC";
+               ";
 
           $query = $this->db->query($sql);
           return $query;
              
     
  }
+ public function cargarEventosPA(){
+      
+    
+        $sql="SELECT ev.id AS idEvento,
+                     ev.titulo AS evento,
+                     ev.descripcion AS descripcion,
+                     ev.fechatope AS fecha
+                    
+                         
+                FROM evento AS ev 
+                INNER JOIN actividad 
+                ON actividad.evento= ev.id
+                WHERE ev.estatus IN (1,2)
+                     AND  actividad.usuario=1 
+                           
+                 GROUP BY  idEvento
+                 ORDER BY fecha ASC
+               ";
 
+          $query = $this->db->query($sql);
+          return $query;
+             
+    
+ }
+ 
  public function cargarPlandeAccionDeEvento($id){
   
         $sql=" SELECT ac.id AS id,

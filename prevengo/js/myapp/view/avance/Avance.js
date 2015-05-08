@@ -1,4 +1,4 @@
-Ext.define('myapp.view.avance.Avance', {
+Ext.define('myapp.view.registrar.Avance', {
   extend: 'Ext.form.Panel',
   alias: 'widget.avance',
   itemId: 'formAvance',

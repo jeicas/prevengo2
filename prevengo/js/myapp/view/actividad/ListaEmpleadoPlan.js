@@ -1,15 +1,15 @@
-Ext.define('myapp.view.actividad.ListaAsignarEjecutorAPlan', {
+Ext.define('myapp.view.actividad.ListaEmpleadoPlan', {
     extend: 'Ext.grid.Panel',
-    alias: 'widget.listaAsignarEjecutorAPlan',
-    itemId: 'listaAsignarEjecutorAPlan',
+    alias: 'widget.listaEmpleadoPlan',
+    itemId: 'listaEmpleadoPlan',
     requires: [
         'Ext.selection.CellModel',
         'Ext.selection.CheckboxModel',
         'Ext.ux.ajax.SimManager',
     ],
     
-    //store: Ext.create('myapp.store.actividad.EmpleadosStore'),
-    emptyText: 'No hay Plan de Acción registrado',
+    store: Ext.create('myapp.store.avance.PlanEmpleadosStore'),
+    emptyText: 'No hay empleado(s) asignado(s) a esta actividad',
     columnLines: true,
     initComponent: function () {
         var me = this;
@@ -18,114 +18,24 @@ Ext.define('myapp.view.actividad.ListaAsignarEjecutorAPlan', {
         me.callParent();
     },
     buildColumns: function () {
-        return [ { 
-			dataIndex: 'id',
-			flex: 0.2,
-			text: 'ID',
-			hidden: true,
-			items    : {
-				xtype: 'textfield',
-				flex : 1,
-				margin: 2,
-				enableKeyEvents: true,
-				listeners: {
-				    keyup: function() {
-			           	var store = this.up('grid').store;
-			           	store.clearFilter();
-			            if (this.value) {
-		                   	store.filter({
-		                        property     : 'id',
-		                        value         : this.value,
-		                        anyMatch      : true,
-		                        caseSensitive : false
-		                    });
-			            }
-				    },
-				    buffer: 500
-				}
-			}
-		},{
+        return [ {
 			text:'Foto',
 			dataIndex:'foto',
 			flex: 0.3,
 			renderer: function(value, metadata, record){
 				return '<img width="50" height="50" src="../../empleados/_DSC'+ value +'">';
-			}
-		},{ 
-			dataIndex: 'nacionalidad',
-			flex: 0.1,
-			text: 'Nac.',
-			items    : {
-				xtype: 'textfield',
-				flex : 1,
-				margin: 2,
-				enableKeyEvents: true,
-				listeners: {
-				    keyup: function() {
-			           	var store = this.up('grid').store;
-			           	store.clearFilter();
-			            if (this.value) {
-		                   	store.filter({
-		                        property     : 'nacionalidad',
-		                        value         : this.value,
-		                        anyMatch      : true,
-		                        caseSensitive : false
-		                    });
-			            }
-				    },
-				    buffer: 500
-				}
-			}
-		},{ 
-			dataIndex: 'cedula',
-			flex: 0.3,
-			text: 'Cédula',
-			items    : {
-				xtype: 'textfield',
-				flex : 1,
-				margin: 2,
-				enableKeyEvents: true,
-				listeners: {
-				    keyup: function() {
-			           	var store = this.up('grid').store;
-			           	store.clearFilter();
-			            if (this.value) {
-		                   	store.filter({
-		                        property     : 'cedula',
-		                        value         : this.value,
-		                        anyMatch      : true,
-		                        caseSensitive : false
-		                    });
-			            }
-				    },
-				    buffer: 500
-				}
-			}
+		   }
 		},{
-			flex: 1,
+			flex: 0.8,
 			dataIndex: 'nombrecompleto',
 			text: 'Nombre y apellido',
-			items    : {
-				xtype: 'textfield',
-				flex : 1,
-				margin: 2,
-				enableKeyEvents: true,
-				listeners: {
-				    keyup: function() {
-			           	var store = this.up('grid').store;
-			           	store.clearFilter();
-			            if (this.value) {
-		                   	store.filter({
-		                        property     : 'nombrecompleto',
-		                        value         : this.value,
-		                        anyMatch      : true,
-		                        caseSensitive : false
-		                    });
-			            }
-				    },
-				    buffer: 500
-				}
-			}
+			
+		},
+                {
+			flex: 0.5,
+			dataIndex: 'fecha',
+			text: 'Fecha de Asignación',
+			
 		}
             ]
     },
@@ -136,29 +46,24 @@ Ext.define('myapp.view.actividad.ListaAsignarEjecutorAPlan', {
                 store: this.store,
                 displayInfo: true,
                   items:[
-                      
-                      
-                    {
+                     {
                         xtype: 'button',
-                        name: 'btnEditarPlan',
-                        text: 'Editar',
+                        name: 'btnAsignarEmpleado',
+                        text: 'Asignar Empleado',
                         iconCls: 'editar'
                     },
-                     {
-                        xtype: 'button',
-                        name: 'btnCancelarPlan',
-                        text: 'Cancelar Actividad',
-                        iconCls: 'cancelar'
-                    },
+                    
                      {
                         xtype: 'label',
-                        name: 'lblIdEvento',
+                        name: 'lblIdActividad',
                         text: '',
                         hidden:true
      
                        
                     }
                 ]
-            }];
+            }
+        
+        ];
     }
 });

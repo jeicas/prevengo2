@@ -24,13 +24,15 @@ Ext.define('myapp.view.evento.Evento', {
                         y: 20,
                         width: 300,
                         fieldLabel: 'Nombre del Evento:',
+                         name:'txtTitulo'
                     },
                     {
                         xtype: 'textareafield',
                         x: 320,
                         y: 20,
                         width: 300,
-                        fieldLabel: 'Descripción:'
+                        fieldLabel: 'Descripción:',
+                        name:'txtDescripcion'
                     },
                     {
                         xtype: 'combobox',
@@ -109,21 +111,28 @@ Ext.define('myapp.view.evento.Evento', {
                         x: 320,
                         y: 140,
                         width: 300,
-                        fieldLabel: 'Presupuesto:'
+                        fieldLabel: 'Presupuesto:',
+                        name:'txtPresupuesto'
                     },
                     {
                         xtype: 'datefield',
                         x: 10,
                         y: 170,
                         width: 300,
-                        fieldLabel: 'Fecha del Evento:'
+                        fieldLabel: 'Fecha del Evento:',
+                        name:'dtfFechaT',
+                        format:'Y-m-d',
+                        minValue: new Date()
                     },
                     {
                         xtype: 'datefield',
                         x: 320,
                         y: 170,
                         width: 300,
-                        fieldLabel: 'Fecha del Preaviso:'
+                        fieldLabel: 'Fecha del Preaviso:',
+                        name:'dtfFechaPA',
+                        format:'Y-m-d',
+                        minValue: new Date()
                     }
 
              
@@ -140,11 +149,6 @@ Ext.define('myapp.view.evento.Evento', {
             xtype : 'tbfill'
           },{
             xtype   : 'button',
-            iconCls :'icon-limpiar',
-            name      :'btnLimpiar',
-            text    : 'Limpiar'
-          },{
-            xtype   : 'button',
             iconCls :'save',
             name    :'btnGuardar',
            // itemId: 'addAvance', 
@@ -154,6 +158,11 @@ Ext.define('myapp.view.evento.Evento', {
             scope   : this,
 
 
+          },{
+            xtype   : 'button',
+            iconCls :'icon-limpiar',
+            name      :'btnLimpiar',
+            text    : 'Limpiar'
           }]
       }]
      
