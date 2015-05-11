@@ -1,8 +1,11 @@
 var nuevo = false;
 var nuevorespo = false;
+var typeExtension="image";
+
 Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
     extend: 'Ext.app.Controller',
     views: ['evento.ListaEventosReincidencia',
+        'evento.WinReincidenciaEvento'
             
   
     ],
@@ -29,6 +32,10 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
             ref: 'WinReincidenciaEvento',
             selector: 'winReincidenciaEvento'
         },
+         {
+            ref: 'WinReincidencia',
+            selector: 'winReincidencia'
+        },
         
 
         
@@ -37,7 +44,18 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
         this.control({
             "listaEventosReincidencia":{
                 itemdblclick: this.onClickVerReincidencia
+            },
+            "listaReincidenciaEvento button[name=btnNuevoReincidencia]":{
+                click: this.onClickNuevoReincidencia
+            },
+
+            "winReincidencia button[name=btnGuardar]":{
+                click: this.onClickGuardarReincidencia
+            },
+             "winReincidencia button[name=btnSubirArchivo[]]":{
+                onChange: this.previewImage
             }
+
  
         });
     },
@@ -53,17 +71,17 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
             store= newGrid.getStore();      
             store.proxy.extraParams.id=item.data.idEv;
             store.load();
-            win.setTitle("Nuevo Comisionado");
+            win.setTitle("Reincidencias del Evento");
             win.show();   
          
     }, // fin de la function
    
    
      // ====================funciones de la ventana listaComisionadoEvento================
-    onClickNuevoComisionado: function (button, e, options) {
+    onClickNuevoReincidencia: function (button, e, options) {
        
-            win= Ext.create('myapp.view.evento.WinAsignarComisionado');
-            win.setTitle("Nuevo Comisionado");
+            win= Ext.create('myapp.view.evento.WinReincidencia');
+            win.setTitle("Nueva Reincidencia");
             win.show();         
     },
   
@@ -122,34 +140,36 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
    
    // ====================funciones de la ventana listaAsignarComisionado================
    
-       onClickGuardarComisionado: function (button, e, options) {
+       onClickGuardarReincidencia: function (button, e, options) {
            
-          grid = this.getListaEventosComisionados();
-          grid2 = this.getListaAsignarComisionado ();
-          grid3 =this.getListaComisionadoEvento();
-          winU= this.getWinAsignarComisionado();
+          grid = this.getListaEventosReincidencia();
+          grid2 =this.getListaReincidenciaEvento();
+          win = this.getWinReincidencia();
        // if (nuevo){     
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
              
         record = grid.getSelectionModel().getSelection();
-        record1 = grid2.getSelectionModel().getSelection(); 
+        
            
-         Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'comisionado/comisionado/registrarComisionado',
+            
+    Ext.Ajax.request(
+            {//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'reincidencia/reincidencia/registrarReincidencia',
             method: 'POST',
             params: {
                 idEv: record[0].get('idEv'),
-                idUs: record1[0].get('idEmpl')
+                descripcion: win.down("textfield[name=txtDescripcion]").getValue(),
+                costo: win.down("textfield[name=txtDescripcion]").getValue(),
             },
             success:  function(result, request){
                    result=Ext.JSON.decode(result.responseText);
                     loadingMask.hide();
 
                     if (result.success) {
-                    grid3.getView().refresh();
-                    grid3.getStore().load();
-                    winU.close();
+                    grid2.getView().refresh();
+                    grid2.getStore().load();
+                    win.close();
                     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
                    
                 }
@@ -164,7 +184,10 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                 Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
             }
-        });
+        }
+     
+
+        );
    // }
    /* else { 
           var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
@@ -210,4 +233,66 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
          
         
     },
+
+
+
+//// -----------Funciones para la vista previa de la imagen y validar la extension de los archivos.---------
+
+checkFileExtension:function (elem) {
+       
+        var filePath = elem;
+
+        if(filePath.indexOf('.') == -1)
+            return false;
+                  
+        var validExtensions = new Array();
+        var ext = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+      
+        if (typeExtension=="image") {
+         validExtensions[0] = 'jpg';
+         validExtensions[1] = 'jpeg';
+         validExtensions[3] = 'png';
+         
+
+        }
+        
+        for(var i = 0; i < validExtensions.length; i++) {
+            if(ext == validExtensions[i])
+                return true;
+        }
+
+        Ext.Msg.alert('Advertencia', 'La extension .'+ext+' del archivo ' + filePath + ' no es permitida!');
+        
+        if (typeExtension=="image") {
+         document.getElementsByName('btnSubirArchivo[]')[0].value='';
+         
+        }
+        
+        return false;
+    },
+
+
+
+
+     previewImage: function (input) {
+
+
+      var typeExtension="image";
+    if (!checkFileExtension(encodeURIComponent(document.getElementsByName("btnSubirArchivo[]")[0].value)))
+    {
+     return false;  
+    }
+    if (input) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+         //cambiar imagenArea por el id de la imagen que se esta usando en el js. 
+       document.getElementById('img').src = e.target.result
+      }
+      reader.readAsDataURL(input);
+    }
+
+   }
+   //-----------------------------------------------------------------------------------------------------------------------
+
+    
 });

@@ -50,10 +50,18 @@ class Reincidencia extends CI_Controller {
  
     public function registrarReincidencia() {
 
+       $idEv = $this->input->post('idEv');
+       $descripcion = $this->input->post('descripcion');
+       $costo= $this->input->post('costo');
+       $fecha= date('Y-m-d');
+       $estatus= 1;
        
-
         $data = array(
-          
+             'evento'     => $idEv,
+             'descripcion'=> $descripcion,
+             'costo'      => $costo,
+             'fecha'      => $fecha,
+             'estatus'    => $estatus,
         );
 
 
@@ -77,13 +85,14 @@ class Reincidencia extends CI_Controller {
 
  public function actualizarReincidencia() {
 
-        $idLineam = $this->input->post('idLineam');
-        $descripcion = $this->input->post('descripcion');
+       $id = $this->post->input('id');
+       $descripcion = $this->post->input('idEv');
+       $costo= $this->post->input('idEv');
       
     
 
         $data = array(
-            'id' => $idLineam,
+            'id' => $id,
             'descripcion' => $descripcion,
         );
 
