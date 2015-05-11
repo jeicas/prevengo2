@@ -83,7 +83,7 @@ Ext.define('myapp.controller.avance.AvanceController', {
             failure: function (form, action) {
                 var result = action.result;
                 loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ocurrio un error. Por favor verifique los datos", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
             }
         });
     }, // fin de la function 

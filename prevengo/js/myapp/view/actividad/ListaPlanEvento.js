@@ -50,6 +50,14 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
     },
     buildDockedItems: function () {
         return [{
+                xtype: 'pagingtoolbar',
+                dock: 'bottom',
+                store: this.store,
+                displayInfo: true,
+                  items: []  
+            },
+            
+            {
                 xtype: 'toolbar',
                 dock: 'top',
                 store: this.store,

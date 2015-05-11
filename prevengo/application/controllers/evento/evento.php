@@ -195,7 +195,7 @@ class Evento extends CI_Controller {
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
-        $estatus = 1;
+        $estatus = 4;
         $agente = $this->input->post('cmbAgente');
         $alcance = $this->input->post('cmbAlcance');
         $tipoEvento = $this->input->post('cmbTipoEvento');

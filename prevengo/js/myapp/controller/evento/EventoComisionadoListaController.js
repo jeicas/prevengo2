@@ -26,13 +26,13 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
         },
 
         {
-            ref: 'ListaAsignarComisionado',
-            selector: 'listaAsignarComisionado'
+            ref: 'ListaAsignarUsuario',
+            selector: 'listaAsignarUsuario'
         },
         
        {
-            ref: 'WinAsignarComisionado',
-            selector: 'winAsignarComisionado'
+            ref: 'WinAsignarUsuario',
+            selector: 'winAsignarUsuario'
         }
         
     ],
@@ -47,7 +47,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
              "listaComisionadoEvento button[name=btnEliminarComisionado]": {
                 click: this.onClickEliminarComisionado
             },
-             "listaAsignarComisionado button[name=btnGuardar]": {
+             "listaAsignarUsuario button[name=btnGuardar]": {
                 click: this.onClickGuardarComisionado
             }
  
@@ -90,7 +90,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
      // ====================funciones de la ventana listaComisionadoEvento================
     onClickNuevoComisionado: function (button, e, options) {
        
-            win= Ext.create('myapp.view.evento.WinAsignarComisionado');
+            win= Ext.create('myapp.view.evento.WinAsignarUsuario');
             win.setTitle("Nuevo Comisionado");
             win.show();         
     },
@@ -148,14 +148,14 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
     },
    
    
-   // ====================funciones de la ventana listaAsignarComisionado================
+   // ====================funciones de la ventana listaAsignarUsuario================
    
        onClickGuardarComisionado: function (button, e, options) {
            
           grid = this.getListaEventosComisionados();
-          grid2 = this.getListaAsignarComisionado ();
+          grid2 = this.getListaAsignarUsuario ();
           grid3 =this.getListaComisionadoEvento();
-          winU= this.getWinAsignarComisionado();
+          winU= this.getWinAsignarUsuario();
        // if (nuevo){     
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
@@ -175,11 +175,11 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
                     loadingMask.hide();
 
                     if (result.success) {
-                    grid3.getView().refresh();
-                    grid3.getStore().load();
-                    winU.close();
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                   
+                        grid3.getView().refresh();
+                        grid3.getStore().load();
+                        winU.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
                 }
                 else {
                     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});

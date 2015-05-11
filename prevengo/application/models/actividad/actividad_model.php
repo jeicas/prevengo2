@@ -45,7 +45,17 @@ class Actividad_model extends CI_Model{
        return $query;
 
     }
+    
+ public function buscarIdActividad($evento){
 
+    $sql="SELECT actividad.id as IdAct from actividad 
+            inner join evento on evento.id= actividad.evento
+            where actividad.evento=$evento and actividad.descripcion='no tiene actividades registrado'";
+
+    $query = $this->db->query($sql);
+       return $query;
+
+    }
 public function  cambiarEstatus($data){         
          $this->db->set('estatus',$data['estatus']);
          $this->db->where('id',$data['id']);
@@ -59,7 +69,11 @@ public function  cambiarEstatus($data){
          return  $this->db->update('actividad');
     }  
     
-    
+     public function  actualizarDataActividad($data){         
+         $this->db->set($data);
+         $this->db->where('id',$data['id']);
+         return  $this->db->update('actividad');
+    } 
     
  public function cargarEventosConPlandeAccion(){
       
@@ -76,12 +90,9 @@ public function  cambiarEstatus($data){
                 FROM evento AS ev 
                 INNER JOIN actividad 
                 ON actividad.evento= ev.id
-                WHERE ev.estatus IN (1,2)
-                     AND  actividad.usuario=1
-                     
-                      
-                       
-                      
+                WHERE ev.estatus IN (1,2,4)
+                     AND  actividad.usuario=2
+
                ";
 
           $query = $this->db->query($sql);
@@ -102,7 +113,7 @@ public function  cambiarEstatus($data){
                 INNER JOIN actividad 
                 ON actividad.evento= ev.id
                 WHERE ev.estatus IN (1,2)
-                     AND  actividad.usuario=1 
+                     AND  actividad.usuario=2 
                            
                  GROUP BY  idEvento
                  ORDER BY fecha ASC
@@ -127,7 +138,7 @@ public function  cambiarEstatus($data){
                 LEFT JOIN actividad 
                 ON actividad.id=ac.actividadepende
                 WHERE ac.estatus IN (0,1,2) 
-                      AND ac.usuario=1  
+                      AND ac.usuario=2  
                       AND ac.evento=$id";
 
                  $query = $this->db->query($sql);
@@ -148,7 +159,8 @@ public function  cambiarEstatus($data){
         $sql="SELECT ac.id AS id,
                      ac.descripcion AS descripcion 
                  FROM actividad AS ac 
-                 WHERE ac.estatus in (1,2) AND 
+                 inner join evento on evento.id=ac.evento
+                 WHERE ac.estatus in (1,2) AND evento.estatus!=4 and
                         ac.evento=$id";
 
           $query = $this->db->query($sql);

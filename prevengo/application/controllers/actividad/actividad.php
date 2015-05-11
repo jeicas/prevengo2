@@ -14,7 +14,9 @@ class Actividad extends CI_Controller {
         $this->load->library('session');
         $this->load->model('actividad/actividad_model');
         $this->load->model('evento/evento_model');
-    }//fin del constructor
+    }
+
+//fin del constructor
 
     public function obtenerPlandeAccion() {
         $resultdbd = array();
@@ -26,7 +28,9 @@ class Actividad extends CI_Controller {
             );
             echo json_encode($output);
         }
-    }//fin de la funcion
+    }
+
+//fin de la funcion
 
     public function buscarUnPlandeAccion($idUsuario) {
         $resultdbd = array();
@@ -50,7 +54,9 @@ class Actividad extends CI_Controller {
             );
             echo json_encode($output);
         }
-    }//fin de la funcion
+    }
+
+//fin de la funcion
 
     public function aprobarActividad() {
         $id = $this->input->post('record');
@@ -72,7 +78,9 @@ class Actividad extends CI_Controller {
                 "msg" => "No se pudo completar la actividad. Por favor verifique los datos suministrados" //no se modifico en la base de datos
             ));
         }
-    }//fin de la funcion
+    }
+
+//fin de la funcion
 
     public function obtenerPlandeAccionEvento() {
         $resultdbd = $this->actividad_model->cargarEventosConPlandeAccion();
@@ -95,6 +103,7 @@ class Actividad extends CI_Controller {
                     case '5':
                         $estatus = 'Expirado';
                         break;
+
                     default:
                         $estatus = 'Completado';
                         break;
@@ -126,14 +135,16 @@ class Actividad extends CI_Controller {
                 "success" => false
             ));
         }
-    }//fin de la funcion
+    }
+
+//fin de la funcion
 
     public function obtenerEventosConPlandeAccion() {
         $resultdbd = $this->actividad_model->cargarEventosPA();
 
         if ($resultdbd->num_rows() > 0) {
             foreach ($resultdbd->result_array() as $row) {
-              
+
 
                 $evento = "<br> <font color=#3F77E6> Evento: " . $row['evento'] . "</font>";
                 $data[] = array(
@@ -141,7 +152,6 @@ class Actividad extends CI_Controller {
                     'evento' => $row['evento'],
                     'descripcion' => $row['descripcion'],
                     'fecha' => $row['fecha'],
-                    
                 );
             }
 
@@ -157,7 +167,9 @@ class Actividad extends CI_Controller {
                 "success" => false
             ));
         }
-    }//fin de la funcion
+    }
+
+//fin de la funcion
 
     public function obtenerPlandeAccionDeEvento() {
         $id = $this->input->get('id');
@@ -181,6 +193,9 @@ class Actividad extends CI_Controller {
                         break;
                     case '5':
                         $estatus = 'Expirado';
+                        break;
+                    case '6':
+                        $estatus = '';
                         break;
                     default:
                         $estatus = 'Completado';
@@ -210,7 +225,9 @@ class Actividad extends CI_Controller {
             );
             echo json_encode($output);
         }
-    }//fin de la funcion
+    }
+
+//fin de la funcion
 
     public function obtenerActividadDependiente() {
         $id = $this->input->get('id');
@@ -224,41 +241,75 @@ class Actividad extends CI_Controller {
             );
             echo json_encode($output);
         }
-    }//fin de la funcion
+    }
+
+//fin de la funcion
 
     public function registrarActividad() {
         $descripcion = $this->input->post('txtDescripcion');
-        $usuario = 1;
+        $usuario = 2;
         $evento = $this->input->post('lblIdEvent');
+ 
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
         $estatus = 1;
         $estatusEv = 2;
 
-        if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
-            $depende = null;
+        $datoAct = $this->actividad_model->buscarIdActividad($evento);
+        if ($datoAct->num_rows() > 0) {
+            foreach ($datoAct->result_array() as $row) {
+                if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
+                    $depende = null;
+                } else {
+                    $depende = $this->input->post('cmbActividadDepende');
+                }
+
+                $datactividad = array(
+                    'id' =>$row['IdAct'],
+                    'usuario' => $usuario,
+                    'evento' => $evento,
+                    'descripcion' => $descripcion,
+                    'fecharegistro' => $fecharegistro,
+                    'fechaaviso' => $fechaPA,
+                    'fechatope' => $fechaT,
+                    'actividadepende' => $depende,
+                    'estatus' => $estatus,
+                );
+
+                $dataEvento = array(
+                    'id' => $evento,
+                    'estatus' => $estatusEv,
+                );
+                $result = $this->actividad_model->actualizarDataActividad($datactividad);
+                $resultEve = $this->evento_model->cambiarEstatus($dataEvento);
+            }
         } else {
-            $depende = $this->input->post('cmbActividadDepende');
+            if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
+                $depende = null;
+            } else {
+                $depende = $this->input->post('cmbActividadDepende');
+            }
+
+            $datactividad = array(
+                'usuario' => $usuario,
+                'evento' => $evento,
+                'descripcion' => $descripcion,
+                'fecharegistro' => $fecharegistro,
+                'fechaaviso' => $fechaPA,
+                'fechatope' => $fechaT,
+                'actividadepende' => $depende,
+                'estatus' => $estatus,
+            );
+
+            $dataEvento = array(
+                'id' => $evento,
+                'estatus' => $estatusEv,
+            );
+            $result = $this->actividad_model->guardarActividad($datactividad);
+            $resultEve = $this->evento_model->cambiarEstatus($dataEvento);
         }
 
-        $datactividad = array(
-            'usuario' => $usuario,
-            'evento' => $evento,
-            'descripcion' => $descripcion,
-            'fecharegistro' => $fecharegistro,
-            'fechaaviso' => $fechaPA,
-            'fechatope' => $fechaT,
-            'actividadepende' => $depende,
-            'estatus' => $estatus,
-        );
-
-        $dataEvento = array(
-            'id' => $evento,
-            'estatus' => $estatusEv,
-        );
-        $result = $this->actividad_model->guardarActividad($datactividad);
-        $resultEve = $this->evento_model->cambiarEstatus($dataEvento);
 
 
         if ($result and $resultEve) {
@@ -273,24 +324,24 @@ class Actividad extends CI_Controller {
                 "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
             ));
         }
-    }//registrarActividad
-    
-    
-    
-     public function asignarEmpleado() {
-       
+    }
+
+//registrarActividad
+
+    public function asignarEmpleado() {
+
         $evento = $this->input->post('event');
-        $usuario =$this->input->post('user');
+        $usuario = $this->input->post('user');
         $estatus = 1;
-      
-     
+
+
         $datactividad = array(
             'usuario' => $usuario,
             'evento' => $evento,
             'estatus' => $estatus,
         );
 
-      
+
         $result = $this->actividad_model->guardarActividad($datactividad);
 
         if ($result) {
@@ -305,22 +356,22 @@ class Actividad extends CI_Controller {
                 "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
             ));
         }
-    }//registrarActividad
-    
-    
-     public function reAsignarEmpleado() {
-       
+    }
+
+//registrarActividad
+
+    public function reAsignarEmpleado() {
+
         $evento = $this->input->post('event');
-        $usuario =$this->input->post('user');
-      
-     
+        $usuario = $this->input->post('user');
+
+
         $datactividad = array(
             'usuario' => $usuario,
             'evento' => $evento,
-            
         );
 
-      
+
         $result = $this->actividad_model->actualizarActividad($datactividad);
 
         if ($result) {
@@ -335,8 +386,9 @@ class Actividad extends CI_Controller {
                 "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
             ));
         }
-    }//registrarActividad
-    
+    }
+
+//registrarActividad
 
     public function obtenerEmpleadosConPlan() {
         $id = $this->input->get('id');
@@ -350,6 +402,9 @@ class Actividad extends CI_Controller {
             );
             echo json_encode($output);
         }
-    }//fin de la funcion
-    
-}//fin del controller
+    }
+
+//fin de la funcion
+}
+
+//fin del controller

@@ -1,6 +1,6 @@
-Ext.define('myapp.view.evento.ListaAsignarComisionado', {
+Ext.define('myapp.view.evento.ListaAsignarUsuario', {
     extend: 'Ext.grid.Panel',
-    alias: 'widget.listaAsignarComisionado',
+    alias: 'widget.listaAsignarUsuario',
     itemId: 'listaAsignarComisionado',
     requires: [
         'Ext.selection.CellModel',
@@ -32,7 +32,7 @@ Ext.define('myapp.view.evento.ListaAsignarComisionado', {
             {
 			text:'Foto',
 			dataIndex:'foto',
-			flex: 0.3,
+			flex: 0.4,
 			renderer: function(value, metadata, record){
 				return '<img width="50" height="50" src="../../empleados/_DSC'+ value +'">';
 		   }
@@ -117,12 +117,12 @@ Ext.define('myapp.view.evento.ListaAsignarComisionado', {
 			
 		},
                  {
-			flex: 1,
+			flex: 0.8,
 			dataIndex: 'division',
 			text: 'Division',
                         items    : {
 				xtype: 'textfield',
-				flex : 1,
+				flex : 0.8,
 				margin: 2,
 				enableKeyEvents: true,
 				listeners: {

@@ -83,7 +83,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
               var loadingMask = new Ext.LoadMask(Ext.getBody(), { msg: "grabando..." });
                 loadingMask.show();
                 
-               
+              
                 if (nuevo){
                     
                     
@@ -97,6 +97,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                          dtfFechaPA: formulario.down("textfield[name=dtfFechaPA]").getValue(),
                          cmbActividadDepende:formulario.down("combobox[name=cmbActividadDepende]").getValue(),
                          lblIdEvent:grid.down("label[name=lblIdEvento]").getEl().dom.textContent,
+                        
                       },
                     
  
