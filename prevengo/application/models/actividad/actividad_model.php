@@ -151,9 +151,7 @@ public function  cambiarEstatus($data){
     
  }
  
- 
- 
- 
+
   public function cargarActividadDependiente($id){
   
         $sql="SELECT ac.id AS id,

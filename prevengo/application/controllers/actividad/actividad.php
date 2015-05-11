@@ -402,9 +402,37 @@ class Actividad extends CI_Controller {
             );
             echo json_encode($output);
         }
+    }//fin de la funcion
+    
+public function cancelarActividad() {
+
+        $observacion = $this->input->post('observacion');
+        $idActividad = $this->input->post('idActividad');
+        $estatus = 3;
+
+
+
+        $dataEvento = array(
+            'id' => $idEvento,
+            'observacion' => $observacion,
+            'estatus' => $estatus
+        );
+
+
+        $result = $this->actividad_model->actualizarActividad($dataEvento);
+
+        if ($result) {
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
+            ));
+        } else {
+
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+            ));
+        }
     }
 
-//fin de la funcion
-}
-
-//fin del controller
+}//fin del controller
