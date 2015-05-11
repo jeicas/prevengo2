@@ -27,6 +27,7 @@ class Reincidencia extends CI_Controller {
                     'idEv' => $row['idEv'],
                     'descripcion' => $row['descripcion'],
                     'fecha' => $row['fecha'],
+                    'idRein' => $row['idRein'],
                 );
             }
             $output = array(
@@ -116,13 +117,12 @@ class Reincidencia extends CI_Controller {
 
 public function eliminarReincidencia() {
 
-        $idLineam = $this->input->post('lin');
-      
+        $id= $this->input->post('id');
         $estatus=0;
     
 
         $data = array(
-            'id' => $idLineam,
+            'id' => $id,
             'estatus' => $estatus,
         );
 

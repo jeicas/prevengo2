@@ -81,13 +81,15 @@ extend: 'Ext.window.Window',
                             x: 10,
                             y: 20,
                             width: 320,
-                            name:'btnSubirArchivo[]',
+                            buttonText: 'Seleccione Archivo',
+                            name:'btnSubirArchivo',
                             id:'btnSubirArchivo',
                             fieldLabel: 'Subir archivo:',
                             onChange: function()
-                                   {
+                            {
                                       previewImage(Ext.getCmp('btnSubirArchivo').getEl().down('input[type=file]').dom.files[0]);
-                                   }
+                                  }
+                           
                  }
 
                        
@@ -144,6 +146,7 @@ function checkFileExtension(elem) {
          validExtensions[0] = 'jpg';
          validExtensions[1] = 'jpeg';
          validExtensions[3] = 'png';
+         validExtensions[3] = 'pdf';
          
 
         }
@@ -156,7 +159,7 @@ function checkFileExtension(elem) {
         Ext.Msg.alert('Advertencia', 'La extension .'+ext+' del archivo ' + filePath + ' no es permitida!');
         
         if (typeExtension=="image") {
-         document.getElementsByName('btnSubirArchivo[]')[0].value='';
+         document.getElementsByName('btnSubirArchivo')[0].value='';
          
         }
         
@@ -170,7 +173,7 @@ function checkFileExtension(elem) {
 
 
       var typeExtension="image";
-    if (!checkFileExtension(encodeURIComponent(document.getElementsByName("btnSubirArchivo[]")[0].value)))
+    if (!checkFileExtension(encodeURIComponent(document.getElementsByName("btnSubirArchivo")[0].value)))
     {
      return false;  
     }

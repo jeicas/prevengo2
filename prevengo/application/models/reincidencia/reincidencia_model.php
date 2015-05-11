@@ -8,7 +8,8 @@ class Reincidencia_model extends CI_Model {
 
     public function cargarListaReincidencia($id) {
 
-        $query = $this->db->query("SELECT reincidencia.evento AS idEv,
+        $query = $this->db->query("SELECT reincidencia.id AS idRein,
+                                          reincidencia.evento AS idEv,
                                        
                                         reincidencia.descripcion AS descripcion, 
                                         reincidencia.fecha AS fecha
