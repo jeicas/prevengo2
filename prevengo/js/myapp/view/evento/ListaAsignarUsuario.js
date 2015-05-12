@@ -1,7 +1,7 @@
 Ext.define('myapp.view.evento.ListaAsignarUsuario', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.listaAsignarUsuario',
-    itemId: 'listaAsignarComisionado',
+    itemId: 'listaAsignarUsuario',
     requires: [
         'Ext.selection.CellModel',
         'Ext.selection.CheckboxModel',

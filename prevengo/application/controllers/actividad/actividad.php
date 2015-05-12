@@ -103,6 +103,7 @@ class Actividad extends CI_Controller {
                     case '5':
                         $estatus = 'Expirado';
                         break;
+                        
 
                     default:
                         $estatus = 'Completado';

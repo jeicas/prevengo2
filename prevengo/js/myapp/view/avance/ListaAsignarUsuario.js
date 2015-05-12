@@ -190,7 +190,7 @@ Ext.define('myapp.view.avance.ListaAsignarUsuario', {
                         xtype: 'label',
                         name: 'lblIdActividad',
                         text: 'h00000',
-                        //hidden:true
+                        hidden:true
      
                     }  
                              

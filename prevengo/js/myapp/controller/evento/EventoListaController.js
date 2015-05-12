@@ -30,6 +30,14 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             ref: 'Observacion',
             selector: 'observacion'
         },
+         {
+            ref: 'WinMaestroNombre',
+            selector: 'winMaestroNombre'
+        },
+         {
+            ref: 'WinMaestroValor',
+            selector: 'winMaestroValor'
+        },
     ],
     init: function (application) {
         this.control({
@@ -45,8 +53,20 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             "winEvento button[name=btnGuardar]": {
                 click: this.onClickGuardarEvento
             },
+            "winEvento button[name=btnNuevoAgente]": {
+                click: this.onClickNuevoAgente
+            },
+            "winEvento button[name=btnNuevoTipoEvento]": {
+                click: this.onClickNuevoTipoEvento
+            },
             "winObservacion button[name=btnGuardar]": {
                 click: this.onClickGuardarObservacionCancelar
+            },
+             "winMaestroValor button[name=btnGuardar]": {
+                click: this.onClickGuardar
+            },
+            "winMaestroNombre button[name=btnGuardar]": {
+                click: this.onClickGuardar
             },
         });
     },
@@ -226,6 +246,21 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         }
 
     }, // fin de la function 
+
+
+
+
+
+onClickNuevoAgente: function (button, e, options){
+    var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroNombre');
+    winAgente.setTitle("Nuevo  Agente");
+    winAgente.show();
+},
+onClickNuevoTipoEvento: function (button, e, options){
+    var winTE = Ext.create('myapp.view.maestroValor.WinMaestroValor');
+    winTE.setTitle("Nuevo  Tipo de Evento");
+    winTE.show();
+},
 
 
     //======================Funciones de la ventana Observaciones ====================0

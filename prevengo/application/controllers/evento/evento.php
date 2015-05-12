@@ -29,8 +29,8 @@ class Evento extends CI_Controller {
                     case '2':
                         $estatus = '<font color=#FF8000> En Ejecución  </font>';
                         break;
-
-
+                    case '4':
+                        $estatus = '<font color=#FF9000> Sin Plan  </font>';
                     default:
                         $estatus = '<font color=#01DF3A> Completado </font>';
                         break;
