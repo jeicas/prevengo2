@@ -40,6 +40,32 @@ Ext.define('myapp.view.evento.ListaEventos', {
     },
     buildColumns: function () {
         return [
+              {
+                dataIndex: 'fechaEvento',
+                flex: 0.4,
+                text: 'Fecha Limite',
+                items: {
+                    xtype: 'textfield',
+                    flex: 1,
+                    margin: 2,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keyup: function () {
+                            var store = this.up('grid').store;
+                            store.clearFilter();
+                            if (this.value) {
+                                store.filter({
+                                    property: 'fechaEvento',
+                                    value: this.value,
+                                    anyMatch: true,
+                                    caseSensitive: false
+                                });
+                            }
+                        },
+                        buffer: 500
+                    }
+                }
+            },
             {
                 dataIndex: 'idEv',
                 flex: 0.1,
@@ -67,32 +93,7 @@ Ext.define('myapp.view.evento.ListaEventos', {
                     }
                 }
             },
-            {
-                dataIndex: 'fechaEvento',
-                flex: 0.4,
-                text: 'Fecha Limite',
-                items: {
-                    xtype: 'textfield',
-                    flex: 1,
-                    margin: 2,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keyup: function () {
-                            var store = this.up('grid').store;
-                            store.clearFilter();
-                            if (this.value) {
-                                store.filter({
-                                    property: 'fechaEvento',
-                                    value: this.value,
-                                    anyMatch: true,
-                                    caseSensitive: false
-                                });
-                            }
-                        },
-                        buffer: 500
-                    }
-                }
-            },
+          
             {
                 dataIndex: 'titulo',
                 flex: 1,

@@ -39,7 +39,7 @@ Ext.define('myapp.view.actividad.ActividadForm', {
                                 minLength:5,
                                 maxLength: 95,
                                 fieldLabel: 'Descripción (*):',
-                                name:'txtDescripcion'
+                                name:'descripcion'
                             },
                             {
                                 xtype: 'datefield',

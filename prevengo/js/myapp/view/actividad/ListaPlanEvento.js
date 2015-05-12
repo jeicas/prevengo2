@@ -24,18 +24,19 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
                 flex: 0.2,
                 text: 'id',
                
-            }, {
+            },
+             {
+                dataIndex: 'fecha',
+                flex: 0.5,
+                text: 'Fecha Tope',
+              
+            },{
                 dataIndex: 'descripcion',
                 flex: 1.5,
                 text: 'Descripcion',
               
             }, 
-            {
-                dataIndex: 'fecha',
-                flex: 0.5,
-                text: 'Fecha Tope',
-              
-            },
+           
             {
                 dataIndex: 'depende',
                 flex: 1,

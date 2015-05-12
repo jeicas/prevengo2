@@ -18,7 +18,14 @@ Ext.define('myapp.view.actividad.ListaEmpleadoPlan', {
         me.callParent();
     },
     buildColumns: function () {
-        return [ {
+        return [ 
+             {
+			flex: 0.5,
+			dataIndex: 'fecha',
+			text: 'Fecha de Asignación',
+			
+		},
+            {
 			text:'Foto',
 			dataIndex:'foto',
 			flex: 0.3,
@@ -30,13 +37,8 @@ Ext.define('myapp.view.actividad.ListaEmpleadoPlan', {
 			dataIndex: 'nombrecompleto',
 			text: 'Nombre y apellido',
 			
-		},
-                {
-			flex: 0.5,
-			dataIndex: 'fecha',
-			text: 'Fecha de Asignación',
-			
 		}
+               
             ]
     },
     buildDockedItems: function () {

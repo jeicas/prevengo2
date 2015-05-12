@@ -19,18 +19,18 @@ Ext.define('myapp.view.evento.ListaReincidenciaEvento', {
     },
     buildColumns: function () {
         return [ 
-			 {
-                dataIndex: 'descripcion',
-                flex: 1.5,
-                text: 'Descripcion',
-              
-            },
-             {
+		{
                 dataIndex: 'fecha',
                 flex: 1.5,
                 text: 'Fecha',
               
-            },
+            },	 {
+                dataIndex: 'descripcion',
+                flex: 1.5,
+                text: 'Descripcion',
+              
+            }
+             
             ]
     },
    

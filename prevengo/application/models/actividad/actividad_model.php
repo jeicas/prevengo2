@@ -112,7 +112,7 @@ public function  cambiarEstatus($data){
                 FROM evento AS ev 
                 INNER JOIN actividad 
                 ON actividad.evento= ev.id
-                WHERE ev.estatus IN (1,2)
+                WHERE ev.estatus IN (1,2,4)
                      AND  actividad.usuario=2 
                            
                  GROUP BY  idEvento
@@ -137,8 +137,8 @@ public function  cambiarEstatus($data){
                 FROM actividad AS ac 
                 LEFT JOIN actividad 
                 ON actividad.id=ac.actividadepende
-                WHERE ac.estatus IN (0,1,2) 
-                      AND ac.usuario=2  
+                WHERE 
+                      ac.usuario=2  
                       AND ac.evento=$id";
 
                  $query = $this->db->query($sql);
@@ -158,8 +158,29 @@ public function  cambiarEstatus($data){
                      ac.descripcion AS descripcion 
                  FROM actividad AS ac 
                  inner join evento on evento.id=ac.evento
-                 WHERE ac.estatus in (1,2) AND evento.estatus!=4 and
+                 WHERE ac.estatus in (1,2,4) AND evento.estatus!=4 and
                         ac.evento=$id";
+
+          $query = $this->db->query($sql);
+                $resultado = array();
+                $resultdb=array();  
+                if ($query->num_rows() > 0){
+                foreach ($query->result() as $row){
+                    $resultado[] = $row;
+                }
+                return $resultado;
+                $query->free-result();
+              } 
+    
+ }
+  public function cargarActividadDependiente2($idEv, $idAct){
+  
+        $sql="SELECT ac.id AS id,
+                     ac.descripcion AS descripcion 
+                 FROM actividad AS ac 
+                 inner join evento on evento.id=ac.evento
+                 WHERE ac.estatus in (1,2,4) AND evento.estatus!=4 and
+                        ac.evento=$idEv and ac.id!=$idAct";
 
           $query = $this->db->query($sql);
                 $resultado = array();

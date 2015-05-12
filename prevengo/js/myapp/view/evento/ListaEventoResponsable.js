@@ -57,6 +57,33 @@ Ext.define('myapp.view.evento.ListaEventoResponsable', {
 				}
 			}
 		},
+                
+                { 
+			dataIndex: 'fechaEvento',
+			flex: 0.5,
+			text: 'Fecha:',
+			items    : {
+				xtype: 'textfield',
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+				    keyup: function() {
+			           	var store = this.up('grid').store;
+			           	store.clearFilter();
+			            if (this.value) {
+		                   	store.filter({
+		                        property     : 'fechaEvento',
+		                        value         : this.value,
+		                        anyMatch      : true,
+		                        caseSensitive : false
+		                    });
+			            }
+				    },
+				    buffer: 500
+				}
+			}
+		},
 		{			
 			dataIndex: 'titulo',
 			flex: 1,
@@ -110,32 +137,7 @@ Ext.define('myapp.view.evento.ListaEventoResponsable', {
 			}
 		},
 
-		{ 
-			dataIndex: 'fechaEvento',
-			flex: 0.5,
-			text: 'Fecha:',
-			items    : {
-				xtype: 'textfield',
-				flex : 1,
-				margin: 2,
-				enableKeyEvents: true,
-				listeners: {
-				    keyup: function() {
-			           	var store = this.up('grid').store;
-			           	store.clearFilter();
-			            if (this.value) {
-		                   	store.filter({
-		                        property     : 'fechaEvento',
-		                        value         : this.value,
-		                        anyMatch      : true,
-		                        caseSensitive : false
-		                    });
-			            }
-				    },
-				    buffer: 500
-				}
-			}
-		},
+		
                 { 
 			dataIndex: 'nombrecompleto',
 			flex: 0.5,

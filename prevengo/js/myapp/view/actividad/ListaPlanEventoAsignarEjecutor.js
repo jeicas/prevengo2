@@ -37,6 +37,32 @@ Ext.define('myapp.view.actividad.ListaPlanEventoAsignarEjecutor', {
                 text: '',
                 hidden: true,
             },
+               {
+                dataIndex: 'fecha',
+                flex: 0.3,
+                text: 'Fecha:',
+                items: {
+                    xtype: 'textfield',
+                    flex: 1,
+                    margin: 2,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keyup: function () {
+                            var store = this.up('grid').store;
+                            store.clearFilter();
+                            if (this.value) {
+                                store.filter({
+                                    property: 'fecha',
+                                    value: this.value,
+                                    anyMatch: true,
+                                    caseSensitive: false
+                                });
+                            }
+                        },
+                        buffer: 500
+                    }
+                }
+            },
             {
                 dataIndex: 'actividad',
                 flex: 2,
@@ -63,32 +89,7 @@ Ext.define('myapp.view.actividad.ListaPlanEventoAsignarEjecutor', {
                     }
                 }
             },
-            {
-                dataIndex: 'fecha',
-                flex: 0.3,
-                text: 'Fecha:',
-                items: {
-                    xtype: 'textfield',
-                    flex: 1,
-                    margin: 2,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keyup: function () {
-                            var store = this.up('grid').store;
-                            store.clearFilter();
-                            if (this.value) {
-                                store.filter({
-                                    property: 'fecha',
-                                    value: this.value,
-                                    anyMatch: true,
-                                    caseSensitive: false
-                                });
-                            }
-                        },
-                        buffer: 500
-                    }
-                }
-            },
+         
             {
                 dataIndex: 'estatus',
                 flex: 0.3,

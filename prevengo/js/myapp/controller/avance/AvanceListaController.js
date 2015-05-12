@@ -1,6 +1,6 @@
 Ext.define('myapp.controller.avance.AvanceListaController', {
     extend: 'Ext.app.Controller',
-    views: ['consultar.ListaAvanceFinal', 
+    views: ['xºultar.ListaAvanceFinal', 
             'consultar.GridConsultarAvances'
             ],
      requires: [

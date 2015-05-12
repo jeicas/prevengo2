@@ -194,9 +194,7 @@ class Actividad extends CI_Controller {
                     case '5':
                         $estatus = 'Expirado';
                         break;
-                    case '6':
-                        $estatus = '';
-                        break;
+                   
                     default:
                         $estatus = 'Completado';
                         break;
@@ -230,20 +228,38 @@ class Actividad extends CI_Controller {
 //fin de la funcion
 
     public function obtenerActividadDependiente() {
-        $id = $this->input->get('id');
+        $idAct = $this->input->get('idAct');
+        $idEv= $this->input->get('idEvent');
         $resultdbd = array();
 
-        if ($resultdbd = $this->actividad_model->cargarActividadDependiente($id)) {
+        
+        if($idAct==0){
+            if ($resultdbd = $this->actividad_model->cargarActividadDependiente($idEv)) {
             $output = array(
                 'success' => true,
                 'total' => count($resultdbd),
                 'data' => array_splice($resultdbd, $this->input->get("start"), $this->input->get("limit"))
             );
             echo json_encode($output);
+          }
+        }else {
+             if ($resultdbd = $this->actividad_model->cargarActividadDependiente2($idEv,$idAct)) {
+               $output = array(
+                'success' => true,
+                'total' => count($resultdbd),
+                'data' => array_splice($resultdbd, $this->input->get("start"), $this->input->get("limit"))
+            );
+            echo json_encode($output);
         }
+        }
+            
+        
+        
+        
     }
 
 //fin de la funcion
+
 
     public function registrarActividad() {
         $descripcion = $this->input->post('txtDescripcion');
@@ -327,6 +343,47 @@ class Actividad extends CI_Controller {
     }
 
 //registrarActividad
+    
+    
+    
+        public function actualizarActividad() {
+        $idAc=$this->input->post('id');
+        $descripcion = $this->input->post('txtDescripcion');
+        $fecharegistro = date('Y-m-d');
+        $fechaT = $this->input->post('dtfFechaT');
+        $fechaPA = $this->input->post('dtfFechaPA');
+        $depende=$this->input->post('cmbActividadDepende'); 
+
+            if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
+                $depende = null;
+            } else {
+                $depende = $this->input->post('cmbActividadDepende');
+            }
+        $dataEvento = array(
+                'id' => $idAc,
+                'descripcion' => $descripcion,
+                'fecharegistro' => $fecharegistro,
+                'fechaaviso' => $fechaPA,
+                'fechatope' => $fechaT,
+                'actividadepende' => $depende,
+             
+        );
+
+        $result = $this->actividad_model->actualizarDataActividad($dataEvento);
+
+        if ($result) {
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se Actualizó con Éxito." //modificado en la base de datos
+            ));
+        } else {
+
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo Actualizar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+            ));
+        }
+    }
 
     public function asignarEmpleado() {
 
@@ -404,27 +461,30 @@ class Actividad extends CI_Controller {
         }
     }//fin de la funcion
     
+    
+    
+    
 public function cancelarActividad() {
 
         $observacion = $this->input->post('observacion');
         $idActividad = $this->input->post('idActividad');
-        $estatus = 3;
+        $estatus = 4;
 
 
 
         $dataEvento = array(
-            'id' => $idEvento,
+            'id' => $idActividad,
             'observacion' => $observacion,
             'estatus' => $estatus
         );
 
 
-        $result = $this->actividad_model->actualizarActividad($dataEvento);
+        $result = $this->actividad_model->actualizarDataActividad($dataEvento);
 
         if ($result) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
+                "msg" => "Se cancelo la actividad con Éxito." //modificado en la base de datos
             ));
         } else {
 

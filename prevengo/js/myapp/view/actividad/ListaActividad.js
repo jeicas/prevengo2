@@ -50,7 +50,34 @@ Ext.define('myapp.view.actividad.ListaActividad', {
                         buffer: 500
                     }
                 }
-            }, {
+            }, 
+             {
+                flex: 0.5,
+                dataIndex: 'fecha',
+                text: 'Fecha de Realización',
+                items: {
+                    xtype: 'textfield',
+                    flex: 1,
+                    margin: 2,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keyup: function () {
+                            var store = this.up('grid').store;
+                            store.clearFilter();
+                            if (this.value) {
+                                store.filter({
+                                    property: 'fecha',
+                                    value: this.value,
+                                    anyMatch: true,
+                                    caseSensitive: false
+                                });
+                            }
+                        },
+                        buffer: 500
+                    }
+                }
+            },
+            {
                 dataIndex: 'evento',
                 flex: 1,
                 text: 'Evento',
@@ -101,35 +128,10 @@ Ext.define('myapp.view.actividad.ListaActividad', {
                         buffer: 500
                     }
                 }
-            },
+            }
             
             
-            {
-                flex: 0.5,
-                dataIndex: 'fecha',
-                text: 'Fecha de Realización',
-                items: {
-                    xtype: 'textfield',
-                    flex: 1,
-                    margin: 2,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keyup: function () {
-                            var store = this.up('grid').store;
-                            store.clearFilter();
-                            if (this.value) {
-                                store.filter({
-                                    property: 'fecha',
-                                    value: this.value,
-                                    anyMatch: true,
-                                    caseSensitive: false
-                                });
-                            }
-                        },
-                        buffer: 500
-                    }
-                }
-            }]
+           ]
     },
     buildDockedItems: function () {
         return [{

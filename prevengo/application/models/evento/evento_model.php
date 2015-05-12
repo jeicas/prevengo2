@@ -24,7 +24,7 @@ class Evento_model extends CI_Model {
                              inner join alcance on alcance.id=evento.alcance
                              inner join tipoevento on tipoevento.id=evento.tipoevento
                              inner join sector on sector.id=evento.sector
-                             where evento.estatus in (0,1,2)
+                             where evento.estatus in (0,1,2,4)
                              order by fechaEv ASC");
        
             return $query;
@@ -88,7 +88,7 @@ class Evento_model extends CI_Model {
                                      ON bdgenerica.empleado.ente= bdgenerica.ente.id
                             left JOIN  bdgenerica.division 
                                      ON bdgenerica.empleado.division= bdgenerica.division.id
-                           where evento.estatus in (1,2)
+                           where evento.estatus in (1,2,4)
                            group by evento.titulo");
         
             return $query;
