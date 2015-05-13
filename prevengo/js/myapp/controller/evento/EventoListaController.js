@@ -2,9 +2,9 @@ var nuevo = false;
 Ext.define('myapp.controller.evento.EventoListaController', {
     extend: 'Ext.app.Controller',
     views: ['evento.ListaEventos',
-        'evento.WinEvento',
-        'evento.Evento',
-        'observacion.WinObservacion'
+            'evento.WinEvento',
+            'evento.Evento',
+            'observacion.WinObservacionEvento'
     ],
     requires: [
         'myapp.util.Util'
@@ -23,18 +23,15 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             selector: 'winEvento'
         },
         {
-            ref: 'WinObservacion',
-            selector: 'winObservacion'
+            ref: 'WinObservacionEvento',
+            selector: 'winObservacionEvento'
         },
+       
         {
-            ref: 'Observacion',
-            selector: 'observacion'
-        },
-         {
             ref: 'WinMaestroNombre',
             selector: 'winMaestroNombre'
         },
-         {
+        {
             ref: 'WinMaestroValor',
             selector: 'winMaestroValor'
         },
@@ -43,6 +40,9 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         this.control({
             "listaEventos button[name=btnNuevo]": {
                 click: this.onClickNuevoEvento
+            },
+            "listaEventos": {
+                itemdblclick: this.onClickResumenEvento
             },
             "listaEventos button[name=btnEditar]": {
                 click: this.onClickEditarEvento
@@ -59,10 +59,10 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             "winEvento button[name=btnNuevoTipoEvento]": {
                 click: this.onClickNuevoTipoEvento
             },
-            "winObservacion button[name=btnGuardar]": {
-                click: this.onClickGuardarObservacionCancelar
+            "winObservacionEvento button[name=btnGuardar]": {
+                click: this.onClickGuardarObservacion
             },
-             "winMaestroValor button[name=btnGuardar]": {
+            "winMaestroValor button[name=btnGuardar]": {
                 click: this.onClickGuardar
             },
             "winMaestroNombre button[name=btnGuardar]": {
@@ -78,6 +78,31 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         win.show();
 
     }, // fin de la function
+
+  onClickResumenEvento: function (button, e, options) {
+       
+        var grid = this.getListaEventos();
+        record = grid.getSelectionModel().getSelection();
+        
+        var win = Ext.create('myapp.view.evento.WinEventoCompleto');
+        win.setTitle("Resumen Evento "+record[0].get('titulo'));
+        win.down('textfield[name=titulo]').setValue(record[0].get('titulo'));
+        win.down('textareafield[name=descripcion]').setValue(record[0].get('descripcion'));
+        win.down('textfield[name=fecha]').setValue(record[0].get('fechaEvento'));
+        win.down('textfield[name=sector]').setValue(record[0].get('sector'));
+        win.down('textfield[name=alcance]').setValue(record[0].get('alcance'));
+        win.down('textfield[name=agente]').setValue(record[0].get('agente'));
+        win.down('textfield[name=tipoEvento]').setValue(record[0].get('tipoEvento'));
+        win.down('textfield[name=estatus]').setValue(record[0].get('estatus'));
+        
+        // cargar las grid de lineamientos
+        
+        
+        
+        win.show();
+
+    }, // fin de la function
+
 
     onClickEditarEvento: function (button, e, options) {
         nuevo = false;
@@ -111,50 +136,48 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         }
 
     },
-    
     onClickCancelarEvento: function (button, e, options) {
 
         var grid = this.getListaEventos();
         record = grid.getSelectionModel().getSelection();
-        
+         
         if (record[0]) {
-          if (record[0].get('estatus')!='<font color=#01DF3A> Completado </font>'){
-              Ext.Msg.show({
-                title: 'Confirmar',
-                msg: 'Esta seguro que desea CANCELAR el Evento ' + record[0].get('titulo') + '?',
-                buttons: Ext.Msg.YESNO,
-                icon: Ext.Msg.QUESTION,
-                fn: function (buttonId) {
-                    if (buttonId == 'yes') {
-                        var win = Ext.create('myapp.view.observacion.WinObservacion');
-                        win.setTitle("Cancelar Evento " + record[0].get('estatus'));
-                        win.down('label[name=lblDescripcion]').setText("Indique la razón por la que desea cancelar el Evento"+record[0].get('titulo')+"?");
-                        win.show();
+            if (record[0].get('estatus') != '<font color=#01DF3A> Completado </font>') {
+                Ext.Msg.show({
+                    title: 'Confirmar',
+                    msg: 'Esta seguro que desea CANCELAR el Evento ' + record[0].get('titulo') + '?',
+                    buttons: Ext.Msg.YESNO,
+                    icon: Ext.Msg.QUESTION,
+                    fn: function (buttonId) {
+                        if (buttonId == 'yes') {
+                            var win = Ext.create('myapp.view.observacion.WinObservacionEvento');
+                            win.setTitle("Cancelar Evento " + record[0].get('estatus'));
+                            win.down('label[name=lblDescripcion]').setText("Indique la razón por la que desea cancelar el Evento" + record[0].get('titulo') + "?");
+                            win.show();
+                        }
                     }
-                }
-            });
-          }
-          else {
-              Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                msg: 'El evento ha finalizado, no lo puede cancelar',
-                buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO}); 
-          }
-            
-               
+                });
+            }
+            else {
+                Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                    msg: 'El evento ha finalizado, no lo puede cancelar',
+                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+            }
+
+
         } else {
             Ext.MessageBox.show({title: 'Informaci&oacute;n',
                 msg: 'Debe seleccionar el evento que desea cancelar',
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
     },
-    
     //==============Funciones de la ventana Evento=====================================
-    
+
     onClickGuardarEvento: function (button, e, options) {
         formulario = this.getEvento();
         grid = this.getListaEventos();
         win = this.getWinEvento();
-        
+
         if (nuevo) {
             var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
             loadingMask.show();
@@ -164,20 +187,18 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                 method: 'POST',
                 params: {
                     txtTitulo: win.down('textfield[name=txtTitulo]').getValue(),
-                    txtDescripcion:win.down('textfield[name=txtDescripcion]').getValue(),
-                    txtPresupuesto:win.down('textfield[name=txtPresupuesto]').getValue(),
-                    cmbAgente:win.down('combobox[name=cmbAgente]').getValue(),
-                    cmbAlcance:win.down('combobox[name=cmbAlcance]').getValue(),
-                    cmbSector:win.down('combobox[name=cmbSector]').getValue(),
-                    cmbTipoEvento:win.down('combobox[name=cmbTipoEvento]').getValue(),
-                    dtfFechaT:win.down('datefield[name=dtfFechaT]').getValue(),
-                    dtfFechaPA:win.down('datefield[name=dtfFechaPA]').getValue(),
+                    txtDescripcion: win.down('textfield[name=txtDescripcion]').getValue(),
+                    txtPresupuesto: win.down('textfield[name=txtPresupuesto]').getValue(),
+                    cmbAgente: win.down('combobox[name=cmbAgente]').getValue(),
+                    cmbAlcance: win.down('combobox[name=cmbAlcance]').getValue(),
+                    cmbSector: win.down('combobox[name=cmbSector]').getValue(),
+                    cmbTipoEvento: win.down('combobox[name=cmbTipoEvento]').getValue(),
+                    dtfFechaT: win.down('datefield[name=dtfFechaT]').getValue(),
+                    dtfFechaPA: win.down('datefield[name=dtfFechaPA]').getValue(),
                 },
-               
-                
-                success:  function(result, request){
-                   result=Ext.JSON.decode(result.responseText);
-                    
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+
                     loadingMask.hide();
 
                     if (result.success) {
@@ -204,24 +225,24 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         {
             var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
             loadingMask.show();
-               record = grid.getSelectionModel().getSelection();
+            record = grid.getSelectionModel().getSelection();
             Ext.Ajax.request({//AQUI ENVIO LA DATA 
                 url: BASE_URL + 'evento/evento/actualizarEvento',
                 method: 'POST',
                 params: {
-                    txtIdEvento:record[0].get('idEv'),
+                    txtIdEvento: record[0].get('idEv'),
                     txtTitulo: win.down('textfield[name=txtTitulo]').getValue(),
-                    txtDescripcion:win.down('textfield[name=txtDescripcion]').getValue(),
-                    txtPresupuesto:win.down('textfield[name=txtPresupuesto]').getValue(),
-                    cmbAgente:win.down('combobox[name=cmbAgente]').getValue(),
-                    cmbAlcance:win.down('combobox[name=cmbAlcance]').getValue(),
-                    cmbSector:win.down('combobox[name=cmbSector]').getValue(),
-                    cmbTipoEvento:win.down('combobox[name=cmbTipoEvento]').getValue(),
-                    dtfFechaT:win.down('datefield[name=dtfFechaT]').getValue(),
-                    dtfFechaPA:win.down('datefield[name=dtfFechaPA]').getValue(),
+                    txtDescripcion: win.down('textfield[name=txtDescripcion]').getValue(),
+                    txtPresupuesto: win.down('textfield[name=txtPresupuesto]').getValue(),
+                    cmbAgente: win.down('combobox[name=cmbAgente]').getValue(),
+                    cmbAlcance: win.down('combobox[name=cmbAlcance]').getValue(),
+                    cmbSector: win.down('combobox[name=cmbSector]').getValue(),
+                    cmbTipoEvento: win.down('combobox[name=cmbTipoEvento]').getValue(),
+                    dtfFechaT: win.down('datefield[name=dtfFechaT]').getValue(),
+                    dtfFechaPA: win.down('datefield[name=dtfFechaPA]').getValue(),
                 },
-                 success:  function(result, request){
-                   result=Ext.JSON.decode(result.responseText);
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
                     loadingMask.hide();
 
                     if (result.success) {
@@ -251,46 +272,44 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
 
 
-onClickNuevoAgente: function (button, e, options){
-    var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroNombre');
-    winAgente.setTitle("Nuevo  Agente");
-    winAgente.show();
-},
-onClickNuevoTipoEvento: function (button, e, options){
-    var winTE = Ext.create('myapp.view.maestroValor.WinMaestroValor');
-    winTE.setTitle("Nuevo  Tipo de Evento");
-    winTE.show();
-},
-
-
+    onClickNuevoAgente: function (button, e, options) {
+        var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroNombre');
+        winAgente.setTitle("Nuevo  Agente");
+        winAgente.show();
+    },
+    onClickNuevoTipoEvento: function (button, e, options) {
+        var winTE = Ext.create('myapp.view.maestroValor.WinMaestroValor');
+        winTE.setTitle("Nuevo  Tipo de Evento");
+        winTE.show();
+    },
     //======================Funciones de la ventana Observaciones ====================0
-    onClickGuardarObservacionCancelar: function (button, e, options) {
-         
+    onClickGuardarObservacion: function (button, e, options) {
+       
         grid = this.getListaEventos();
-        winO = this.getWinObservacion();
-             
+        winO = this.getWinObservacionEvento();
+        
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
 
         record = grid.getSelectionModel().getSelection();
 
-         Ext.Ajax.request({//AQUI ENVIO LA DATA 
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
             url: BASE_URL + 'evento/evento/cancelarEvento',
             method: 'POST',
             params: {
                 observacion: winO.down("textfield[name=txtDescripcion]").getValue(),
                 idEvento: record[0].get('idEv')
             },
-            success:  function(result, request){
-                   result=Ext.JSON.decode(result.responseText);
-                    loadingMask.hide();
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+                loadingMask.hide();
 
-                    if (result.success) {
+                if (result.success) {
                     grid.getView().refresh();
                     grid.getStore().load();
                     winO.close();
                     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                   
+
                 }
                 else {
                     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});

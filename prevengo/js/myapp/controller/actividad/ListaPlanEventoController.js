@@ -23,8 +23,8 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             selector: 'winActividad'
         },
         {
-            ref: 'WinObservacion',
-            selector: 'winObservacion'
+            ref: 'WinObservacionActividad',
+            selector: 'winObservacionActividad'
         }
 
     ],
@@ -45,7 +45,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             "actividadForm checkboxfield[name=cbfDepende]": {
                 change: this.cargarActividad
             },
-            "winObservacion button[name=btnGuardar]": {
+            "winObservacionActividad button[name=btnGuardar]": {
                 click: this.onClickGuardarObservacionCancelar
             },
         });
@@ -99,7 +99,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                     icon: Ext.Msg.QUESTION,
                     fn: function (buttonId) {
                         if (buttonId == 'yes') {
-                            var win = Ext.create('myapp.view.observacion.WinObservacion');
+                            var win = Ext.create('myapp.view.observacion.winObservacionActividad');
                             win.setTitle("Cancelar Evento " + record[0].get('descripcion'));
                             win.down('label[name=lblDescripcion]').setText("Indique la razón por la que desea cancelar el plan de accción  " + record[0].get('descripcion') + "?");
                             win.show();
@@ -245,7 +245,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
     onClickGuardarObservacionCancelar: function (button, e, options) {
 
         grid = this.getListaPlanEvento();
-        winO = this.getWinObservacion();
+        winO = this.getwinObservacionActividad();
 
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();

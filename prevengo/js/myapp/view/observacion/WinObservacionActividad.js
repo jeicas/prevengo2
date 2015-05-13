@@ -1,19 +1,26 @@
-Ext.define('myapp.view.observacion.Observacion', {
-  extend: 'Ext.form.Panel',
-  alias: 'widget.observacion',
-  requires:['Ext.form.*'],
+Ext.define('myapp.view.observacion.WinObservacionActividad', {
+extend: 'Ext.window.Window',
+  alias: 'widget.winObservacionActividad',
+  itemId: 'winObservacionActividad',
+  title:'Evento',
+  height: 250,
+  width: 390,
+  modal:true,
+  requires: [
     
+  ],
   layout: {
-    type: 'fit'
+   	type: 'fit'
   },
   initComponent: function() {
     var me = this;
     me.items = me.buildItem();
+    me.dockedItems = me.buildDockedItems();
     me.callParent();
   },
   buildItem : function(){
     return [{
-            xtype: 'container',
+      xtype: 'container',
             height: 270,
             width: 676,
             layout: 'absolute',
@@ -23,8 +30,8 @@ Ext.define('myapp.view.observacion.Observacion', {
                         x: 10,
                         y: 20,
                         width: 400,
-                        text:'Por favor indique la razón por la cual se cancela el Evento:',
-                        name:'txtDescripcion'
+                        text:'',
+                        name:'lblDescripcion'
                     },
                     {
                         xtype: 'textareafield',
@@ -35,14 +42,14 @@ Ext.define('myapp.view.observacion.Observacion', {
                         name:'txtDescripcion'
                     }
         ]// fin del contenedor
-    }]// el del Return
+    }]
   },
-     dockedItems:[{ 
-       xtype   : 'toolbar',
-          dock    : 'bottom',
-          height  : 40,
-          width: '100%',
-          items:[{
+  buildDockedItems : function(){
+    return [{
+      xtype : 'toolbar',
+      flex  : 1,
+      dock  : 'bottom',
+      items: [{
             xtype : 'tbfill'
           },
           {
@@ -63,6 +70,6 @@ Ext.define('myapp.view.observacion.Observacion', {
             name      :'btnLimpiar',
             text    : 'Limpiar'
           }]
-      }]
-     
+    }]
+  }
 });

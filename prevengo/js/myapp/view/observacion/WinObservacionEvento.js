@@ -1,7 +1,7 @@
-Ext.define('myapp.view.observacion.WinObservacion', {
+Ext.define('myapp.view.observacion.WinObservacionEvento', {
 extend: 'Ext.window.Window',
-  alias: 'widget.winObservacion',
-  itemId: 'winObservacion',
+  alias: 'widget.winObservacionEvento',
+  itemId: 'winObservacionEvento',
   title:'Evento',
   height: 250,
   width: 390,
@@ -30,7 +30,7 @@ extend: 'Ext.window.Window',
                         x: 10,
                         y: 20,
                         width: 400,
-                        text:'Por favor indique la razón por la cual se cancela el Evento:',
+                        text:'',
                         name:'lblDescripcion'
                     },
                     {
