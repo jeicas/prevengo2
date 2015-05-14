@@ -2,9 +2,9 @@ var nuevo = false;
 Ext.define('myapp.controller.evento.EventoListaController', {
     extend: 'Ext.app.Controller',
     views: ['evento.ListaEventos',
-            'evento.WinEvento',
-            'evento.Evento',
-            'observacion.WinObservacionEvento'
+        'evento.WinEvento',
+        'evento.Evento',
+        'observacion.WinObservacionEvento'
     ],
     requires: [
         'myapp.util.Util'
@@ -26,7 +26,6 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             ref: 'WinObservacionEvento',
             selector: 'winObservacionEvento'
         },
-       
         {
             ref: 'WinMaestroNombre',
             selector: 'winMaestroNombre'
@@ -79,13 +78,13 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
     }, // fin de la function
 
-  onClickResumenEvento: function (button, e, options) {
-       
+    onClickResumenEvento: function (button, e, options) {
+
         var grid = this.getListaEventos();
         record = grid.getSelectionModel().getSelection();
-        
+
         var win = Ext.create('myapp.view.evento.WinEventoCompleto');
-        win.setTitle("Resumen Evento "+record[0].get('titulo'));
+        win.setTitle("Resumen Evento " + record[0].get('titulo'));
         win.down('textfield[name=titulo]').setValue(record[0].get('titulo'));
         win.down('textareafield[name=descripcion]').setValue(record[0].get('descripcion'));
         win.down('textfield[name=fecha]').setValue(record[0].get('fechaEvento'));
@@ -94,29 +93,36 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         win.down('textfield[name=agente]').setValue(record[0].get('agente'));
         win.down('textfield[name=tipoEvento]').setValue(record[0].get('tipoEvento'));
         win.down('textfield[name=estatus]').setValue(record[0].get('estatus'));
-        
+
         // cargar las grid de lineamientos
-            store= win.down('gridpanel[name=gridLineamiento]').getStore();      
-            store.proxy.extraParams.id=record[0].get('idEv');
-            store.load();
-         
-      // cargar las grid de la Reincidencia
-            store1= win.down('gridpanel[name=gridReincidencia]').getStore();      
-            store1.proxy.extraParams.id=record[0].get('idEv');
-            store1.load();
-           
-      // cargar las grid de Comisionado  
-            store2= win.down('gridpanel[name=gridComisionado]').getStore();      
-            store2.proxy.extraParams.id=record[0].get('idEv');
-            store2.load();
-         /*   
-      // cargar las grid de Comisionado  
-            store3= win.down('gridpanel[name=gridPlanDeAccion]').getStore();      
-            store3.proxy.extraParams.id=record[0].get('idEv');
-            store3.load();*/
-            
+        store = win.down('gridpanel[name=gridLineamiento]').getStore();
+        store.proxy.extraParams.id = record[0].get('idEv');
+        store.load();
+
+        // cargar las grid de la Reincidencia
+        store1 = win.down('gridpanel[name=gridReincidencia]').getStore();
+        store1.proxy.extraParams.id = record[0].get('idEv');
+        store1.load();
+
+        // cargar las grid de Comisionado  
+        store2 = win.down('gridpanel[name=gridComisionado]').getStore();
+        store2.proxy.extraParams.id = record[0].get('idEv');
+        store2.load();
+
+        // cargar las grid de Comisionado  
         
+       
+        var form =  win.down('form[name=formPlan]').getForm();
+            store3 = win.down('gridpanel[name=gridPlanDeAccion]').getStore();
+            store3.proxy.extraParams.id = record[0].get('idEv');
+            store3.load();
+            console.log(store.data.items);
+        
+        form.down('textfield[name=responsable]').setValue('hhhh');
+     
+
         win.show();
+        
 
     }, // fin de la function
 
@@ -157,7 +163,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
         var grid = this.getListaEventos();
         record = grid.getSelectionModel().getSelection();
-         
+
         if (record[0]) {
             if (record[0].get('estatus') != '<font color=#01DF3A> Completado </font>') {
                 Ext.Msg.show({
@@ -301,10 +307,10 @@ Ext.define('myapp.controller.evento.EventoListaController', {
     },
     //======================Funciones de la ventana Observaciones ====================0
     onClickGuardarObservacion: function (button, e, options) {
-       
+
         grid = this.getListaEventos();
         winO = this.getWinObservacionEvento();
-        
+
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
 

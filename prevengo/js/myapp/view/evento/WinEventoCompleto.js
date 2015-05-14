@@ -172,23 +172,34 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                         ]
 
                     },
-                    {
-                        xtype: 'fieldset',
-                        x: 280,
-                        y: 220,
-                        height: 460,
-                        width: 390,
-                        layout: 'absolute',
-                        title: 'Información del Plan de Acción:',
-                        items: [
-                            {
+                   {
+                    xtype: 'form',
+                    x: 280,
+                    y: 220,
+                    height: 470,
+                    width: 580,
+                    layout: 'absolute',
+                    bodyPadding: 10,
+                    title: '',
+                    name:'formPlan',
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            x: 10,
+                            y: 10,
+                            height: 460,
+                            width: 430,
+                            layout: 'absolute',
+                            title: 'Información del Plan de Acción:',
+                            items: [
+                        {
                                 xtype: 'gridpanel',
                                 x: 10,
                                 y: 80,
                                 height: 340,
                                 width: 330,
                                 name: 'gridPlanDeAccion',
-                                //store: Ext.create('myapp.store.actividad.ActividadEventoCompletoStore'),
+                                store: Ext.create('myapp.store.actividad.ActividadAvanceStore'),
                                 emptyText: 'No tiene Plan de accion',
                                 title: 'Plan de Acción',
                                 features: [ {
@@ -201,49 +212,41 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                     }],
                                 columns: [
                                     {
-                                        dataIndex: 'string',
+                                        dataIndex: 'avance',
                                         text: 'Avance'
                                     },
                                     {
-                                        dataIndex: 'string',
+                                        dataIndex: 'tipoEvento',
                                         text: 'Tipo'
                                     },
                                     {
-                                        dataIndex: 'string',
+                                        dataIndex: 'ejecutor',
                                         text: 'Ejecutor'
                                     }
                                 ],
                                 viewConfig: {
                                     height: 273
-                                },
-                                dockedItems: [
-                                    {
-                                        xtype: 'pagingtoolbar',
-                                        dock: 'bottom',
-                                        width: 360,
-                                        displayInfo: true
-                                    }
-                                ]
+                                }
                             },
-                            {
-                                xtype: 'textfield',
-                                x: 10,
-                                y: 10,
-                                width: 330,
-                                fieldLabel: 'Responsable:'
-                            },
-                            {
-                                xtype: 'textfield',
-                                x: 10,
-                                y: 40,
-                                width: 330,
-                                fieldLabel: 'Fecha:'
-                            }
-                        ]
-                    }
+                                {
+                                    xtype: 'textfield',
+                                    x: 10,
+                                    y: 10,
+                                    width: 330,
+                                     name:'responsable',
+                                    fieldLabel: 'Responsable:'
+                                }
+                            ]
+                        }
+                    ]
+                }
                 ]
             }
         ]
     }
 
 });
+
+
+
+  
