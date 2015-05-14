@@ -96,8 +96,25 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         win.down('textfield[name=estatus]').setValue(record[0].get('estatus'));
         
         // cargar las grid de lineamientos
-        
-        
+            store= win.down('gridpanel[name=gridLineamiento]').getStore();      
+            store.proxy.extraParams.id=record[0].get('idEv');
+            store.load();
+         
+      // cargar las grid de la Reincidencia
+            store1= win.down('gridpanel[name=gridReincidencia]').getStore();      
+            store1.proxy.extraParams.id=record[0].get('idEv');
+            store1.load();
+           
+      // cargar las grid de Comisionado  
+            store2= win.down('gridpanel[name=gridComisionado]').getStore();      
+            store2.proxy.extraParams.id=record[0].get('idEv');
+            store2.load();
+         /*   
+      // cargar las grid de Comisionado  
+            store3= win.down('gridpanel[name=gridPlanDeAccion]').getStore();      
+            store3.proxy.extraParams.id=record[0].get('idEv');
+            store3.load();*/
+            
         
         win.show();
 

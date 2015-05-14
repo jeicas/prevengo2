@@ -14,14 +14,18 @@ class Comisionado_model extends CI_Model {
                                     bdgenerica.persona.nombre as nombre,
                                     bdgenerica.persona.apellido as apellido,
                                     bdgenerica.persona.foto as foto,
+                                    bdgenerica.cargo.nombre as cargo,
                                     prevengo.comisionado.estatus as estatus
 
                                     from prevengo.comisionado 
                                     inner join bdgenerica.empleado
                                       on prevengo.comisionado.empleado= bdgenerica.empleado.id
+                                    inner join bdgenerica.cargo 
+                                      on  bdgenerica.empleado.cargo=bdgenerica.cargo.id
                                     inner join bdgenerica.persona
                                         on bdgenerica.persona.cedula= bdgenerica.empleado.cedula
-                                    where  prevengo.comisionado.evento=$id and prevengo.comisionado.estatus=1
+                                    where  prevengo.comisionado.evento=$id and 					 												   
+                                           prevengo.comisionado.estatus=1
                                  ");
        
             return $query;

@@ -10,7 +10,8 @@ class Lineamiento_model extends CI_Model {
 
         $query = $this->db->query("SELECT lineamiento.evento AS idEv,
                                         lineamiento.id AS idLin,
-                                        lineamiento.descripcion AS descripcion, 
+                                        lineamiento.descripcion AS descripcion,
+                                        lineamiento.fecha AS fecha, 
                                         lineamiento.estatus AS estatus
                                  FROM lineamiento 
                                  

@@ -26,6 +26,7 @@ class Lineamiento extends CI_Controller {
                     'idLin' => $row['idLin'],
                     'idEv' => $row['idEv'],
                     'descripcion' => $row['descripcion'],
+                    'fecha' => $row['fecha'],
                     'estatus' => $row['estatus'],
                 );
             }

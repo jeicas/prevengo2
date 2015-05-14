@@ -27,6 +27,7 @@ class Comisionado extends CI_Controller {
                     'idUs' => $row['idEmpl'],
                     'idEv' => $row['idEv'],
                     'nombrecompleto' => $row['nombre']." ".$row['apellido'],
+                    'cargo'=> $row['cargo'],
                     'foto' => $row['foto'],
                     'estatus' => $row['estatus'],
                 );
