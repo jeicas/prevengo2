@@ -110,19 +110,14 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         store2.load();
 
         // cargar las grid de Comisionado  
+
+        store3 = win.down('gridpanel[name=gridPlanDeAccion]').getStore();
+        store3.proxy.extraParams.id = record[0].get('idEv');
         
-       
-        var form =  win.down('form[name=formPlan]').getForm();
-            store3 = win.down('gridpanel[name=gridPlanDeAccion]').getStore();
-            store3.proxy.extraParams.id = record[0].get('idEv');
-            store3.load();
-            console.log(store.data.items);
-        
-        form.down('textfield[name=responsable]').setValue('hhhh');
-     
+        store3.load();
 
         win.show();
-        
+
 
     }, // fin de la function
 

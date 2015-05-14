@@ -172,74 +172,85 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                         ]
 
                     },
-                   {
-                    xtype: 'form',
-                    x: 280,
-                    y: 220,
-                    height: 470,
-                    width: 580,
-                    layout: 'absolute',
-                    bodyPadding: 10,
-                    title: '',
-                    name:'formPlan',
-                    items: [
-                        {
-                            xtype: 'fieldset',
-                            x: 10,
-                            y: 10,
-                            height: 460,
-                            width: 430,
-                            layout: 'absolute',
-                            title: 'Información del Plan de Acción:',
-                            items: [
-                        {
-                                xtype: 'gridpanel',
+                    {
+                        xtype: 'form',
+                        x: 280,
+                        y: 220,
+                        height: 490,
+                        width: 400,
+                        layout: 'absolute',
+                        bodyPadding: 10,
+                        title: '',
+                        name: 'formPlan',
+                        items: [
+                            {
+                                xtype: 'fieldset',
                                 x: 10,
-                                y: 80,
-                                height: 340,
-                                width: 330,
-                                name: 'gridPlanDeAccion',
-                                store: Ext.create('myapp.store.actividad.ActividadAvanceStore'),
-                                emptyText: 'No tiene Plan de accion',
-                                title: 'Plan de Acción',
-                                features: [ {
-                                        id: 'group',
-                                        ftype: 'groupingsummary',
-                                        summaryType: 'count',
-                                        groupHeaderTpl: '<font size=2><font size=2>{name}</font>',
-                                        hideGroupedHeader: true,
-                                        enableGroupingMenu: false
-                                    }],
-                                columns: [
+                                y: 10,
+                                height: 460,
+                                width: 380,
+                                layout: 'absolute',
+                                title: 'Información del Plan de Acción:',
+                                items: [
                                     {
-                                        dataIndex: 'avance',
-                                        text: 'Avance'
-                                    },
-                                    {
-                                        dataIndex: 'tipoEvento',
-                                        text: 'Tipo'
-                                    },
-                                    {
-                                        dataIndex: 'ejecutor',
-                                        text: 'Ejecutor'
+                                        xtype: 'gridpanel',
+                                        x: 10,
+                                        y: 80,
+                                        height: 340,
+                                        width: 330,
+                                        name: 'gridPlanDeAccion',
+                                        store: Ext.create('myapp.store.actividad.ActividadAvanceStore'),
+                                        emptyText: 'No tiene Plan de accion',
+                                        title: 'Plan de Acción',
+                                        features: [{
+                                                id: 'group',
+                                                ftype: 'groupingsummary',
+                                                summaryType: 'count',
+                                                groupHeaderTpl: '<font size=2><font size=2>{name}</font>',
+                                                hideGroupedHeader: true,
+                                                enableGroupingMenu: false
+                                            }],
+                                        columns: [
+                                            {
+                                                dataIndex: 'avance',
+                                                text: 'Avance'
+                                            },
+                                            {
+                                                dataIndex: 'tipoEvento',
+                                                text: 'Tipo'
+                                            },
+                                            {
+                                                dataIndex: 'ejecutor',
+                                                text: 'Ejecutor'
+                                            }
+                                        ],
+                                        viewConfig: {
+                                            height: 273
+                                        },
+                                        dockedItems: [
+                                            {
+                                                xtype: 'toolbar',
+                                                dock: 'top',
+                                                height: 73,
+                                                items: [
+                                                    {
+                                                        xtype: 'textfield',
+                                                        x: 10,
+                                                        y: 10,
+                                                        width: 330,
+                                                        name: 'responsable',
+                                                        fieldLabel: 'Responsable:'
+                                                    }
+
+                                                ]
+                                            }
+                                        ]
                                     }
-                                ],
-                                viewConfig: {
-                                    height: 273
-                                }
-                            },
-                                {
-                                    xtype: 'textfield',
-                                    x: 10,
-                                    y: 10,
-                                    width: 330,
-                                     name:'responsable',
-                                    fieldLabel: 'Responsable:'
-                                }
-                            ]
-                        }
-                    ]
-                }
+
+                                ]
+                            }
+                        ]
+                    }
                 ]
             }
         ]
