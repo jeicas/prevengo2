@@ -61,11 +61,17 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             "winObservacionEvento button[name=btnGuardar]": {
                 click: this.onClickGuardarObservacion
             },
-            "winMaestroValor button[name=btnGuardar]": {
-                click: this.onClickGuardar
+            "winMaestroAlcance button[name=btnGuardar]": {
+                click: this.onClickGuardarAlcance
             },
-            "winMaestroNombre button[name=btnGuardar]": {
-                click: this.onClickGuardar
+             "winMaestroAgente button[name=btnGuardar]": {
+                click: this.onClickGuardarAgente
+            },
+             "winMaestroSector button[name=btnGuardar]": {
+                click: this.onClickGuardarSector
+            },
+            "winMaestroTipoEvento button[name=btnGuardar]": {
+                click: this.onClickGuardarTipoEvento
             },
         });
     },

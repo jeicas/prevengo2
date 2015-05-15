@@ -1,9 +1,9 @@
-Ext.define('myapp.view.maestroValor.WinMaestroValor', {
+Ext.define('myapp.view.maestroNombre.WinMaestroSector', {
 extend: 'Ext.window.Window',
-  alias: 'widget.winMaestroValor',
-  itemId: 'winMaestroValor',
+  alias: 'widget.winMaestroSector',
+  itemId: 'winMaestroSector',
   title:'Evento',
-  height: 180,
+  height: 150,
   width: 330,
   modal:true,
   requires: [
@@ -25,22 +25,14 @@ extend: 'Ext.window.Window',
             width: 676,
             layout: 'absolute',
             items: [
-                  {
+                 {
                          xtype: 'textfield',
                         x: 10,
                         y: 20,
                         width: 300,
                         fieldLabel: 'Nombre:',
                         name:'nombre'
-                    },
-                   {
-                       xtype: 'numberfield',
-                        x: 10,
-                        y: 60,
-                        width: 300,
-                        fieldLabel: 'Valor:',
-                        name:'valor'
-                    },
+                    }
         ]// fin del contenedor
     }]
   },
