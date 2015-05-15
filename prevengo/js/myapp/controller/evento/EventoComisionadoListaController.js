@@ -62,7 +62,9 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
         record = grid.getSelectionModel().getSelection();
     
 
-       if (record[0].get('estatus')== '<font color=#2E9AFE> Pendiente </font>'|| record[0].get('estatus')== '<font color=#FF8000> En Ejecución  </font>') 
+       if (record[0].get('estatus')== '<font color=#2E9AFE> Pendiente </font>'
+               || record[0].get('estatus')== '<font color=#FF8000> En Ejecución  </font>'
+                || record[0].get('estatus')== '<font color=#FF0000> Sin Plan </font>') 
        {
             win= Ext.create('myapp.view.evento.WinComisionadoEvento');
             newGrid=this.getListaComisionadoEvento();

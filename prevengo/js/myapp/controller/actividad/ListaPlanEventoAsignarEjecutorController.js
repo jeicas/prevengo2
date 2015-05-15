@@ -47,7 +47,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
             store= newGrid.getStore();      
             store.proxy.extraParams.id=item.data.idAct;
             store.load();
-           // newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
+            newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
             win.setTitle("Asignar Empleados al plan de accion: "+ item.data.actividad);
             win.show();
               
@@ -65,10 +65,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
          var gridUsu= this.getListaAsignarUsuario();
          var win = this.getWinAsignarUsuario();
          record = gridUsu.getSelectionModel().getSelection();
-       
-        
-       
-        
+
         if(record[0]){
                     
                 Ext.Ajax.request({

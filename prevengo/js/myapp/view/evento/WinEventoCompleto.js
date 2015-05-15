@@ -195,10 +195,11 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                     {
                                         xtype: 'gridpanel',
                                         x: 10,
-                                        y: 80,
-                                        height: 340,
+                                        y: 10,
+                                        height: 410,
                                         width: 330,
                                         name: 'gridPlanDeAccion',
+                                        columnLines: true,
                                         store: Ext.create('myapp.store.actividad.ActividadAvanceStore'),
                                         emptyText: 'No tiene Plan de accion',
                                         title: 'Plan de Acción',
@@ -213,15 +214,19 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                         columns: [
                                             {
                                                 dataIndex: 'avance',
-                                                text: 'Avance'
+                                                text: 'Avance',
+                                                flex:0.7
+                                                
                                             },
                                             {
                                                 dataIndex: 'tipoEvento',
-                                                text: 'Tipo'
+                                                text: 'Tipo',
+                                                flex:0.4
                                             },
                                             {
                                                 dataIndex: 'ejecutor',
-                                                text: 'Ejecutor'
+                                                text: 'Ejecutor',
+                                                flex:0.5
                                             }
                                         ],
                                         viewConfig: {
@@ -231,13 +236,13 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                             {
                                                 xtype: 'toolbar',
                                                 dock: 'top',
-                                                height: 73,
+                                                height: 53,
                                                 items: [
                                                     {
                                                         xtype: 'textfield',
                                                         x: 10,
                                                         y: 10,
-                                                        width: 330,
+                                                        width: 300,
                                                         name: 'responsable',
                                                         fieldLabel: 'Responsable:'
                                                     }

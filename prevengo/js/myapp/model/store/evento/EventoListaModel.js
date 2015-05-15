@@ -10,7 +10,8 @@ Ext.define('myapp.model.store.evento.EventoListaModel', {
 	{name: 'tipoEvento',          type: 'string'}, 
 	{name: 'alcance',          type: 'string'}, 
 	{name: 'sector',          type: 'string'}, 
-	{name: 'presupuesto',          type: 'string'},  
+	{name: 'presupuesto',          type: 'string'}, 
+        {name: 'nombrecompleto',          type: 'string'},
 	{name: 'estatus',          type: 'string'}, 
     	
     ]

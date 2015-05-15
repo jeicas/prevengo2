@@ -18,13 +18,24 @@ class Evento_model extends CI_Model {
                                     alcance.nombre as alcance,
                                     agente.nombre as agente,
                                     tipoevento.nombre as tipoEv,
-                                    sector.nombre as sector
+                                    sector.nombre as sector,
+                                    bdgenerica.persona.nombre as nombre,
+                                    bdgenerica.persona.apellido as apellido
                              from evento 
                              inner join agente on agente.id=evento.agente
                              inner join alcance on alcance.id=evento.alcance
                              inner join tipoevento on tipoevento.id=evento.tipoevento
                              inner join sector on sector.id=evento.sector
-                             where evento.estatus in (0,1,2,4)
+                             left join actividad
+                                    on actividad.evento=evento.id
+                             left join  bdgenerica.usuario 
+                                    on bdgenerica.usuario.id= actividad.usuario
+                     		left join  bdgenerica.persona 
+                                    on bdgenerica.usuario.cedula=bdgenerica.persona.cedula
+                            left join bdgenerica.empleado on 
+                                         bdgenerica.persona.cedula=bdgenerica.empleado.cedula
+                            
+                             group by idEv
                              order by fechaEv ASC");
        
             return $query;

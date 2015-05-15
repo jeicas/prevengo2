@@ -22,20 +22,35 @@ class Evento extends CI_Controller {
 
             foreach ($eventos->result_array() as $row) {
 
-                switch ($row['estatus']) {
+                 switch ($row['estatus']) {
                     case '1':
                         $estatus = "<font color=#2E9AFE> Pendiente </font>";
                         break;
                     case '2':
                         $estatus = '<font color=#FF8000> En Ejecución  </font>';
                         break;
+                    case '3':
+                        $estatus = '<font color=#DF01D7> Cancelado  </font>';
+                        break;
                     case '4':
-                        $estatus = '<font color=#FF9000> Sin Plan  </font>';
+                        $estatus = '<font color=#FF0000> Sin Plan </font>';
+                        break;
+                     case '5':
+                        $estatus = '<font color=#FF0000> Expirado  </font>';
+                        break;
+
                     default:
                         $estatus = '<font color=#01DF3A> Completado </font>';
                         break;
                 }
 
+                if ($row['nombre'] == NULL && $row['apellido'] == NULL) {
+                    $nombre = " Por Asignar";
+                  
+                } else {
+                    $nombre = $row['nombre'] . " " . $row['apellido'];
+                    
+                }
 
 
                 $data[] = array(
@@ -49,6 +64,7 @@ class Evento extends CI_Controller {
                     'alcance' => $row['alcance'],
                     'sector' => $row['sector'],
                     'presupuesto' => $row['presupuesto'],
+                    'nombrecompleto' => $nombre,
                     'estatus' => $estatus,
                 );
             }
@@ -66,9 +82,9 @@ class Evento extends CI_Controller {
     }
 
 //fin listaEventos
-    
-    
-        public function listaEventoTodo() {
+
+
+    public function listaEventoTodo() {
 
         $eventos = $this->evento_model->cargarListaEventoTodo();
 
@@ -87,6 +103,9 @@ class Evento extends CI_Controller {
                         $estatus = '<font color=#DF01D7> Cancelado  </font>';
                         break;
                     case '4':
+                        $estatus = '<font color=#FF0000> Sin Plan </font>';
+                        break;
+                     case '5':
                         $estatus = '<font color=#FF0000> Expirado  </font>';
                         break;
 
@@ -143,33 +162,32 @@ class Evento extends CI_Controller {
                         $estatus = 'Completado';
                         break;
                 }
-                
-                if ($row['nombre']==NULL && $row['apellido']==NULL ){
-                    $nombre="<font color=#FF0000> Por Asignar </font>";
-                    $cedula=$row['cedula'];
-                }else{
-                    $nombre=$row['nombre']." ".$row['apellido'];
-                    $cedula=$row['nacionalidad']."-".$row['cedula'];
+
+                if ($row['nombre'] == NULL && $row['apellido'] == NULL) {
+                    $nombre = "<font color=#FF0000> Por Asignar </font>";
+                    $cedula = $row['cedula'];
+                } else {
+                    $nombre = $row['nombre'] . " " . $row['apellido'];
+                    $cedula = $row['nacionalidad'] . "-" . $row['cedula'];
                 }
-                 
 
 
 
-              $data[] = array(
-                    
-                                'idEv' => $row['idEvent'],
-                                'idUs' => $row['idUsuario'],
-                                'titulo' => $row['titulo'],
-                                'descripcion' => $row['descripcion'],
-                                'fechaEvento' => $row['fechaEv'],
-                                'cedula' => $cedula,
-                                'nombrecompleto' => $nombre,
-                                'cargo' => $row['cargo'],
-                                'foto' => $row['foto'],
-                                'ente' => $row['ente'],
-                                'division' => $row['division'],
-                                'estatus' => $estatus,
-                            );
+
+                $data[] = array(
+                    'idEv' => $row['idEvent'],
+                    'idUs' => $row['idUsuario'],
+                    'titulo' => $row['titulo'],
+                    'descripcion' => $row['descripcion'],
+                    'fechaEvento' => $row['fechaEv'],
+                    'cedula' => $cedula,
+                    'nombrecompleto' => $nombre,
+                    'cargo' => $row['cargo'],
+                    'foto' => $row['foto'],
+                    'ente' => $row['ente'],
+                    'division' => $row['division'],
+                    'estatus' => $estatus,
+                );
             }
             $output = array(
                 'success' => true,
@@ -182,14 +200,10 @@ class Evento extends CI_Controller {
                 "success" => false
             ));
         }
-   
-    }//fin 
-    
-    
-      
+    }
 
+//fin 
 
- 
     public function registrarEvento() {
 
         $titulo = $this->input->post('txtTitulo');

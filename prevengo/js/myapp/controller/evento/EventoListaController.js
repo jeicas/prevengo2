@@ -77,7 +77,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         win.show();
 
     }, // fin de la function
-
+        
     onClickResumenEvento: function (button, e, options) {
 
         var grid = this.getListaEventos();
@@ -115,7 +115,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         store3.proxy.extraParams.id = record[0].get('idEv');
         
         store3.load();
-
+        win.down('textfield[name=responsable]').setValue(record[0].get('nombrecompleto'));
         win.show();
 
 
