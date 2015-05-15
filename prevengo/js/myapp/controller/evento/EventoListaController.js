@@ -55,8 +55,17 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             "winEvento button[name=btnNuevoAgente]": {
                 click: this.onClickNuevoAgente
             },
+              "winEvento button[name=btnEditarAgente]": {
+                click: this.onClickEditarAgente
+            },
             "winEvento button[name=btnNuevoTipoEvento]": {
                 click: this.onClickNuevoTipoEvento
+            },
+             "winEvento button[name=btnNuevoAlcance]": {
+                click: this.onClickNuevoAlcance
+            },
+             "winEvento button[name=btnNuevoSector]": {
+                click: this.onClickNuevoSector
             },
             "winObservacionEvento button[name=btnGuardar]": {
                 click: this.onClickGuardarObservacion
@@ -297,12 +306,27 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
 
     onClickNuevoAgente: function (button, e, options) {
-        var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroNombre');
+        var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
         winAgente.setTitle("Nuevo  Agente");
         winAgente.show();
     },
+     onClickEditarAgente: function (button, e, options) {
+        var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
+        winAgente.setTitle("Actualizar  Agente");
+        winAgente.show();
+    },
+     onClickNuevoAlcance: function (button, e, options) {
+        var winAlcance = Ext.create('myapp.view.maestroValor.WinMaestroAlcance');
+        winAlcance.setTitle("Nuevo  Alcance");
+        winAlcance.show();
+    },
+     onClickNuevoSector: function (button, e, options) {
+        var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
+        winSector.setTitle("Nuevo  Sector");
+        winSector.show();
+    },
     onClickNuevoTipoEvento: function (button, e, options) {
-        var winTE = Ext.create('myapp.view.maestroValor.WinMaestroValor');
+        var winTE = Ext.create('myapp.view.maestroValor.WinMaestrotipoEvento');
         winTE.setTitle("Nuevo  Tipo de Evento");
         winTE.show();
     },
