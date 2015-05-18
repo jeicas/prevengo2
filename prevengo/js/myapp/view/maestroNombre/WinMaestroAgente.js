@@ -26,7 +26,7 @@ extend: 'Ext.window.Window',
             layout: 'absolute',
             items: [
                  {
-                         xtype: 'textfield',
+                        xtype: 'textfield',
                         x: 10,
                         y: 20,
                         width: 300,

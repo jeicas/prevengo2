@@ -20,6 +20,15 @@ class Alcance_model extends CI_Model {
             $query->free - result();
         }
     }
-
+     public function guardarAlcance($data){
+        return $this->db->insert('alcance',$data);
+      }
+      
+      
+        public function  actualizarAgente($data){         
+         $this->db->set($data);
+         $this->db->where('id',$data['id']);
+         return  $this->db->update('alcance');
+    }  
 }// fin de la clase
 

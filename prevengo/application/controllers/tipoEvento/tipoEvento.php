@@ -25,6 +25,67 @@ class TipoEvento extends CI_Controller
         }
     }
     
+        public function registrarTipoEvento()
+   {
+        $nombre = $this->input->post('txtNombre');
+        $valor = $this->input->post('txtValor');
+        $estatus = 1;
+
+        $dataAgente= array(
+            'nombre' => $nombre,
+            'valor' => $valor,
+            'estatus' => $estatus,
+        );
+
+        $result = $this->tipoEvento_model->guardarTipoEvento($dataAgente);
+
+        if ($result) {
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
+            ));
+        } else {
+
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+            ));
+        }
+    }
+  
+    
+      public function actualizarTipoEvento()
+   {
+        $id = $this->input->post('id');
+        $nombre = $this->input->post('txtNombre');
+         $valor = $this->input->post('txtValor');
+        $estatus = 1;
+
+        $dataAgente= array(
+            'id' => $id,
+            'nombre' => $nombre,
+            'valor' => $valor,
+            'estatus' => $estatus,
+        );
+
+        $result = $this->tipoEvento_model->actualizarTipoEvento($dataAgente);
+
+        if ($result) {
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se Actualizó con Éxito." //modificado en la base de datos
+            ));
+        } else {
+
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+            ));
+        }
+    }
+    
+    
+    
 
 
 

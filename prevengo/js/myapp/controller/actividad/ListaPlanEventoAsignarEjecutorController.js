@@ -60,7 +60,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
        },// fin de la function
        
        
-       onClickGuardarEmpleado:function(button, e, options) {
+    onClickGuardarEmpleado:function(button, e, options) {
          var grid1 = this.getListaEmpleadoPlan();
          var gridUsu= this.getListaAsignarUsuario();
          var win = this.getWinAsignarUsuario();

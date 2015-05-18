@@ -71,7 +71,6 @@ Ext.define('myapp.controller.evento.EventoResponsableListaController', {
                  img.setSrc(BASE_PATH+'./empleados/_DSC' + record[0].get('foto'));
             }
               win.setTitle("Responsable Asignado");
-    
         }
           win.show();
         

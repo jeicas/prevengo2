@@ -154,7 +154,7 @@ Ext.define('myapp.view.evento.WinEvento', {
                         xtype: 'button',
                         x: 330,
                         y: 200,
-                        name: 'btnEditarAgente',
+                       name: 'btnNuevoTipoEvento',
                         iconCls: 'icon-limpiar',
                         text: ''
                     },
@@ -162,38 +162,14 @@ Ext.define('myapp.view.evento.WinEvento', {
                         xtype: 'button',
                         x: 330,
                         y: 240,
-                        name: 'btnNuevoTipoEvento',
-                        iconCls: 'icon-limpiar',
-                        text: ''
-                    },
-                    {
-                        xtype: 'button',
-                        x: 330,
-                        y: 280,
-                        name: 'btnEditarTipoEvento',
-                        iconCls: 'icon-limpiar',
-                        text: ''
-                    },
-                    {
-                        xtype: 'button',
-                        x: 360,
-                        y: 280,
                         name: 'btnNuevoSector',
                         iconCls: 'icon-limpiar',
                         text: ''
                     },
-                     {
-                        xtype: 'button',
-                        x: 360,
-                        y: 240,
-                        name: 'btnEditarSector',
-                        iconCls: 'icon-limpiar',
-                        text: ''
-                    },
                     {
                         xtype: 'button',
-                        x: 360,
-                        y: 160,
+                        x: 330,
+                        y: 280,
                         name: 'btnNuevoAlcance',
                         iconCls: 'icon-limpiar',
                         text: ''
@@ -201,11 +177,35 @@ Ext.define('myapp.view.evento.WinEvento', {
                     {
                         xtype: 'button',
                         x: 360,
+                        y: 160,
+                        name: 'btnEditarAgente',
+                        iconCls: 'icon-limpiar',
+                        text: ''
+                    },
+                     {
+                        xtype: 'button',
+                        x: 360,
                         y: 200,
+                        name: 'btnEditarTipoEvento',
+                        iconCls: 'icon-limpiar',
+                        text: ''
+                    },   {
+                        xtype: 'button',
+                        x: 360,
+                        y: 240,
+                        name: 'btnEditarSector',
+                        iconCls: 'icon-limpiar',
+                        text: ''
+                    },{
+                        xtype: 'button',
+                        x: 360,
+                        y: 280,
                         name: 'btnEditarAlcance',
                         iconCls: 'icon-limpiar',
                         text: ''
                     }
+                  
+                   
 
 
 

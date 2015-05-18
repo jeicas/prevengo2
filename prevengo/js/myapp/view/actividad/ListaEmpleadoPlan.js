@@ -54,14 +54,12 @@ Ext.define('myapp.view.actividad.ListaEmpleadoPlan', {
                         text: 'Asignar Empleado',
                         iconCls: 'editar'
                     },
-                    
                      {
                         xtype: 'label',
                         name: 'lblIdActividad',
                         text: '',
                         hidden:true
      
-                       
                     }
                 ]
             }

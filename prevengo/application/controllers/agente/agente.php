@@ -25,6 +25,59 @@ class Agente extends CI_Controller
         }
     }
     
+    public function registrarAgente()
+   {
+        $nombre = $this->input->post('txtNombre');
+        $estatus = 1;
+
+        $dataAgente= array(
+            'nombre' => $nombre,
+            'estatus' => $estatus,
+        );
+
+        $result = $this->agente_model->guardarAgente($dataAgente);
+
+        if ($result) {
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
+            ));
+        } else {
+
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+            ));
+        }
+    }
+    
+      public function actualizarAgente()
+   {
+        $id = $this->input->post('id');
+        $nombre = $this->input->post('txtNombre');
+        $estatus = 1;
+
+        $dataAgente= array(
+            'id' => $id,
+            'nombre' => $nombre,
+            'estatus' => $estatus,
+        );
+
+        $result = $this->agente_model->actualizarAgente($dataAgente);
+
+        if ($result) {
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se Actualizó con Éxito." //modificado en la base de datos
+            ));
+        } else {
+
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+            ));
+        }
+    }
 
 
 

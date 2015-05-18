@@ -40,7 +40,7 @@ extend: 'Ext.window.Window',
                         width: 300,
                         fieldLabel: 'Valor:',
                         name:'valor'
-                    },
+                    }
         ]// fin del contenedor
     }]
   },
@@ -56,10 +56,8 @@ extend: 'Ext.window.Window',
             xtype   : 'button',
             iconCls :'save',
             name    :'btnGuardar',
-           // itemId: 'addAvance', 
             text    : 'Guardar',
             disabled:false,
-            //formBind: true,
             scope   : this,
 
 

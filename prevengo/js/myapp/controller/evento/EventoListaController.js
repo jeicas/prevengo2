@@ -4,7 +4,11 @@ Ext.define('myapp.controller.evento.EventoListaController', {
     views: ['evento.ListaEventos',
         'evento.WinEvento',
         'evento.Evento',
-        'observacion.WinObservacionEvento'
+        'observacion.WinObservacionEvento',
+        'maestroValor.WinMaestroTipoEvento',
+        'maestroValor.WinMaestroAlcance',
+        'maestroNombre.WinMaestroSector',
+        'maestroNombre.WinMaestroAgente'
     ],
     requires: [
         'myapp.util.Util'
@@ -27,12 +31,20 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             selector: 'winObservacionEvento'
         },
         {
-            ref: 'WinMaestroNombre',
-            selector: 'winMaestroNombre'
+            ref: 'WinMaestroAgente',
+            selector: 'winMaestroAgente'
         },
         {
-            ref: 'WinMaestroValor',
-            selector: 'winMaestroValor'
+            ref: 'WinMaestroSector',
+            selector: 'winMaestroSector'
+        },
+        {
+            ref: 'WinMaestroTipoEvento',
+            selector: 'winMaestroTipoEvento'
+        },
+        {
+            ref: 'WinMaestroAlcance',
+            selector: 'winMaestroAlcance'
         },
     ],
     init: function (application) {
@@ -55,17 +67,26 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             "winEvento button[name=btnNuevoAgente]": {
                 click: this.onClickNuevoAgente
             },
-              "winEvento button[name=btnEditarAgente]": {
-                click: this.onClickEditarAgente
-            },
             "winEvento button[name=btnNuevoTipoEvento]": {
                 click: this.onClickNuevoTipoEvento
             },
-             "winEvento button[name=btnNuevoAlcance]": {
+            "winEvento button[name=btnNuevoAlcance]": {
                 click: this.onClickNuevoAlcance
             },
-             "winEvento button[name=btnNuevoSector]": {
+            "winEvento button[name=btnNuevoSector]": {
                 click: this.onClickNuevoSector
+            },
+            "winEvento button[name=btnEditarAgente]": {
+                click: this.onClickEditarAgente
+            },
+            "winEvento button[name=btnEditarTipoEvento]": {
+                click: this.onClickEditarTipoEvento
+            },
+            "winEvento button[name=btnEditarAlcance]": {
+                click: this.onClickEditarAlcance
+            },
+            "winEvento button[name=btnEditarSector]": {
+                click: this.onClickEditarSector
             },
             "winObservacionEvento button[name=btnGuardar]": {
                 click: this.onClickGuardarObservacion
@@ -73,10 +94,10 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             "winMaestroAlcance button[name=btnGuardar]": {
                 click: this.onClickGuardarAlcance
             },
-             "winMaestroAgente button[name=btnGuardar]": {
+            "winMaestroAgente button[name=btnGuardar]": {
                 click: this.onClickGuardarAgente
             },
-             "winMaestroSector button[name=btnGuardar]": {
+            "winMaestroSector button[name=btnGuardar]": {
                 click: this.onClickGuardarSector
             },
             "winMaestroTipoEvento button[name=btnGuardar]": {
@@ -92,7 +113,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         win.show();
 
     }, // fin de la function
-        
+
     onClickResumenEvento: function (button, e, options) {
 
         var grid = this.getListaEventos();
@@ -128,7 +149,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
         store3 = win.down('gridpanel[name=gridPlanDeAccion]').getStore();
         store3.proxy.extraParams.id = record[0].get('idEv');
-        
+
         store3.load();
         win.down('textfield[name=responsable]').setValue(record[0].get('nombrecompleto'));
         win.show();
@@ -301,34 +322,48 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
     }, // fin de la function 
 
-
-
-
-
+    //============================MAESTROS===============================================
     onClickNuevoAgente: function (button, e, options) {
         var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
         winAgente.setTitle("Nuevo  Agente");
         winAgente.show();
     },
-     onClickEditarAgente: function (button, e, options) {
-        var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
-        winAgente.setTitle("Actualizar  Agente");
-        winAgente.show();
-    },
-     onClickNuevoAlcance: function (button, e, options) {
+    onClickNuevoAlcance: function (button, e, options) {
         var winAlcance = Ext.create('myapp.view.maestroValor.WinMaestroAlcance');
         winAlcance.setTitle("Nuevo  Alcance");
         winAlcance.show();
     },
-     onClickNuevoSector: function (button, e, options) {
+    onClickNuevoSector: function (button, e, options) {
         var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
         winSector.setTitle("Nuevo  Sector");
         winSector.show();
     },
     onClickNuevoTipoEvento: function (button, e, options) {
-        var winTE = Ext.create('myapp.view.maestroValor.WinMaestrotipoEvento');
+        var winTE = Ext.create('myapp.view.maestroValor.WinMaestroTipoEvento');
         winTE.setTitle("Nuevo  Tipo de Evento");
         winTE.show();
+    },
+    onClickEditarAgente: function (button, e, options) {
+        var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
+        winAgente.setTitle("Actualizar  Agente");
+        winAgente.show();
+    },
+    onClickEditarTipoEvento: function (button, e, options) {
+        var winTE = Ext.create('myapp.view.maestroValor.WinMaestroTipoEvento');
+        winTE.setTitle("Actualizar  Tipo de Evento");
+        winTE.show();
+    },
+    onClickEditarSector: function (button, e, options) {
+        var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
+        winSector.setTitle("Actualizar  Sector");
+       
+        
+        winSector.show();
+    },
+    onClickEditarAlcance: function (button, e, options) {
+        var winAlcance = Ext.create('myapp.view.maestroValor.WinMaestroAlcance');
+        winAlcance.setTitle("Actualizar  Alcance");
+        winAlcance.show();
     },
     //======================Funciones de la ventana Observaciones ====================0
     onClickGuardarObservacion: function (button, e, options) {
@@ -374,4 +409,161 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
 
     },
+    //==============================Maestros=======================================
+    onClickGuardarAgente: function (button, e, options) {
+        winE = this.getWinEvento();
+        storeE = winE.down("combobox[name=cmbAgente]").getStore();
+        winO = this.getWinMaestroAgente();
+
+        var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+        loadingMask.show();
+
+
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'agente/agente/registrarAgente',
+            method: 'POST',
+            params: {
+                txtNombre: winO.down("textfield[name=nombre]").getValue(),
+            },
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+                loadingMask.hide();
+                if (result.success) {
+
+                    storeE.load();
+                    winO.close();
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+                else {
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    // myapp.util.Util.showErrorMsg(result.msg);
+                }
+            },
+            failure: function (form, action) {
+                var result = action.result;
+                loadingMask.hide();
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+        });
+
+
+    },
+    onClickGuardarSector: function (button, e, options) {
+        winE = this.getWinEvento();
+        storeE = winE.down("combobox[name=cmbSector]").getStore();
+        winO = this.getWinMaestroSector();
+
+        var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+        loadingMask.show();
+
+
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'sector/sector/registrarSector',
+            method: 'POST',
+            params: {
+                txtNombre: winO.down("textfield[name=nombre]").getValue(),
+            },
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+                loadingMask.hide();
+                if (result.success) {
+
+                    storeE.load();
+                    winO.close();
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+                else {
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    // myapp.util.Util.showErrorMsg(result.msg);
+                }
+            },
+            failure: function (form, action) {
+                var result = action.result;
+                loadingMask.hide();
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+        });
+    },
+    onClickGuardarTipoEvento: function (button, e, options) {
+        winE = this.getWinEvento();
+        storeE = winE.down("combobox[name=cmbTipoEvento]").getStore();
+        winO = this.getWinMaestroTipoEvento();
+
+        var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+        loadingMask.show();
+
+
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'tipoEvento/tipoEvento/registrarTipoEvento',
+            method: 'POST',
+            params: {
+                txtValor: winO.down("textfield[name=valor]").getValue(),
+                txtNombre: winO.down("textfield[name=nombre]").getValue(),
+            },
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+                loadingMask.hide();
+                if (result.success) {
+
+                    storeE.load();
+                    winO.close();
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+                else {
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    // myapp.util.Util.showErrorMsg(result.msg);
+                }
+            },
+            failure: function (form, action) {
+                var result = action.result;
+                loadingMask.hide();
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+        });
+    },
+            onClickGuardarAlcance: function (button, e, options) {
+                winE = this.getWinEvento();
+                storeE = winE.down("combobox[name=cmbAlcance]").getStore();
+                winO = this.getWinMaestroAlcance();
+
+                var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+                loadingMask.show();
+
+
+                Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                    url: BASE_URL + 'alcance/alcance/registrarAlcance',
+                    method: 'POST',
+                    params: {
+                        txtValor: winO.down("textfield[name=valor]").getValue(),
+                        txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                    },
+                    success: function (result, request) {
+                        result = Ext.JSON.decode(result.responseText);
+                        loadingMask.hide();
+                        if (result.success) {
+
+                            storeE.load();
+                            winO.close();
+                            Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                        }
+                        else {
+                            Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                            // myapp.util.Util.showErrorMsg(result.msg);
+                        }
+                    },
+                    failure: function (form, action) {
+                        var result = action.result;
+                        loadingMask.hide();
+                        Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                    }
+                });
+            },
 });

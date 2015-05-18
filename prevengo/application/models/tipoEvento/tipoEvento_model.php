@@ -20,5 +20,10 @@ class TipoEvento_model extends CI_Model {
             $query->free - result();
         }
     }
+    
+    
+        public function guardarTipoEvento($data){
+        return $this->db->insert('tipoevento',$data);
+      }
 
 }// fin de la clase

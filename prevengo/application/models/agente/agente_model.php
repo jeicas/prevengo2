@@ -21,5 +21,18 @@ class Agente_model extends CI_Model {
         }
     }
 
+    
+    
+       public function guardarAgente($data){
+        return $this->db->insert('agente',$data);
+      }
+      
+      
+        public function  actualizarAgente($data){         
+         $this->db->set($data);
+         $this->db->where('id',$data['id']);
+         return  $this->db->update('actividad');
+    }  
+        
 }// fin de la clase
 

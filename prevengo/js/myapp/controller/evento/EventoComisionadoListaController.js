@@ -53,9 +53,8 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
  
         });
     },
-   
-   
-      //==============Funciones de la listaEventosComisionados  =====================================
+
+ //==============Funciones de la listaEventosComisionados  =====================================
     onClickVerComisionado: function (record, item, index, e, eOpts ) {
 
         grid = this.getListaEventosComisionados();
