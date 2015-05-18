@@ -1,8 +1,8 @@
 var nuevo = false;
-var nuevoS= false;
-var nuevoTE= false;
-var nuevoAg= false;
-var nuevoAl=false;
+var nuevoS = false;
+var nuevoTE = false;
+var nuevoAg = false;
+var nuevoAl = false;
 
 Ext.define('myapp.controller.evento.EventoListaController', {
     extend: 'Ext.app.Controller',
@@ -201,7 +201,9 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         record = grid.getSelectionModel().getSelection();
 
         if (record[0]) {
-            if (record[0].get('estatus') != '<font color=#01DF3A> Completado </font>') {
+            if (record[0].get('estatus')== '<font color=#2E9AFE> Pendiente </font>'
+               || record[0].get('estatus')== '<font color=#FF8000> En Ejecución  </font>'
+               || record[0].get('estatus')== '<font color=#FF0000> Sin Plan </font>') {
                 Ext.Msg.show({
                     title: 'Confirmar',
                     msg: 'Esta seguro que desea CANCELAR el Evento ' + record[0].get('titulo') + '?',
@@ -210,7 +212,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                     fn: function (buttonId) {
                         if (buttonId == 'yes') {
                             var win = Ext.create('myapp.view.observacion.WinObservacionEvento');
-                            win.setTitle("Cancelar Evento " + record[0].get('estatus'));
+                            win.setTitle("Cancelar Evento  " + record[0].get('titulo'));
                             win.down('label[name=lblDescripcion]').setText("Indique la razón por la que desea cancelar el Evento" + record[0].get('titulo') + "?");
                             win.show();
                         }
@@ -219,14 +221,14 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             }
             else {
                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                    msg: 'El evento ha finalizado, no lo puede cancelar',
+                    msg: "El Evento "+ record[0].get('titulo') +" no lo puede cancelar, porque ha sido: "+record[0].get('estatus'),
                     buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
             }
 
 
         } else {
             Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                msg: 'Debe seleccionar el evento que desea cancelar',
+                msg: 'Debe seleccionar el evento que desea Cancelar',
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
     },
@@ -329,105 +331,105 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
     //============================MAESTROS===============================================
     onClickNuevoAgente: function (button, e, options) {
-        nuevoAg=true;
+        nuevoAg = true;
         var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
         winAgente.setTitle("Nuevo  Agente");
         winAgente.show();
     },
     onClickNuevoAlcance: function (button, e, options) {
-        nuevoAl=true;
+        nuevoAl = true;
         var winAlcance = Ext.create('myapp.view.maestroValor.WinMaestroAlcance');
         winAlcance.setTitle("Nuevo  Alcance");
         winAlcance.show();
     },
     onClickNuevoSector: function (button, e, options) {
-        nuevoS=true;
+        nuevoS = true;
         var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
         winSector.setTitle("Nuevo  Sector");
         winSector.show();
     },
     onClickNuevoTipoEvento: function (button, e, options) {
-        nuevoTE=true;
+        nuevoTE = true;
         var winTE = Ext.create('myapp.view.maestroValor.WinMaestroTipoEvento');
         winTE.setTitle("Nuevo  Tipo de Evento");
         winTE.show();
     },
     onClickEditarAgente: function (button, e, options) {
-        nuevoAg=false;
-        winE =this.getWinEvento();
+        nuevoAg = false;
+        winE = this.getWinEvento();
         var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
         winAgente.setTitle("Actualizar  Agente");
-          storeS= winE.down("combobox[name=cmbAgente]").getStore();
-         valor= winE.down("combobox[name=cmbAgente]").getValue();
-         
-           for (i=0; i<storeS.data.items.length; ++i)
-         { 
-             
-            if(storeS.data.items[i].data['id']==valor){    
-              winAgente.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
-              i=storeS.data.items.length+1;
-            }  
-         }
+        storeS = winE.down("combobox[name=cmbAgente]").getStore();
+        valor = winE.down("combobox[name=cmbAgente]").getValue();
+
+        for (i = 0; i < storeS.data.items.length; ++i)
+        {
+
+            if (storeS.data.items[i].data['id'] == valor) {
+                winAgente.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
+                i = storeS.data.items.length + 1;
+            }
+        }
         winAgente.show();
     },
     onClickEditarTipoEvento: function (button, e, options) {
-        nuevoTE=false;
-        winE =this.getWinEvento();
+        nuevoTE = false;
+        winE = this.getWinEvento();
         var winTE = Ext.create('myapp.view.maestroValor.WinMaestroTipoEvento');
         winTE.setTitle("Actualizar  Tipo de Evento");
-          storeS= winE.down("combobox[name=cmbTipoEvento]").getStore();
-         valor= winE.down("combobox[name=cmbTipoEvento]").getValue();
-         
-           for (i=0; i<storeS.data.items.length; ++i)
-         { 
-             
-            if(storeS.data.items[i].data['id']==valor){    
-              winTE.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
-              winTE.down("textfield[name=valor]").setValue(storeS.data.items[i].data['valor']);
-              i=storeS.data.items.length+1;
-            }  
-         }
+        storeS = winE.down("combobox[name=cmbTipoEvento]").getStore();
+        valor = winE.down("combobox[name=cmbTipoEvento]").getValue();
+
+        for (i = 0; i < storeS.data.items.length; ++i)
+        {
+            console.log(storeS.data.items[i]);
+            if (storeS.data.items[i].data['id'] == valor) {
+                winTE.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
+                winTE.down("textfield[name=valor]").setValue(storeS.data.items[i].data['valor']);
+                i = storeS.data.items.length + 1;
+            }
+        }
         winTE.show();
     },
     onClickEditarSector: function (button, e, options) {
-        nuevoS=false;
-        winE =this.getWinEvento();
-         var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
-         winSector.setTitle("Actualizar  Sector");
-         storeS= winE.down("combobox[name=cmbSector]").getStore();
-         valor= winE.down("combobox[name=cmbSector]").getValue();
-         
-           for (i=0; i<storeS.data.items.length; ++i)
-         { 
-             
-            if(storeS.data.items[i].data['id']==valor){    
-              winSector.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
-              i=storeS.data.items.length+1;
-            }  
-         }
-           
-             
-        
-        
+        nuevoS = false;
+        winE = this.getWinEvento();
+        var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
+        winSector.setTitle("Actualizar  Sector");
+        storeS = winE.down("combobox[name=cmbSector]").getStore();
+        valor = winE.down("combobox[name=cmbSector]").getValue();
+
+        for (i = 0; i < storeS.data.items.length; ++i)
+        {
+
+            if (storeS.data.items[i].data['id'] == valor) {
+                winSector.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
+                i = storeS.data.items.length + 1;
+            }
+        }
+
+
+
+
         winSector.show();
     },
     onClickEditarAlcance: function (button, e, options) {
-        nuevoAl=false;
-        winE =this.getWinEvento();
+        nuevoAl = false;
+        winE = this.getWinEvento();
         var winAlcance = Ext.create('myapp.view.maestroValor.WinMaestroAlcance');
         winAlcance.setTitle("Actualizar  Alcance");
-          storeS= winE.down("combobox[name=cmbSector]").getStore();
-         valor= winE.down("combobox[name=cmbSector]").getValue();
-         
-           for (i=0; i<storeS.data.items.length; ++i)
-         { 
-             
-            if(storeS.data.items[i].data['id']==valor){    
-              winAlcance.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
-              winAlcance.down("textfield[name=valor]").setValue(storeS.data.items[i].data['valor']);
-              i=storeS.data.items.length+1;
-            }  
-         }
+        storeS = winE.down("combobox[name=cmbAlcance]").getStore();
+        valor = winE.down("combobox[name=cmbAlcance]").getValue();
+
+        for (i = 0; i < storeS.data.items.length; ++i)
+        {
+
+            if (storeS.data.items[i].data['id'] == valor) {
+                winAlcance.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
+                winAlcance.down("textfield[name=valor]").setValue(storeS.data.items[i].data['valor']);
+                i = storeS.data.items.length + 1;
+            }
+        }
         winAlcance.show();
     },
     //======================Funciones de la ventana Observaciones ====================0
@@ -483,35 +485,69 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
 
+        if (nuevoAg) {
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'agente/agente/registrarAgente',
+                method: 'POST',
+                params: {
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
 
-        Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'agente/agente/registrarAgente',
-            method: 'POST',
-            params: {
-                txtNombre: winO.down("textfield[name=nombre]").getValue(),
-            },
-            success: function (result, request) {
-                result = Ext.JSON.decode(result.responseText);
-                loadingMask.hide();
-                if (result.success) {
+                        storeE.load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
-                    storeE.load();
-                    winO.close();
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
                 }
-                else {
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                    // myapp.util.Util.showErrorMsg(result.msg);
-                }
-            },
-            failure: function (form, action) {
-                var result = action.result;
-                loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+            });
+        }
+        else {
 
-            }
-        });
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'agente/agente/actualizarAgente',
+                method: 'POST',
+                params: {
+                    id: winE.down("combobox[name=cmbAgente]").getValue(),
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
+
+                        storeE.load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+            });
+        }
+
 
 
     },
@@ -523,35 +559,68 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
 
+        if (nuevoS) {
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'sector/sector/registrarSector',
+                method: 'POST',
+                params: {
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
 
-        Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'sector/sector/registrarSector',
-            method: 'POST',
-            params: {
-                txtNombre: winO.down("textfield[name=nombre]").getValue(),
-            },
-            success: function (result, request) {
-                result = Ext.JSON.decode(result.responseText);
-                loadingMask.hide();
-                if (result.success) {
+                        storeE.load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
-                    storeE.load();
-                    winO.close();
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
                 }
-                else {
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                    // myapp.util.Util.showErrorMsg(result.msg);
-                }
-            },
-            failure: function (form, action) {
-                var result = action.result;
-                loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+            });
+        }
+        else {
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'sector/sector/actualizarSector',
+                method: 'POST',
+                params: {
+                    id: winE.down("combobox[name=cmbSector]").getValue(),
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
 
-            }
-        });
+                        storeE.load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+            });
+        }
+
     },
     onClickGuardarTipoEvento: function (button, e, options) {
         winE = this.getWinEvento();
@@ -561,74 +630,142 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
 
+        if (nuevoTE) {
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'tipoEvento/tipoEvento/registrarTipoEvento',
+                method: 'POST',
+                params: {
+                    txtValor: winO.down("textfield[name=valor]").getValue(),
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
 
-        Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'tipoEvento/tipoEvento/registrarTipoEvento',
-            method: 'POST',
-            params: {
-                txtValor: winO.down("textfield[name=valor]").getValue(),
-                txtNombre: winO.down("textfield[name=nombre]").getValue(),
-            },
-            success: function (result, request) {
-                result = Ext.JSON.decode(result.responseText);
-                loadingMask.hide();
-                if (result.success) {
-
-                    storeE.load();
-                    winO.close();
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-
-                }
-                else {
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                    // myapp.util.Util.showErrorMsg(result.msg);
-                }
-            },
-            failure: function (form, action) {
-                var result = action.result;
-                loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-
-            }
-        });
-    },
-            onClickGuardarAlcance: function (button, e, options) {
-                winE = this.getWinEvento();
-                storeE = winE.down("combobox[name=cmbAlcance]").getStore();
-                winO = this.getWinMaestroAlcance();
-
-                var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
-                loadingMask.show();
-
-
-                Ext.Ajax.request({//AQUI ENVIO LA DATA 
-                    url: BASE_URL + 'alcance/alcance/registrarAlcance',
-                    method: 'POST',
-                    params: {
-                        txtValor: winO.down("textfield[name=valor]").getValue(),
-                        txtNombre: winO.down("textfield[name=nombre]").getValue(),
-                    },
-                    success: function (result, request) {
-                        result = Ext.JSON.decode(result.responseText);
-                        loadingMask.hide();
-                        if (result.success) {
-
-                            storeE.load();
-                            winO.close();
-                            Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-
-                        }
-                        else {
-                            Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                            // myapp.util.Util.showErrorMsg(result.msg);
-                        }
-                    },
-                    failure: function (form, action) {
-                        var result = action.result;
-                        loadingMask.hide();
-                        Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        storeE.load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
                     }
-                });
-            },
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+            });
+        }
+        else {
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'tipoEvento/tipoEvento/actualizarTipoEvento',
+                method: 'POST',
+                params: {
+                    id: winE.down("combobox[name=cmbTipoEvento]").getValue(),
+                    txtValor: winO.down("textfield[name=valor]").getValue(),
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
+
+                        storeE.load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+            });
+        }
+
+    },
+    onClickGuardarAlcance: function (button, e, options) {
+        winE = this.getWinEvento();
+        storeE = winE.down("combobox[name=cmbAlcance]").getStore();
+        winO = this.getWinMaestroAlcance();
+
+        var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+        loadingMask.show();
+
+        if (nuevoAl) {
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'alcance/alcance/registrarAlcance',
+                method: 'POST',
+                params: {
+                    txtValor: winO.down("textfield[name=valor]").getValue(),
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
+
+                        storeE.load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+            });
+        }
+        else {
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'alcance/alcance/actualizarAlcance',
+                method: 'POST',
+                params: {
+                    id: winE.down("combobox[name=cmbAlcance]").getValue(),
+                    txtValor: winO.down("textfield[name=valor]").getValue(),
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
+
+                        storeE.load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+            });
+        }
+
+    },
 });

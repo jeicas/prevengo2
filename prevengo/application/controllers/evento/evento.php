@@ -158,7 +158,12 @@ class Evento extends CI_Controller {
                     case '2':
                         $estatus = 'En Ejecución';
                         break;
+                     case '4':
+                        $estatus = 'Sin Plan';
+                        break;
+                    
                     default:
+                        
                         $estatus = 'Completado';
                         break;
                 }

@@ -53,19 +53,34 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
             }
 
 
-        });  },
+        });
+    },
     //==============Funciones de la listaEventosComisionados  =====================================
     onClickVerReincidencia: function (record, item, index, e, eOpts) {
 
 
         win = Ext.create('myapp.view.evento.WinReincidenciaEvento');
+        if (item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
+                || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
+                || item.data.estatus == '<font color=#FF0000> Sin Plan </font>') {
+            newGrid = this.getListaReincidenciaEvento();
+            store = newGrid.getStore();
+            store.proxy.extraParams.id = item.data.idEv;
+            store.load();
+            win.setTitle("Reincidencias del Evento");
+            win.show();
+        }
+        else {
+            newGrid = this.getListaReincidenciaEvento();
+            store = newGrid.getStore();
+            store.proxy.extraParams.id = item.data.idEv;
+            store.load();
+            newGrid.down('button[name=btnNuevoReincidencia]').setVisible(false);
+               newGrid.down('button[name=btnEliminarReincidencia]').setVisible(false);
+            win.setTitle("Reincidencias del Evento");
+            win.show(); 
+        }
 
-        newGrid = this.getListaReincidenciaEvento();
-        store = newGrid.getStore();
-        store.proxy.extraParams.id = item.data.idEv;
-        store.load();
-        win.setTitle("Reincidencias del Evento");
-        win.show();
 
     }, // fin de la function
 
@@ -124,7 +139,7 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                 msg: 'Debe seleccionar la reincidencia que desea eliminar',
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
-  },
+    },
     // ====================funciones de la ventana listaAsignarComisionado================
 
     onClickGuardarReincidencia: function (button, e, options) {

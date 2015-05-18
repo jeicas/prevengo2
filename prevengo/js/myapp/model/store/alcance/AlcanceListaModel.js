@@ -4,6 +4,7 @@ Ext.define('myapp.model.store.alcance.AlcanceListaModel', {
     fields: [
         { name: 'id'},
         { name: 'nombre'},
+         { name: 'valor'},
         { name: 'estatus'},
     ] 
 });

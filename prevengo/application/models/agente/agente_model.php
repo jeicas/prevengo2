@@ -31,7 +31,7 @@ class Agente_model extends CI_Model {
         public function  actualizarAgente($data){         
          $this->db->set($data);
          $this->db->where('id',$data['id']);
-         return  $this->db->update('actividad');
+         return  $this->db->update('agente');
     }  
         
 }// fin de la clase

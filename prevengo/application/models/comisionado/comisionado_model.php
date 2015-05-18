@@ -51,5 +51,17 @@ class Comisionado_model extends CI_Model {
          $this->db->where('id',$data['id']);
          return  $this->db->update('comisionado');
     }
+    
+     public function  buscarComisionado($id){         
+            $query = $this->db->query("select count(*) as cuantos
+
+                                    from prevengo.comisionado 
+                                    
+                                    where  prevengo.comisionado.evento=$id and 					 												   
+                                           prevengo.comisionado.estatus=1
+                                 ");
+       
+            return $query; 
+    }
 
 }// fin de la clase

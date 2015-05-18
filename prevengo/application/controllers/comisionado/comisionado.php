@@ -80,8 +80,30 @@ class Comisionado extends CI_Controller {
         }
     }//fin registrar
 
+   public function buscarComisionado() {
+        $id = $this->input->post('id');
+        $comisionado= $this->comisionado_model->buscarComisionado($id);
 
+        if ($comisionado->num_rows() > 0) {
 
+            $row = $comisionado->row_array(); 
+
+                   $cuanto = $row['cuantos'];
+ 
+            $output = array(
+                'success' => true,
+                'cuanto' => $cuanto,
+            );  
+            echo json_encode($output);
+        } else {
+            echo json_encode(array(
+                "success" => false
+            ));
+        }
+    
+       
+    }//fin registrar
+    
  public function actualizarComisionado() {
 
         $idLineam = $this->input->post('idLineam');
