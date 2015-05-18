@@ -1,4 +1,9 @@
 var nuevo = false;
+var nuevoS= false;
+var nuevoTE= false;
+var nuevoAg= false;
+var nuevoAl=false;
+
 Ext.define('myapp.controller.evento.EventoListaController', {
     extend: 'Ext.app.Controller',
     views: ['evento.ListaEventos',
@@ -324,45 +329,105 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
     //============================MAESTROS===============================================
     onClickNuevoAgente: function (button, e, options) {
+        nuevoAg=true;
         var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
         winAgente.setTitle("Nuevo  Agente");
         winAgente.show();
     },
     onClickNuevoAlcance: function (button, e, options) {
+        nuevoAl=true;
         var winAlcance = Ext.create('myapp.view.maestroValor.WinMaestroAlcance');
         winAlcance.setTitle("Nuevo  Alcance");
         winAlcance.show();
     },
     onClickNuevoSector: function (button, e, options) {
+        nuevoS=true;
         var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
         winSector.setTitle("Nuevo  Sector");
         winSector.show();
     },
     onClickNuevoTipoEvento: function (button, e, options) {
+        nuevoTE=true;
         var winTE = Ext.create('myapp.view.maestroValor.WinMaestroTipoEvento');
         winTE.setTitle("Nuevo  Tipo de Evento");
         winTE.show();
     },
     onClickEditarAgente: function (button, e, options) {
+        nuevoAg=false;
+        winE =this.getWinEvento();
         var winAgente = Ext.create('myapp.view.maestroNombre.WinMaestroAgente');
         winAgente.setTitle("Actualizar  Agente");
+          storeS= winE.down("combobox[name=cmbAgente]").getStore();
+         valor= winE.down("combobox[name=cmbAgente]").getValue();
+         
+           for (i=0; i<storeS.data.items.length; ++i)
+         { 
+             
+            if(storeS.data.items[i].data['id']==valor){    
+              winAgente.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
+              i=storeS.data.items.length+1;
+            }  
+         }
         winAgente.show();
     },
     onClickEditarTipoEvento: function (button, e, options) {
+        nuevoTE=false;
+        winE =this.getWinEvento();
         var winTE = Ext.create('myapp.view.maestroValor.WinMaestroTipoEvento');
         winTE.setTitle("Actualizar  Tipo de Evento");
+          storeS= winE.down("combobox[name=cmbTipoEvento]").getStore();
+         valor= winE.down("combobox[name=cmbTipoEvento]").getValue();
+         
+           for (i=0; i<storeS.data.items.length; ++i)
+         { 
+             
+            if(storeS.data.items[i].data['id']==valor){    
+              winTE.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
+              winTE.down("textfield[name=valor]").setValue(storeS.data.items[i].data['valor']);
+              i=storeS.data.items.length+1;
+            }  
+         }
         winTE.show();
     },
     onClickEditarSector: function (button, e, options) {
-        var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
-        winSector.setTitle("Actualizar  Sector");
-       
+        nuevoS=false;
+        winE =this.getWinEvento();
+         var winSector = Ext.create('myapp.view.maestroNombre.WinMaestroSector');
+         winSector.setTitle("Actualizar  Sector");
+         storeS= winE.down("combobox[name=cmbSector]").getStore();
+         valor= winE.down("combobox[name=cmbSector]").getValue();
+         
+           for (i=0; i<storeS.data.items.length; ++i)
+         { 
+             
+            if(storeS.data.items[i].data['id']==valor){    
+              winSector.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
+              i=storeS.data.items.length+1;
+            }  
+         }
+           
+             
+        
         
         winSector.show();
     },
     onClickEditarAlcance: function (button, e, options) {
+        nuevoAl=false;
+        winE =this.getWinEvento();
         var winAlcance = Ext.create('myapp.view.maestroValor.WinMaestroAlcance');
         winAlcance.setTitle("Actualizar  Alcance");
+          storeS= winE.down("combobox[name=cmbSector]").getStore();
+         valor= winE.down("combobox[name=cmbSector]").getValue();
+         
+           for (i=0; i<storeS.data.items.length; ++i)
+         { 
+             
+            if(storeS.data.items[i].data['id']==valor){    
+              winAlcance.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
+              winAlcance.down("textfield[name=valor]").setValue(storeS.data.items[i].data['valor']);
+              i=storeS.data.items.length+1;
+            }  
+         }
         winAlcance.show();
     },
     //======================Funciones de la ventana Observaciones ====================0
