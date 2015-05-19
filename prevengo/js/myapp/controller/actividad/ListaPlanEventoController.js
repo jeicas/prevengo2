@@ -72,7 +72,8 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             editWindow.down('textfield[name=descripcion]').setValue(record[0].get('descripcion'));
             editWindow.down('textfield[name=dtfFechaT]').setValue(record[0].get('fecha'));
             editWindow.down('textfield[name=dtfFechaPA]').setValue(record[0].get('fechaPA'));
-            editWindow.down('combobox[name=cmbActividadDepende]').setValue(record[0].get('depende'));
+            
+            editWindow.down('combobox[name=dependiente]').setValue("Bienvenido");
             editWindow.show();
         }
         else {
@@ -92,12 +93,12 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             if (record[0].get('estatus') != 'Completado') {
                 Ext.Msg.show({
                     title: 'Confirmar',
-                    msg: 'Esta seguro que desea CANCELAR el Evento ' + record[0].get('titulo') + '?',
+                    msg: 'Esta seguro que desea CANCELAR el Evento ' + record[0].get('descripcion') + '?',
                     buttons: Ext.Msg.YESNO,
                     icon: Ext.Msg.QUESTION,
                     fn: function (buttonId) {
                         if (buttonId == 'yes') {
-                            var win = Ext.create('myapp.view.observacion.winObservacionActividad');
+                            var win = Ext.create('myapp.view.observacion.WinObservacionActividad');
                             win.setTitle("Cancelar Evento " + record[0].get('descripcion'));
                             win.down('label[name=lblDescripcion]').setText("Indique la razón por la que desea cancelar el plan de accción  " + record[0].get('descripcion') + "?");
                             win.show();
@@ -114,7 +115,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
 
         } else {
             Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                msg: 'Debe seleccionar el evento que desea cancelar',
+                msg: 'Debe seleccionar la actividad que desea cancelar',
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
 
@@ -245,7 +246,7 @@ onClickGuardarPlan: function (button, e, options) {
     onClickGuardarObservacionCancelar: function (button, e, options) {
 
         grid = this.getListaPlanEvento();
-        winO = this.getwinObservacionActividad();
+        winO = this.getWinObservacionActividad();
 
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();

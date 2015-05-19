@@ -175,6 +175,12 @@ class Avance extends CI_Controller {
                 } else {
                     $tipo = 'Parcial';
                 }
+                
+                  if ($row['observacion'] == 'no tiene observaciones') {
+                    $observacion = '';
+                } else {
+                    $observacion = $row['observacion'];
+                }
 
                 $eventAct = "  Actividad: " . $row['actividad'] . "<br> <font color=#3F77E6> Evento: " . $row['evento'] . "</font></br>";
 
@@ -185,6 +191,8 @@ class Avance extends CI_Controller {
                     'fecha' => $row['fecha'],
                     'nombre' => $row['nombre'],
                     'apellido' => $row['apellido'],
+                    'observacion' => $observacion,
+                    
                 );
             }
             $output = array(

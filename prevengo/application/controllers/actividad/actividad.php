@@ -103,7 +103,7 @@ class Actividad extends CI_Controller {
                     case '5':
                         $estatus = 'Expirado';
                         break;
-                        
+
 
                     default:
                         $estatus = 'Completado';
@@ -172,7 +172,7 @@ class Actividad extends CI_Controller {
 
 //fin de la funcion
 
-    public function obtenerPlandeAccionDeEvento() {
+        public function obtenerPlandeAccionDeEvento() {
         $id = $this->input->get('id');
 
         $resultdbd = $this->actividad_model->cargarPlandeAccionDeEvento($id);
@@ -206,12 +206,21 @@ class Actividad extends CI_Controller {
                 } else {
                     $depende = $row['depende'];
                 }
+                
+                   if ($row['observacion'] == 'no tiene observaciones') {
+                    $observacion = '';
+                } else {
+                    $observacion = $row['observacion'];
+                }
+
+                
                 $data[] = array(
                     'id' => $row['id'],
                     'descripcion' => $row['descripcion'],
                     'fecha' => $row['fecha'],
                     'fechaPA' => $row['fechaPA'],
                     'depende' => $depende,
+                     'observacion' => $observacion,
                     'estatus' => $estatus,
                 );
             }
@@ -230,33 +239,29 @@ class Actividad extends CI_Controller {
 
     public function obtenerActividadDependiente() {
         $idAct = $this->input->get('idAct');
-        $idEv= $this->input->get('idEvent');
+        $idEv = $this->input->get('idEvent');
         $resultdbd = array();
 
-        
-        if($idAct==0){
+
+        if ($idAct == 0) {
             if ($resultdbd = $this->actividad_model->cargarActividadDependiente($idEv)) {
-            $output = array(
-                'success' => true,
-                'total' => count($resultdbd),
-                'data' => array_splice($resultdbd, $this->input->get("start"), $this->input->get("limit"))
-            );
-            echo json_encode($output);
-          }
-        }else {
-             if ($resultdbd = $this->actividad_model->cargarActividadDependiente2($idEv,$idAct)) {
-               $output = array(
-                'success' => true,
-                'total' => count($resultdbd),
-                'data' => array_splice($resultdbd, $this->input->get("start"), $this->input->get("limit"))
-            );
-            echo json_encode($output);
+                $output = array(
+                    'success' => true,
+                    'total' => count($resultdbd),
+                    'data' => array_splice($resultdbd, $this->input->get("start"), $this->input->get("limit"))
+                );
+                echo json_encode($output);
+            }
+        } else {
+            if ($resultdbd = $this->actividad_model->cargarActividadDependiente2($idEv, $idAct)) {
+                $output = array(
+                    'success' => true,
+                    'total' => count($resultdbd),
+                    'data' => array_splice($resultdbd, $this->input->get("start"), $this->input->get("limit"))
+                );
+                echo json_encode($output);
+            }
         }
-        }
-            
-        
-        
-        
     }
 
 //fin de la funcion
@@ -266,7 +271,7 @@ class Actividad extends CI_Controller {
         $descripcion = $this->input->post('txtDescripcion');
         $usuario = 2;
         $evento = $this->input->post('lblIdEvent');
- 
+
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
@@ -283,7 +288,7 @@ class Actividad extends CI_Controller {
                 }
 
                 $datactividad = array(
-                    'id' =>$row['IdAct'],
+                    'id' => $row['IdAct'],
                     'usuario' => $usuario,
                     'evento' => $evento,
                     'descripcion' => $descripcion,
@@ -344,30 +349,29 @@ class Actividad extends CI_Controller {
     }
 
 //registrarActividad
-    
-    
-    
-        public function actualizarActividad() {
-        $idAc=$this->input->post('id');
+
+
+
+    public function actualizarActividad() {
+        $idAc = $this->input->post('id');
         $descripcion = $this->input->post('txtDescripcion');
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
-        $depende=$this->input->post('cmbActividadDepende'); 
+        $depende = $this->input->post('cmbActividadDepende');
 
-            if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
-                $depende = null;
-            } else {
-                $depende = $this->input->post('cmbActividadDepende');
-            }
+        if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
+            $depende = null;
+        } else {
+            $depende = $this->input->post('cmbActividadDepende');
+        }
         $dataEvento = array(
-                'id' => $idAc,
-                'descripcion' => $descripcion,
-                'fecharegistro' => $fecharegistro,
-                'fechaaviso' => $fechaPA,
-                'fechatope' => $fechaT,
-                'actividadepende' => $depende,
-             
+            'id' => $idAc,
+            'descripcion' => $descripcion,
+            'fecharegistro' => $fecharegistro,
+            'fechaaviso' => $fechaPA,
+            'fechatope' => $fechaT,
+            'actividadepende' => $depende,
         );
 
         $result = $this->actividad_model->actualizarDataActividad($dataEvento);
@@ -460,12 +464,11 @@ class Actividad extends CI_Controller {
             );
             echo json_encode($output);
         }
-    }//fin de la funcion
-    
-    
-    
-    
-public function cancelarActividad() {
+    }
+
+//fin de la funcion
+
+    public function cancelarActividad() {
 
         $observacion = $this->input->post('observacion');
         $idActividad = $this->input->post('idActividad');
@@ -495,10 +498,9 @@ public function cancelarActividad() {
             ));
         }
     }
-    
-    
+
     public function listaActivadesAvancesPorEvento() {
-         $id= $this->input->get('id');
+        $id = $this->input->get('id');
         $eventos = $this->actividad_model->eventoActividadAvance($id);
 
         if ($eventos->num_rows() > 0) {
@@ -526,9 +528,9 @@ public function cancelarActividad() {
                         $estatus = '<font color=#01DF3A> Completado </font>';
                         break;
                 }
-                
-                
-                   switch ($row['tipoAvance']) {
+
+
+                switch ($row['tipoAvance']) {
                     case '1':
                         $tipoE = "Parcial";
                         break;
@@ -540,15 +542,15 @@ public function cancelarActividad() {
                         $tipoE = 'Final';
                         break;
                 }
-                
+
                 $data[] = array(
                     'idAct' => $row['idAct'],
-                    'actividad' =>" Plan de Accion:".$row['actDescripcion']." <br> <font color=#3F77E6> Estado: ".$estatus."</font></br>",
-                    'responsable' => $row['nombreAct']." ".$row['apellidoAct'],
+                    'actividad' => " Plan de Accion:" . $row['actDescripcion'] . " <br> <font color=#3F77E6> Estado: " . $estatus . "</font></br>",
+                    'responsable' => $row['nombreAct'] . " " . $row['apellidoAct'],
                     'avance' => $row['avDescripcion'],
                     'tipoEvento' => $tipoE,
                     'fecha' => $row['fecha'],
-                    'ejecutor' => $row['nombreAva']." ".$row['apellidoAva'],
+                    'ejecutor' => $row['nombreAva'] . " " . $row['apellidoAva'],
                     'estatus' => $estatus,
                 );
             }
@@ -561,9 +563,11 @@ public function cancelarActividad() {
         } else {
             echo json_encode(array(
                 "success" => false,
-                "msj"=> "no hay información para mostrar"
+                "msj" => "no hay información para mostrar"
             ));
         }
     }
 
-}//fin del controller
+}
+
+//fin del controller

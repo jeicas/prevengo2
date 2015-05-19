@@ -106,6 +106,24 @@ extend: 'Ext.window.Window',
                                 triggerAction : 'all'
                                 
                                 
+                            },
+                               {
+                                xtype: 'combobox',
+                                x: 200,
+                                y: 30,
+                                fieldLabel: 'Actividad:',
+                                name:'dependiente',
+                                editable      : false,
+                                store         : Ext.create('myapp.store.actividad.ActividadDependienteStore'),
+                                valueField    : 'id',
+                                displayField  : 'descripcion',
+                                emptyText     :'Seleccione',
+                                queryMode     : 'local',
+                                disabled       :false,
+                                forceSelection: true,
+                                triggerAction : 'all'
+                                
+                                
                             }
                         ]
                     }

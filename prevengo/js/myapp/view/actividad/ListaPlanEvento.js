@@ -46,6 +46,11 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
                 dataIndex: 'estatus',
                 flex: 0.5,
                 text: 'Estatus',
+            },
+            {
+                dataIndex: 'observacion',
+                flex: 0.5,
+                text: 'Observacion',
             }
             ]
     },

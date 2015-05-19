@@ -50,7 +50,8 @@ class Avance_model extends CI_Model {
         $sql = "SELECT av.descripcion AS descripcion, evento.titulo AS evento, 
                      actividad.descripcion AS actividad, 
                      av.tipo AS tipo,
-                     av.fecharegistro AS fecha,  
+                     av.fecharegistro AS fecha, 
+                     av.observacion AS observacion,
                      bdgenerica.persona.nombre AS nombre, 
                      bdgenerica.persona.apellido AS apellido 
 

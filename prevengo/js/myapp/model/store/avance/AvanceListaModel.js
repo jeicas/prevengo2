@@ -11,5 +11,6 @@ Ext.define('myapp.model.store.avance.AvanceListaModel', {
         { name: 'fecha'},
         { name: 'nombre'},
         { name: 'apellido'},
+        { name: 'observacion'},
     ] 
 });
