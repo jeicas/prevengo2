@@ -42,7 +42,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             "winActividad button[name=btnGuardar]": {
                 click: this.onClickGuardarPlan
             },
-            "actividadForm checkboxfield[name=cbfDepende]": {
+            "winActividad checkboxfield[name=cbfDepende]": {
                 change: this.cargarActividad
             },
             "winObservacionActividad button[name=btnGuardar]": {
@@ -64,17 +64,15 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
     onClickEditarPlan: function (button, e, options) {
         nuevoPlan = false;
         var grid = this.getListaPlanEvento(),
-                record = grid.getSelectionModel().getSelection();
+            record = grid.getSelectionModel().getSelection();
 
         if (record[0]) {
-
-
-
             var editWindow = Ext.create('myapp.view.actividad.WinActividad');
             editWindow.setTitle("Actualizar Actividad");
-            editWindow.down('actividadForm').getForm().reset();
-            editWindow.down('actividadForm').loadRecord(record[0]);
-
+            editWindow.down('textfield[name=descripcion]').setValue(record[0].get('descripcion'));
+            editWindow.down('textfield[name=dtfFechaT]').setValue(record[0].get('fecha'));
+            editWindow.down('textfield[name=dtfFechaPA]').setValue(record[0].get('fechaPA'));
+            editWindow.down('combobox[name=cmbActividadDepende]').setValue(record[0].get('depende'));
             editWindow.show();
         }
         else {
@@ -122,9 +120,8 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
 
     },
 //=======================Funciones del WinActividad=========================================
-
-    onClickGuardarPlan: function (button, e, options) {
-        formulario = this.getActividadForm();
+onClickGuardarPlan: function (button, e, options) {
+       
         win = this.getWinActividad();
         grid = this.getListaPlanEvento();
 
@@ -133,19 +130,19 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
 
 
         if (nuevoPlan) {
-            formulario.getForm().submit({//AQUI ENVIO LA DATA 
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
                 url: BASE_URL + 'actividad/actividad/registrarActividad',
                 method: 'POST',
                 params:
                         {
-                            txtDescripcion: formulario.down("textfield[name=descripcion]").getValue(),
-                            dtfFechaT: formulario.down("textfield[name=dtfFechaT]").getValue(),
-                            dtfFechaPA: formulario.down("textfield[name=dtfFechaPA]").getValue(),
-                            cmbActividadDepende: formulario.down("combobox[name=cmbActividadDepende]").getValue(),
+                            txtDescripcion:win.down("textfield[name=descripcion]").getValue(),
+                            dtfFechaT: win.down("textfield[name=dtfFechaT]").getValue(),
+                            dtfFechaPA: win.down("textfield[name=dtfFechaPA]").getValue(),
+                            cmbActividadDepende: win.down("combobox[name=cmbActividadDepende]").getValue(),
                             lblIdEvent: grid.down("label[name=lblIdEvento]").getEl().dom.textContent,
                         },
-                success: function (form, action) {
-                    var result = action.result;
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
                     loadingMask.hide();
 
                     if (result.success) {
@@ -171,19 +168,19 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
         else
         {
             record = grid.getSelectionModel().getSelection();
-            formulario.getForm().submit({//AQUI ENVIO LA DATA 
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
                 url: BASE_URL + 'actividad/actividad/actualizarActividad',
                 method: 'POST',
                 params:
                         {
                             id: record[0].get('id'),
-                            txtDescripcion: formulario.down("textfield[name=descripcion]").getValue(),
-                            dtfFechaT: formulario.down("textfield[name=dtfFechaT]").getValue(),
-                            dtfFechaPA: formulario.down("textfield[name=dtfFechaPA]").getValue(),
-                            cmbActividadDepende: formulario.down("combobox[name=cmbActividadDepende]").getValue(),
+                            txtDescripcion: win.down("textfield[name=descripcion]").getValue(),
+                            dtfFechaT: win.down("textfield[name=dtfFechaT]").getValue(),
+                            dtfFechaPA: win.down("textfield[name=dtfFechaPA]").getValue(),
+                            cmbActividadDepende: win.down("combobox[name=cmbActividadDepende]").getValue(),
                      },
-                success: function (form, action) {
-                    var result = action.result;
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
                     loadingMask.hide();
 
                     if (result.success) {
@@ -209,14 +206,17 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
 
 
     }, // fin de la function
-
-    cargarActividad: function () {
+    
+	
+	
+	
+	cargarActividad: function () {
         nuevo = this.getListaPlanEvento();
         evento = nuevo.down("label[name=lblIdEvento]").getEl().dom.textContent;
         if (nuevoPlan) {
-            if (Ext.ComponentQuery.query('actividadForm checkboxfield[name=cbfDepende]')[0].getValue() == true) {
-                Ext.ComponentQuery.query('actividadForm combobox[name=cmbActividadDepende]')[0].setDisabled(false);
-                store = Ext.ComponentQuery.query('actividadForm combobox[name=cmbActividadDepende]')[0].getStore();
+            if (Ext.ComponentQuery.query('winActividad checkboxfield[name=cbfDepende]')[0].getValue() == true) {
+                Ext.ComponentQuery.query('winActividad combobox[name=cmbActividadDepende]')[0].setDisabled(false);
+                store = Ext.ComponentQuery.query('winActividad  combobox[name=cmbActividadDepende]')[0].getStore();
                 store.proxy.extraParams.idEvent = evento;
                 store.proxy.extraParams.idAct = 0;
                 store.load();
@@ -226,10 +226,10 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             }
         } else {
             record= nuevo.getSelectionModel().getSelection();
-            if (Ext.ComponentQuery.query('actividadForm checkboxfield[name=cbfDepende]')[0].getValue() == true) {
-                Ext.ComponentQuery.query('actividadForm combobox[name=cmbActividadDepende]')[0].setDisabled(false);
+            if (Ext.ComponentQuery.query('winActividad  checkboxfield[name=cbfDepende]')[0].getValue() == true) {
+                Ext.ComponentQuery.query('winActividad  combobox[name=cmbActividadDepende]')[0].setDisabled(false);
                
-                    store = Ext.ComponentQuery.query('actividadForm combobox[name=cmbActividadDepende]')[0].getStore();
+                    store = Ext.ComponentQuery.query('winActividad combobox[name=cmbActividadDepende]')[0].getStore();
                     store.proxy.extraParams.idEvent = evento;
                     store.proxy.extraParams.idAct = record[0].get('id');
                     store.load();
@@ -241,7 +241,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             }
         }
     },
-    //======================Funciones de la ventana Observaciones ====================0
+        //======================Funciones de la ventana Observaciones ====================0
     onClickGuardarObservacionCancelar: function (button, e, options) {
 
         grid = this.getListaPlanEvento();

@@ -79,6 +79,7 @@ Ext.define('myapp.view.actividad.ActividadForm', {
                                 xtype: 'checkboxfield',
                                 x: 10,
                                 y: 10,
+                          
                                 fieldLabel: 'Esta actividad depende de otra para iniciar?',
                                 boxLabel: 'Si',
                                 name:'cbfDepende'
