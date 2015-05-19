@@ -1,0 +1,67 @@
+Ext.define('myapp.view.observacion.WinObservacionAvanceRechazado', {
+extend: 'Ext.window.Window',
+  alias: 'widget.winObservacionAvanceRechazado',
+  itemId: 'winObservacionAvanceRechazado',
+  title:'Evento',
+  height: 250,
+  width: 390,
+  modal:true,
+  requires: [
+    
+  ],
+  layout: {
+   	type: 'fit'
+  },
+  initComponent: function() {
+    var me = this;
+    me.items = me.buildItem();
+    me.dockedItems = me.buildDockedItems();
+    me.callParent();
+  },
+  buildItem : function(){
+    return [{
+      xtype: 'container',
+            height: 270,
+            width: 676,
+            layout: 'absolute',
+            items: [
+                  {
+                        xtype: 'label',
+                        x: 10,
+                        y: 20,
+                        width: 400,
+                        text:'',
+                        name:'lblDescripcion'
+                    },
+                    {
+                        xtype: 'textareafield',
+                        x: 10,
+                        y: 60,
+                        width: 300,
+                        fieldLabel: 'Descripción:',
+                        name:'txtDescripcion'
+                    }
+        ]// fin del contenedor
+    }]
+  },
+  buildDockedItems : function(){
+    return [{
+      xtype : 'toolbar',
+      flex  : 1,
+      dock  : 'bottom',
+      items: [{
+            xtype : 'tbfill'
+          },
+          {
+            xtype   : 'button',
+            iconCls :'save',
+            name    :'btnGuardar',
+            text    : 'Guardar',
+            disabled:false,
+            scope   : this,
+
+
+          }]
+    }]
+  }
+});

@@ -19,7 +19,7 @@ class Actividad_model extends CI_Model{
                                         from actividad 
                                         inner join avance on actividad.id=avance.actividad
                                         inner join evento on evento.id=actividad.evento
-                                        where (evento.estatus in (1,2)) and (actividad.estatus in (1,2)) and (avance.usuario=3)
+                                        where (evento.estatus in (1,2)) and (actividad.estatus in (1,2)) and (avance.usuario=2)
                                         order by actividad.estatus, actividad.id ");
                 $resultado = array();
                 $resultdb=array();  

@@ -27,7 +27,7 @@ Ext.define('myapp.view.avance.GridListaAvance', {
 	viewConfig: {
     	 		
     },
-	selType: 'checkboxmodel',
+	
 	columnLines: true,
 	initComponent : function(){
 	    var me = this;
@@ -183,6 +183,32 @@ Ext.define('myapp.view.avance.GridListaAvance', {
 			            if (this.value) {
 		                   	store.filter({
 		                        property     : 'apellido',
+		                        value         : this.value,
+		                        anyMatch      : true,
+		                        caseSensitive : false
+		                    });
+			            }
+				    },
+				    buffer: 500
+				}
+			}
+		},
+                {
+			flex: 0.5,
+			dataIndex:'estatus',
+			text: 'Estado',
+			items    : {
+				xtype: 'textfield',
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+				    keyup: function() {
+			           	var store = this.up('grid').store;
+			           	store.clearFilter();
+			            if (this.value) {
+		                   	store.filter({
+		                        property     : 'estatus',
 		                        value         : this.value,
 		                        anyMatch      : true,
 		                        caseSensitive : false

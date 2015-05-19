@@ -52,6 +52,7 @@ class Avance_model extends CI_Model {
                      av.tipo AS tipo,
                      av.fecharegistro AS fecha, 
                      av.observacion AS observacion,
+                     av.estatus AS estatus,
                      bdgenerica.persona.nombre AS nombre, 
                      bdgenerica.persona.apellido AS apellido 
 
@@ -60,7 +61,7 @@ class Avance_model extends CI_Model {
                 INNER JOIN evento ON actividad.evento=evento.id 
                 INNER JOIN bdgenerica.usuario ON av.usuario= bdgenerica.usuario.id 
                 INNER JOIN bdgenerica.persona ON bdgenerica.usuario.cedula=bdgenerica.persona.cedula
-                WHERE av.estatus=0 
+                WHERE av.estatus in (0,2,3)    
                 ORDER BY av.fecharegistro, av.tipo ASC";
 
 

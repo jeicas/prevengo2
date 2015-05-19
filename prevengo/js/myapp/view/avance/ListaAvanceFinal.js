@@ -279,7 +279,7 @@ Ext.define('myapp.view.consultar.ListaAvanceFinal', {
                      {
                         xtype: 'button',
                         name: 'btnAprobarAvance',
-                        text: 'Rechazar Avance',
+                        text: 'Aprobar Avance',
                         iconCls: 'cancel'
                     },
                     {

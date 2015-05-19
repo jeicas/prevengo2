@@ -23,7 +23,7 @@ class Avance extends CI_Controller {
       
 
         $actividad = $this->input->post('cmbActividad');
-        $usuario = 3;
+        $usuario = 2;
         $tipo = $this->input->post('cmbTipoAvance');
         $costo = $this->input->post('txtCosto');
         $fecharegistro = date('Y-m-d');
@@ -181,6 +181,24 @@ class Avance extends CI_Controller {
                 } else {
                     $observacion = $row['observacion'];
                 }
+                
+                 switch ($row['estatus']) {
+                    case '2':
+                        $estatus = 'Cancelado';
+                        break;
+                    case '3':
+                        $estatus = 'Rechazado';
+                        break;
+                    case '4':
+                        $estatus = 'Retrasado';
+                        break;
+                   
+                    default:
+                        $estatus = 'Completado';
+                        break;
+                }
+                
+                
 
                 $eventAct = "  Actividad: " . $row['actividad'] . "<br> <font color=#3F77E6> Evento: " . $row['evento'] . "</font></br>";
 
@@ -192,6 +210,7 @@ class Avance extends CI_Controller {
                     'nombre' => $row['nombre'],
                     'apellido' => $row['apellido'],
                     'observacion' => $observacion,
+                    'estatus' => $estatus,
                     
                 );
             }
@@ -252,10 +271,12 @@ class Avance extends CI_Controller {
 
         $idAct = $this->input->post('record');
         $id = $this->input->post('idAvance');
+        $observacion= $this->input->post('observacion');
         $estatus = 3; // rechazar la actividad
         $estatusAct = 2;
         $data = array(
             'id' => $id,
+            'observacion' =>$observacion,
             'estatus' => $estatus,
         );
 
