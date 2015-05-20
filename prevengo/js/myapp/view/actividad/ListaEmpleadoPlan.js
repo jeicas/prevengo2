@@ -52,7 +52,7 @@ Ext.define('myapp.view.actividad.ListaEmpleadoPlan', {
                         xtype: 'button',
                         name: 'btnAsignarEmpleado',
                         text: 'Asignar Empleado',
-                        iconCls: 'editar'
+                        iconCls: 'useradd1'
                     },
                      {
                         xtype: 'label',

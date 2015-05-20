@@ -66,13 +66,24 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
                console.log(result.cuanto);
 
                 if (result.cuanto==0){
-                    Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene Comisionados registrados", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-
+                   
+                     if (item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                       {
+                           win = Ext.create('myapp.view.evento.WinComisionadoEvento');
+                        
+                        store = newGrid.getStore();
+                        store.proxy.extraParams.id = item.data.idEv;
+                        store.load();
+                        win.setTitle("Comisionados del evento: " + record[0].get('titulo'));
+                        win.show();
+                       }
+                       Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene Comisionados registrados", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                      
                     }
                 else { 
                    
 
-                   if (item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
+                   if(item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
                             || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
                             || item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
                     {
@@ -86,7 +97,6 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
                     } else
                     {
                         win = Ext.create('myapp.view.evento.WinComisionadoEvento');
-                        
                         store = newGrid.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();

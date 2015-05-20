@@ -44,13 +44,13 @@ Ext.define('myapp.view.evento.ListaReincidenciaEvento', {
                      {  
                         xtype: 'button',
                         name: 'btnNuevoReincidencia',
-                        text: 'Nueva Reincidencia',
-                        iconCls: 'editar'
+                        text: 'Nuevo',
+                        iconCls: 'useradd'
                     },{  
                         xtype: 'button',
                         name: 'btnEliminarReincidencia',
-                        text: 'Eliminar Reincidencia',
-                        iconCls: 'editar'
+                        text: 'Eliminar',
+                        iconCls: 'eliminar2'
                     },
                     
                      {

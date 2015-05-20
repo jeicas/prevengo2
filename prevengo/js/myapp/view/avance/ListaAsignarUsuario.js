@@ -184,12 +184,12 @@ Ext.define('myapp.view.avance.ListaAsignarUsuario', {
                         xtype: 'button',
                         name: 'btnGuardar',
                         text: 'Guardar',
-                        iconCls: 'editar'
+                        iconCls: 'save'
                     },
                      {
                         xtype: 'label',
                         name: 'lblIdActividad',
-                        text: 'h00000',
+                        text: '',
                         hidden:true
      
                     }  

@@ -78,13 +78,13 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
                         xtype: 'button',
                         name: 'btnEditarPlan',
                         text: 'Editar',
-                        iconCls: 'editar'
+                        iconCls: 'useredit'
                     },
                      {
                         xtype: 'button',
                         name: 'btnCancelarPlan',
-                        text: 'Cancelar Actividad',
-                        iconCls: 'cancelar'
+                        text: 'Cancelar',
+                        iconCls: 'userdelete'
                     },
                      {
                         xtype: 'label',
