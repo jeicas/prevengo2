@@ -102,7 +102,7 @@ extend: 'Ext.window.Window',
                                 emptyText     :'Seleccione',
                                 queryMode     : 'local',
                                 disabled       :true,
-                                forceSelection: true,
+                                
                                 triggerAction : 'all'
                                 
                                 

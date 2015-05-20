@@ -132,6 +132,7 @@ public function  cambiarEstatus($data){
                      ac.fechatope AS fecha,
                      ac.fechaaviso AS fechaPA, 
                      actividad.descripcion AS depende,
+                      ac.actividadepende AS iddepende,
                      ac.observacion as observacion,
                      ac.estatus AS estatus
                 

@@ -207,6 +207,12 @@ class Actividad extends CI_Controller {
                     $depende = $row['depende'];
                 }
                 
+                  if ($row['iddepende'] == 'NULL') {
+                    $idDepende = '';
+                } else {
+                    $idDepende = $row['iddepende'];
+                }
+                
                    if ($row['observacion'] == 'no tiene observaciones') {
                     $observacion = '';
                 } else {
@@ -220,6 +226,7 @@ class Actividad extends CI_Controller {
                     'fecha' => $row['fecha'],
                     'fechaPA' => $row['fechaPA'],
                     'depende' => $depende,
+                    'iddepende' =>$idDepende,
                      'observacion' => $observacion,
                     'estatus' => $estatus,
                 );
@@ -358,7 +365,7 @@ class Actividad extends CI_Controller {
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
-        $depende = $this->input->post('cmbActividadDepende');
+        
 
         if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
             $depende = null;

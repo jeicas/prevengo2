@@ -43,6 +43,11 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
                 text: 'Actividad Dependiente',
             },
              {
+                dataIndex: 'iddepende',
+                flex: 0.3,
+                text: 'Id Dependiente',
+            },
+             {
                 dataIndex: 'estatus',
                 flex: 0.5,
                 text: 'Estatus',
