@@ -19,8 +19,11 @@ class Actividad extends CI_Controller {
 //fin del constructor
 
     public function obtenerPlandeAccion() {
+        $user = $this->session->userdata('datasession');
+        $usuario = $user['idusuario'];
         $resultdbd = array();
-        if ($resultdbd = $this->actividad_model->cargarPlandeAccion()) {
+
+        if ($resultdbd = $this->actividad_model->cargarPlandeAccion($usuario)) {
             $output = array(
                 'success' => true,
                 'total' => count($resultdbd),
@@ -61,13 +64,21 @@ class Actividad extends CI_Controller {
     public function aprobarActividad() {
         $id = $this->input->post('record');
         $estatus = 0;
+        $estatusDepende = 1;
 
         $data = array(
             'id' => $id,
             'estatus' => $estatus,
         );
+        $dataDepende = array(
+            'id' => $id,
+            'estatus' => $estatusDepende,
+        );
+
         $resultdbd = $this->actividad_model->cambiarEstatus($data);
-        if ($resultdbd) {
+        $resultdbd2 = $this->actividad_model->cambiarEstatusDependientes($dataDepende);
+
+        if ($resultdbd && $resultdbd2) {
             echo json_encode(array(
                 "success" => true,
                 "msg" => "La actividad ha sido Completada exitosamente" //modificado en la base de datos
@@ -83,7 +94,9 @@ class Actividad extends CI_Controller {
 //fin de la funcion
 
     public function obtenerPlandeAccionEvento() {
-        $resultdbd = $this->actividad_model->cargarEventosConPlandeAccion();
+        $user = $this->session->userdata('datasession');
+        $usuario = $user['idusuario'];
+        $resultdbd = $this->actividad_model->cargarEventosConPlandeAccion($usuario);
 
         if ($resultdbd->num_rows() > 0) {
             foreach ($resultdbd->result_array() as $row) {
@@ -104,7 +117,9 @@ class Actividad extends CI_Controller {
                         $estatus = 'Expirado';
                         break;
 
-
+                    case '6':
+                        $estatus = 'En Espera';
+                        break;
                     default:
                         $estatus = 'Completado';
                         break;
@@ -140,8 +155,11 @@ class Actividad extends CI_Controller {
 
 //fin de la funcion
 
-    public function obtenerEventosConPlandeAccion() {
-        $resultdbd = $this->actividad_model->cargarEventosPA();
+    public function obtenerEventosConPlandeAccion() { 
+        $user=$this->session->userdata('datasession');
+         $usuario = $user['idusuario'];
+        
+        $resultdbd = $this->actividad_model->cargarEventosPA($usuario);
 
         if ($resultdbd->num_rows() > 0) {
             foreach ($resultdbd->result_array() as $row) {
@@ -172,10 +190,11 @@ class Actividad extends CI_Controller {
 
 //fin de la funcion
 
-        public function obtenerPlandeAccionDeEvento() {
+    public function obtenerPlandeAccionDeEvento() {
         $id = $this->input->get('id');
-
-        $resultdbd = $this->actividad_model->cargarPlandeAccionDeEvento($id);
+ $user=$this->session->userdata('datasession');
+         $usuario = $user['idusuario'];
+        $resultdbd = $this->actividad_model->cargarPlandeAccionDeEvento($id,$usuario);
 
         if ($resultdbd->num_rows() > 0) {
             foreach ($resultdbd->result_array() as $row) {
@@ -195,7 +214,10 @@ class Actividad extends CI_Controller {
                     case '5':
                         $estatus = 'Expirado';
                         break;
-                   
+                    case '6':
+                        $estatus = 'En Espera';
+                        break;
+
                     default:
                         $estatus = 'Completado';
                         break;
@@ -206,28 +228,28 @@ class Actividad extends CI_Controller {
                 } else {
                     $depende = $row['depende'];
                 }
-                
-                  if ($row['iddepende'] == 'NULL') {
+
+                if ($row['iddepende'] == 'NULL') {
                     $idDepende = '';
                 } else {
                     $idDepende = $row['iddepende'];
                 }
-                
-                   if ($row['observacion'] == 'no tiene observaciones') {
+
+                if ($row['observacion'] == 'no tiene observaciones') {
                     $observacion = '';
                 } else {
                     $observacion = $row['observacion'];
                 }
 
-                
+
                 $data[] = array(
                     'id' => $row['id'],
                     'descripcion' => $row['descripcion'],
                     'fecha' => $row['fecha'],
                     'fechaPA' => $row['fechaPA'],
                     'depende' => $depende,
-                    'iddepende' =>$idDepende,
-                     'observacion' => $observacion,
+                    'iddepende' => $idDepende,
+                    'observacion' => $observacion,
                     'estatus' => $estatus,
                 );
             }
@@ -275,23 +297,29 @@ class Actividad extends CI_Controller {
 
 
     public function registrarActividad() {
+        $user = $this->session->userdata('datasession');
+        $usuario = $user['idusuario'];
+
         $descripcion = $this->input->post('txtDescripcion');
-        $usuario = 2;
+
         $evento = $this->input->post('lblIdEvent');
 
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
-        $estatus = 1;
+
         $estatusEv = 2;
+
 
         $datoAct = $this->actividad_model->buscarIdActividad($evento);
         if ($datoAct->num_rows() > 0) {
             foreach ($datoAct->result_array() as $row) {
                 if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
                     $depende = null;
+                    $estatus = 1;
                 } else {
                     $depende = $this->input->post('cmbActividadDepende');
+                    $estatus = 6;
                 }
 
                 $datactividad = array(
@@ -316,10 +344,11 @@ class Actividad extends CI_Controller {
         } else {
             if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
                 $depende = null;
+                $estatus = 1;
             } else {
                 $depende = $this->input->post('cmbActividadDepende');
+                $estatus = 6;
             }
-
             $datactividad = array(
                 'usuario' => $usuario,
                 'evento' => $evento,
@@ -344,7 +373,7 @@ class Actividad extends CI_Controller {
         if ($result and $resultEve) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
+                "msg" => "Se Guardo con Éxito.".$usuario //modificado en la base de datos
             ));
         } else {
 
@@ -365,7 +394,7 @@ class Actividad extends CI_Controller {
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
-        
+
 
         if ($this->input->post('cmbActividadDepende') == '' || $this->input->post('cmbActividadDepende') == null || $this->input->post('cmbActividadDepende') == 'Seleccione') {
             $depende = null;
@@ -529,6 +558,9 @@ class Actividad extends CI_Controller {
                         break;
                     case '5':
                         $estatus = '<font color=#FF0000> Expirado  </font>';
+                        break;
+                     case '6':
+                        $estatus = 'En Espera';
                         break;
 
                     default:

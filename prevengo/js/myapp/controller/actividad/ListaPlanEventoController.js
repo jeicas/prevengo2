@@ -85,7 +85,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                 msg: 'Debe seleccionar el evento que desea editar',
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
-        console.log(record[0].get('iddepende'));
+       
     }, // fin de la function
 
 
@@ -136,8 +136,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
         }
         else {
             if (nuevoPlan) {
-                var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
-                loadingMask.show();
+               
                 Ext.Ajax.request({//AQUI ENVIO LA DATA 
                     url: BASE_URL + 'actividad/actividad/registrarActividad',
                     method: 'POST',
@@ -174,19 +173,17 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             }
             else
             {
-                console.log(win.down("combobox[name=cmbActividadDepende]").getValue());
-                 
+             
                 record = grid.getSelectionModel().getSelection();
                 
-                if ( win.down("combobox[name=cmbActividadDepende]").getValue()==tieneDepende || tieneDepende==0)
+                if (tieneDepende!=null)
                 {
                     ActividadDependiente=tieneDepende
                 }
                 else {
                     ActividadDependiente=win.down("combobox[name=cmbActividadDepende]").getValue();
                 }
-                console.log(win.down("combobox[name=cmbActividadDepende]").getValue());
-                
+              
                 Ext.Ajax.request({//AQUI ENVIO LA DATA 
                     url: BASE_URL + 'actividad/actividad/actualizarActividad',
                     method: 'POST',

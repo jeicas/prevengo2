@@ -17,6 +17,7 @@ class Menu_model extends CI_Model {
       WHERE u.usuario ='$usuario' 
       AND u.clave='$pass'");
     $folder = array();
+    
     if ($queryString ->num_rows() > 0){
       $in = '('; 
         foreach($queryString->result_array() as $user){

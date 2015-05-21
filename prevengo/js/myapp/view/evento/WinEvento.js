@@ -57,7 +57,7 @@ Ext.define('myapp.view.evento.WinEvento', {
                         emptyText: 'Seleccione',
                         queryMode: 'local',
                         allowBlank: false,
-                        forceSelection: true,
+                        
                         triggerAction: 'all'
                     },
                     {
@@ -75,7 +75,7 @@ Ext.define('myapp.view.evento.WinEvento', {
                         emptyText: 'Seleccione',
                         queryMode: 'local',
                         allowBlank: false,
-                        forceSelection: true,
+                       
                         triggerAction: 'all'
                     },
                     {
@@ -93,7 +93,7 @@ Ext.define('myapp.view.evento.WinEvento', {
                         emptyText: 'Seleccione',
                         queryMode: 'local',
                         allowBlank: false,
-                        forceSelection: true,
+                       
                         triggerAction: 'all'
                     },
                     {
@@ -111,7 +111,7 @@ Ext.define('myapp.view.evento.WinEvento', {
                         emptyText: 'Seleccione',
                         queryMode: 'local',
                         allowBlank: false,
-                        forceSelection: true,
+                       
                         triggerAction: 'all'
                     },
                     {
@@ -147,7 +147,8 @@ Ext.define('myapp.view.evento.WinEvento', {
                         x: 330,
                         y: 160,
                         name: 'btnNuevoAgente',
-                        iconCls: 'icon-limpiar',
+                        tooltip:'agregar Agente',
+                        iconCls: 'useradd',
                         text: ''
                     },
                     {
@@ -155,7 +156,8 @@ Ext.define('myapp.view.evento.WinEvento', {
                         x: 330,
                         y: 200,
                        name: 'btnNuevoTipoEvento',
-                        iconCls: 'icon-limpiar',
+                       tooltip:'agregar Tipo de Evento',
+                        iconCls: 'useradd',
                         text: ''
                     },
                     {
@@ -163,7 +165,8 @@ Ext.define('myapp.view.evento.WinEvento', {
                         x: 330,
                         y: 240,
                         name: 'btnNuevoSector',
-                        iconCls: 'icon-limpiar',
+                        tooltip:'agregar Sector',
+                        iconCls: 'useradd',
                         text: ''
                     },
                     {
@@ -171,7 +174,8 @@ Ext.define('myapp.view.evento.WinEvento', {
                         x: 330,
                         y: 280,
                         name: 'btnNuevoAlcance',
-                        iconCls: 'icon-limpiar',
+                        tooltip:'agregar Alcance',
+                        iconCls: 'useradd',
                         text: ''
                     },
                     {
@@ -179,7 +183,8 @@ Ext.define('myapp.view.evento.WinEvento', {
                         x: 360,
                         y: 160,
                         name: 'btnEditarAgente',
-                        iconCls: 'icon-limpiar',
+                        tooltip:'editar el agente seleccionado',
+                        iconCls: 'useredit',
                         text: ''
                     },
                      {
@@ -187,21 +192,24 @@ Ext.define('myapp.view.evento.WinEvento', {
                         x: 360,
                         y: 200,
                         name: 'btnEditarTipoEvento',
-                        iconCls: 'icon-limpiar',
+                        tooltip:'editar el tipo de evento seleccionado',
+                        iconCls: 'useredit',
                         text: ''
                     },   {
                         xtype: 'button',
                         x: 360,
                         y: 240,
                         name: 'btnEditarSector',
-                        iconCls: 'icon-limpiar',
+                        iconCls: 'useredit',
+                        tooltip:'editar el sector seleccionado',
                         text: ''
                     },{
                         xtype: 'button',
                         x: 360,
                         y: 280,
                         name: 'btnEditarAlcance',
-                        iconCls: 'icon-limpiar',
+                        tooltip:'editar el alcance seleccionado',
+                        iconCls: 'useredit',
                         text: ''
                     }
                   

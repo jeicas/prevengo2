@@ -9,8 +9,6 @@ Ext.define('myapp.view.Header', {
     src: BASE_PATH+'imagen/logo/Logo-Nuevo-Gober-sin-borde.png',
     height:80,
     width:350,
-    },{ 
-        xtype: 'tbfill'
     },
    {
      xtype: 'label',                           
@@ -33,6 +31,8 @@ Ext.define('myapp.view.Header', {
         xtype: 'label',
         text: 'PREVENGO',
         baseCls:'Three-Dee'
-    }
+    },{ 
+        xtype: 'tbfill'
+    },
     ] 
 });

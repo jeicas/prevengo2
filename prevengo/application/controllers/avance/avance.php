@@ -20,10 +20,11 @@ class Avance extends CI_Controller {
     }
 
     public function registrarAvance() {
-      
+       $user=$this->session->userdata('datasession');
+         $usuario = $user['idusuario'];
 
         $actividad = $this->input->post('cmbActividad');
-        $usuario = 2;
+    
         $tipo = $this->input->post('cmbTipoAvance');
         $costo = $this->input->post('txtCosto');
         $fecharegistro = date('Y-m-d');

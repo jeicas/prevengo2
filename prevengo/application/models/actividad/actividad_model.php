@@ -13,13 +13,13 @@ class Actividad_model extends CI_Model{
     }
         
         
-	 public function cargarPlandeAccion(){
+	 public function cargarPlandeAccion($usuario){
      
             $query = $this->db->query("select actividad.id, actividad.descripcion,  avance.fechaasignacion as fecha, evento.titulo as evento
                                         from actividad 
                                         inner join avance on actividad.id=avance.actividad
                                         inner join evento on evento.id=actividad.evento
-                                        where (evento.estatus in (1,2)) and (actividad.estatus in (1,2)) and (avance.usuario=2)
+                                        where (evento.estatus in (1,2)) and (actividad.estatus in (1,2)) and (avance.usuario=$usuario)
                                         order by actividad.estatus, actividad.id ");
                 $resultado = array();
                 $resultdb=array();  
@@ -62,6 +62,12 @@ public function  cambiarEstatus($data){
          return  $this->db->update('actividad');
     }
  
+    public function  cambiarEstatusDependientes($data){         
+         $this->db->set('estatus',$data['estatus']);
+         $this->db->where('actividadepende',$data['id']);
+          $this->db->where('estatus',6);
+         return  $this->db->update('actividad');
+    }
     
   public function  actualizarActividad($data){         
          $this->db->set('usuario',$data['usuario']);
@@ -75,7 +81,7 @@ public function  cambiarEstatus($data){
          return  $this->db->update('actividad');
     } 
     
- public function cargarEventosConPlandeAccion(){
+ public function cargarEventosConPlandeAccion($usuario){
       
     
         $sql="SELECT ev.id AS idEvento,
@@ -91,7 +97,7 @@ public function  cambiarEstatus($data){
                 INNER JOIN actividad 
                 ON actividad.evento= ev.id
                 WHERE ev.estatus IN (1,2,4)
-                     AND  actividad.usuario=2
+                     AND  actividad.usuario=$usuario
 
                ";
 
@@ -100,7 +106,7 @@ public function  cambiarEstatus($data){
              
     
  }
- public function cargarEventosPA(){
+ public function cargarEventosPA($usuario){
       
     
         $sql="SELECT ev.id AS idEvento,
@@ -113,7 +119,7 @@ public function  cambiarEstatus($data){
                 INNER JOIN actividad 
                 ON actividad.evento= ev.id
                 WHERE ev.estatus IN (1,2,4)
-                     AND  actividad.usuario=2 
+                     AND  actividad.usuario=$usuario 
                            
                  GROUP BY  idEvento
                  ORDER BY fecha ASC
@@ -125,7 +131,7 @@ public function  cambiarEstatus($data){
     
  }
  
- public function cargarPlandeAccionDeEvento($id){
+ public function cargarPlandeAccionDeEvento($id,$usuario){
   
         $sql=" SELECT ac.id AS id,
                     ac.descripcion AS descripcion, 
@@ -140,7 +146,7 @@ public function  cambiarEstatus($data){
                 LEFT JOIN actividad 
                 ON actividad.id=ac.actividadepende
                 WHERE 
-                      ac.usuario=2  
+                      ac.usuario=$usuario  
                       AND ac.evento=$id";
 
                  $query = $this->db->query($sql);

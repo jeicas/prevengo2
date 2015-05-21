@@ -173,10 +173,10 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                 var win = Ext.create('myapp.view.evento.WinEvento');
                 win.down('textfield[name=txtTitulo]').setValue(record[0].get('titulo'));
                 win.down('textfield[name=txtDescripcion]').setValue(record[0].get('descripcion'));
-                //win.down('combobox[name=cmbAgente]').setDisplay(record[0].get('agente'));
-                //win.down('combobox[name=cmbAlcnace]').setValue(record[0].get('alcance'));
-                //win.down('combobox[name=cmbSector]').setValue(record[0].get('sector'));
-                //win.down('combobox[name=cmbTipoEvento]').setValue(record[0].get('tipoEvento'));
+                win.down('combobox[name=cmbAgente]').setValue(record[0].get('agente'));
+                win.down('combobox[name=cmbAlcance]').setValue(record[0].get('alcance'));
+                win.down('combobox[name=cmbSector]').setValue(record[0].get('sector'));
+                win.down('combobox[name=cmbTipoEvento]').setValue(record[0].get('tipoEvento'));
                 win.down('datefield[name=dtfFechaT]').setValue(record[0].get('fechaEvento'));
                 win.down('datefield[name=dtfFechaPA]').setValue(record[0].get('fechaPreAviso'));
                 win.down('numberfield[name=txtPresupuesto]').setValue(record[0].get('presupuesto'));

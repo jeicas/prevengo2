@@ -210,11 +210,12 @@ class Evento extends CI_Controller {
 //fin 
 
     public function registrarEvento() {
-
+         $user=$this->session->userdata('datasession');
+         $usuario = $user['idusuario'];            
         $titulo = $this->input->post('txtTitulo');
         $descripcion = $this->input->post('txtDescripcion');
         $presupuesto = $this->input->post('txtPresupuesto');
-        $usuario = 1;
+      
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
