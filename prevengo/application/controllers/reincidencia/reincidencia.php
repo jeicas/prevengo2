@@ -45,7 +45,25 @@ class Reincidencia extends CI_Controller {
 
 //fin listaEventos
     
-    
+       public function buscarReincidencia() {
+        $id = $this->input->post('id');
+        $valor= $this->reincidencia_model->buscarReincidencia($id);
+
+        if ($valor->num_rows() > 0) {
+
+            $row = $valor->row_array(); 
+            $output = array(
+                'success' => true,
+                'cuanto' =>  $row['cuantos'],
+            );  
+            echo json_encode($output);
+        } else {
+            echo json_encode(array(
+                "success" => false
+            ));
+        }
+       
+    }//fin registrar
       
 
  

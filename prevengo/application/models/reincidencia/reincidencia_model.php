@@ -40,4 +40,16 @@ class Reincidencia_model extends CI_Model {
          return  $this->db->update('reincidencia');
     }
 
+       public function  buscarReincidencia($id){         
+            $query = $this->db->query("select count(*) as cuantos
+
+                                    from prevengo.reincidencia 
+                                    
+                                    where  prevengo.reincidencia.evento=$id and 					 												   
+                                           prevengo.reincidencia.estatus=1
+                                 ");
+       
+            return $query; 
+    }
+
 }// fin de la clase

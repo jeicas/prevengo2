@@ -57,34 +57,67 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
     },
     //==============Funciones de la listaEventosComisionados  =====================================
     onClickVerReincidencia: function (record, item, index, e, eOpts) {
+         win = Ext.create('myapp.view.evento.WinReincidenciaEvento');
+         newGrid2 = this.getListaReincidenciaEvento();
+         
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'reincidencia/reincidencia/buscarReincidencia',
+            method: 'POST',
+            params: {
+                id: item.data.idEv
+            },
+            success: function (result, request) {
+                
+              
+                result = Ext.JSON.decode(result.responseText);
+                if (result.cuanto == 0) {
+                 
+                    if (item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                    {
+                      
+                        store = newGrid2.getStore();
+                        store.proxy.extraParams.id = item.data.idEv;
+                        store.load();
+                        win.setTitle("Reincidencias del evento: " + item.data.titulo);
+                        win.show();
+                    }
+                    Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene Reincidencias registrados", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
+                }
+                else {
+                   
+                    if (item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
+                            || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
+                            || item.data.estatus == '<font color=#FF0000> Sin Plan </font>') {
 
-        win = Ext.create('myapp.view.evento.WinReincidenciaEvento');
-        if (item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
-                || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
-                || item.data.estatus == '<font color=#FF0000> Sin Plan </font>') {
-            newGrid = this.getListaReincidenciaEvento();
-            store = newGrid.getStore();
-            store.proxy.extraParams.id = item.data.idEv;
-            store.load();
-            win.setTitle("Reincidencias del Evento");
-            win.show();
-        }
-        else {
-            newGrid = this.getListaReincidenciaEvento();
-            store = newGrid.getStore();
-            store.proxy.extraParams.id = item.data.idEv;
-            store.load();
-            newGrid.down('button[name=btnNuevoReincidencia]').setVisible(false);
-               newGrid.down('button[name=btnEliminarReincidencia]').setVisible(false);
-            win.setTitle("Reincidencias del Evento");
-            win.show(); 
-        }
+                        store = newGrid2.getStore();
+                        store.proxy.extraParams.id = item.data.idEv;
+                        store.load();
+                        win.setTitle("Reincidencias del Evento");
+                        win.show();
+                    }
+                    else {
 
+                        store = newGrid2.getStore();
+                        store.proxy.extraParams.id = item.data.idEv;
+                        store.load();
+                        newGrid2.down('button[name=btnNuevoReincidencia]').setVisible(false);
+                        newGrid2.down('button[name=btnEliminarReincidencia]').setVisible(false);
+                        win.setTitle("Reincidencias del Evento");
+                        win.show();
+                    }
+                }
+
+            },
+            failure: function (form, action) {
+                var result = action.result;
+
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+        });
 
     }, // fin de la function
-
-
     // ====================funciones de la ventana listaComisionadoEvento================
     onClickNuevoReincidencia: function (button, e, options) {
 
@@ -276,8 +309,7 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
     previewImage: function (fieldfile) {
 
 
-        console.log("Cambia");
-
+      
         /*
          if (!checkFileExtension(encodeURIComponent(document.getElementsByName("btnSubirArchivo[]")[0].value)))
          {

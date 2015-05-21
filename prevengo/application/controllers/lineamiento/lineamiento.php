@@ -46,7 +46,25 @@ class Lineamiento extends CI_Controller {
 //fin listaEventos
     
     
-      
+            public function buscarLineamiento() {
+        $id = $this->input->post('id');
+        $valor= $this->lineamiento_model->buscarLineamiento($id);
+
+        if ($valor->num_rows() > 0) {
+
+            $row = $valor->row_array(); 
+            $output = array(
+                'success' => true,
+                'cuanto' =>  $row['cuantos'],
+            );  
+            echo json_encode($output);
+        } else {
+            echo json_encode(array(
+                "success" => false
+            ));
+        }
+       
+    }//fin registrar
 
  
     public function registrarLineamiento() {

@@ -3,12 +3,11 @@ var nuevorespo = false;
 Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
     extend: 'Ext.app.Controller',
     views: ['evento.ListaEventosLineamientos',
-             'evento.ListaLineamientosPorEvento'
-        
+        'evento.ListaLineamientosPorEvento'
+
     ],
     requires: [
         'myapp.util.Util',
-        
     ],
     refs: [
         {
@@ -23,84 +22,118 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
             ref: 'ListaLineamientoPorEvento',
             selector: 'listaLineamientoPorEvento'
         },
-       {
+        {
             ref: 'WinDescripcion',
             selector: 'winDescripcion'
         },
-     
-        
     ],
     init: function (application) {
         this.control({
-            "listaEventosLineamientos":{
+            "listaEventosLineamientos": {
                 itemdblclick: this.onClickVerLineamiento
             },
-           
-             "listaLineamientoPorEvento button[name=btnNuevoLineamiento]": {
+            "listaLineamientoPorEvento button[name=btnNuevoLineamiento]": {
                 click: this.onClickNuevoLineamiento
             },
-             "listaLineamientoPorEvento button[name=btnEditarLineamiento]": {
+            "listaLineamientoPorEvento button[name=btnEditarLineamiento]": {
                 click: this.onClickEditarLineamiento
             },
-             "listaLineamientoPorEvento button[name=btnEliminarLineamiento]": {
+            "listaLineamientoPorEvento button[name=btnEliminarLineamiento]": {
                 click: this.onClickEliminarLineamiento
             },
-             "winDescripcion button[name=btnGuardar]": {
+            "winDescripcion button[name=btnGuardar]": {
                 click: this.onClickGuardarLineamiento
             },
-             "winDescripcion button[name=btnLimpiar]": {
+            "winDescripcion button[name=btnLimpiar]": {
                 click: this.onClickLimpiarLineamiento
             },
- 
         });
     },
-   
-   
-      //==============Funciones de la ListaEventosLineamientos  =====================================
-    onClickVerLineamiento: function (record, item, index, e, eOpts ) {
+    //==============Funciones de la ListaEventosLineamientos  =====================================
+    onClickVerLineamiento: function (record, item, index, e, eOpts) {
 
         grid = this.getListaEventosLineamientos();
         record = grid.getSelectionModel().getSelection();
-    
+        win = Ext.create('myapp.view.evento.WinLineamientoPorEvento');
+        newGrid = this.getListaLineamientoPorEvento();
 
-       if (record[0].get('estatus')== '<font color=#2E9AFE> Pendiente </font>'
-               || record[0].get('estatus')== '<font color=#FF8000> En Ejecución  </font>'
-               || record[0].get('estatus')== '<font color=#FF0000> Sin Plan </font>') 
-       {
-            win= Ext.create('myapp.view.evento.WinLineamientoPorEvento');
-            newGrid=this.getListaLineamientoPorEvento();
-            store= newGrid.getStore();      
-            store.proxy.extraParams.id=item.data.idEv;
-            store.load();
-            win.setTitle("Lineamientos del evento: "+record[0].get('titulo'));
-            win.show();  
-       }else 
-       {
-        win= Ext.create('myapp.view.evento.WinLineamientoPorEvento');
-            newGrid=this.getListaLineamientoPorEvento();
-            store= newGrid.getStore();      
-            store.proxy.extraParams.id=item.data.idEv;
-            store.load();
-             newGrid.down('button[name=btnNuevoLineamiento]').setVisible(false);
-              newGrid.down('button[name=btnEditarLineamiento]').setVisible(false);
-               newGrid.down('button[name=btnEliminarLineamiento]').setVisible(false);
-            win.setTitle("Lineamientos del evento: "+record[0].get('titulo'));
-            win.show();
-       }
-         
-           
-        
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'lineamiento/lineamiento/buscarLineamiento',
+            method: 'POST',
+            params: {
+                id: item.data.idEv
+            },
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+                
+
+                if (result.cuanto == 0) {
+                    if (item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                    {
+
+                        store = newGrid.getStore();
+                        store.proxy.extraParams.id = item.data.idEv;
+                        store.load();
+                        win.setTitle("Lineamientos del evento: " + item.data.titulo);
+                        win.show();
+                    }
+                    Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene lineamientos registrados", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+                else {
+                    if (record[0].get('estatus') == '<font color=#2E9AFE> Pendiente </font>'
+                            || record[0].get('estatus') == '<font color=#FF8000> En Ejecución  </font>'
+                            || record[0].get('estatus') == '<font color=#FF0000> Sin Plan </font>')
+                    {
+
+                        store = newGrid.getStore();
+                        store.proxy.extraParams.id = item.data.idEv;
+                        store.load();
+                        win.setTitle("Lineamientos del evento: " + record[0].get('titulo'));
+                        win.show();
+                    } else
+                    {
+
+                        store = newGrid.getStore();
+                        store.proxy.extraParams.id = item.data.idEv;
+                        store.load();
+                        newGrid.down('button[name=btnNuevoLineamiento]').setVisible(false);
+                        newGrid.down('button[name=btnEditarLineamiento]').setVisible(false);
+                        newGrid.down('button[name=btnEliminarLineamiento]').setVisible(false);
+                        win.setTitle("Lineamientos del evento: " + record[0].get('titulo'));
+                        win.show();
+                    }
+                }
+
+
+            },
+            failure: function (form, action) {
+                var result = action.result;
+
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+        });
+
+
+
+
+
+
+
+
+
 
     }, // fin de la function
-   
-   
-     // ====================funciones de la ventana listaLineamientoPorEvento================
+
+
+    // ====================funciones de la ventana listaLineamientoPorEvento================
     onClickNuevoLineamiento: function (button, e, options) {
-           nuevo = true;  
-           win= Ext.create('myapp.view.descripcion.WinDescripcion');
-            win.setTitle("Nuevo Lineamiento");
-            win.show();
-           
+        nuevo = true;
+        win = Ext.create('myapp.view.descripcion.WinDescripcion');
+        win.setTitle("Nuevo Lineamiento");
+        win.show();
+
     },
     onClickEditarLineamiento: function (button, e, options) {
         nuevo = false;
@@ -108,158 +141,154 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
         record = grid.getSelectionModel().getSelection();
 
         if (record[0]) {
-            
-                var win = Ext.create('myapp.view.descripcion.WinDescripcion');
-                win.down('textfield[name=txtDescripcion]').setValue(record[0].get('descripcion'));
-                win.setTitle("Actualizar Lineamiento");
-                win.show();
+
+            var win = Ext.create('myapp.view.descripcion.WinDescripcion');
+            win.down('textfield[name=txtDescripcion]').setValue(record[0].get('descripcion'));
+            win.setTitle("Actualizar Lineamiento");
+            win.show();
         } else {
             Ext.MessageBox.show({title: 'Informaci&oacute;n',
                 msg: 'Debe seleccionar el evento que desea Editar',
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
-   
-       
+
+
     },
     onClickEliminarLineamiento: function (button, e, options) {
         var grid = this.getListaLineamientoPorEvento();
         record = grid.getSelectionModel().getSelection();
-        
+
         if (record[0]) {
-              Ext.Msg.show({
+            Ext.Msg.show({
                 title: 'Confirmar',
                 msg: 'Esta seguro que desea Eliminar el Lineamiento?',
                 buttons: Ext.Msg.YESNO,
                 icon: Ext.Msg.QUESTION,
                 fn: function (buttonId) {
                     if (buttonId == 'yes') {
-                         Ext.Ajax.request({
-                        url: BASE_URL+'lineamiento/lineamiento/eliminarLineamiento',
-                    method: 'POST',
-                    params: {
-                        lin:record[0].get('idLin')
-                        
-                    },
-                    
-                     success: function(result, request){
-                       data=Ext.JSON.decode(result.responseText);
-                       
-                        if (data.success){
-                              Ext.MessageBox.show({ title: 'Mensaje', msg:  data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
-                                grid.getView().refresh();
-                                grid.getStore().load();
-                               
+                        Ext.Ajax.request({
+                            url: BASE_URL + 'lineamiento/lineamiento/eliminarLineamiento',
+                            method: 'POST',
+                            params: {
+                                lin: record[0].get('idLin')
+
+                            },
+                            success: function (result, request) {
+                                data = Ext.JSON.decode(result.responseText);
+
+                                if (data.success) {
+                                    Ext.MessageBox.show({title: 'Mensaje', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                                    grid.getView().refresh();
+                                    grid.getStore().load();
+
+                                }
+                                else {
+                                    Ext.MessageBox.show({title: 'Alerta', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                                    // myapp.util.Util.showErrorMsg(result.msg);
+                                }
+                            },
+                            failure: function (result, request) {
+                                var result = Ext.JSON.decode(result.responseText);
+                                loadingMask.hide();
+                                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
                             }
-                        else{
-                           Ext.MessageBox.show({ title: 'Alerta', msg:  data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
-                           // myapp.util.Util.showErrorMsg(result.msg);
-                        }
-                    },
-                    failure: function(result, request){
-                    var result = Ext.JSON.decode(result.responseText);   
-                     loadingMask.hide();
-                           Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                     }
-                });                
+                        });
                     }
                 }
             });
-    
+
         } else {
             Ext.MessageBox.show({title: 'Informaci&oacute;n',
                 msg: 'Debe seleccionar el lineamiento que desea eliminar',
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
-       
     },
-   
-   
-   // ====================funciones de la ventana WinDescripcion================
-   
-       onClickGuardarLineamiento: function (button, e, options) {
-           
-          grid = this.getListaEventosLineamientos();
-          grid2 = this.getListaLineamientoPorEvento();
-          winO = this.getWinDescripcion();
-        if (nuevo){     
-        var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
-        loadingMask.show();
+    // ====================funciones de la ventana WinDescripcion================
 
-        record = grid.getSelectionModel().getSelection();
-           
-         Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'lineamiento/lineamiento/registrarLineamiento',
-            method: 'POST',
-            params: {
-                descripcion: winO.down("textfield[name=txtDescripcion]").getValue(),
-                idEvento: record[0].get('idEv')
-            },
-            success:  function(result, request){
-                   result=Ext.JSON.decode(result.responseText);
+    onClickGuardarLineamiento: function (button, e, options) {
+
+        grid = this.getListaEventosLineamientos();
+        grid2 = this.getListaLineamientoPorEvento();
+        winO = this.getWinDescripcion();
+        if (nuevo) {
+            var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+            loadingMask.show();
+
+            record = grid.getSelectionModel().getSelection();
+
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'lineamiento/lineamiento/registrarLineamiento',
+                method: 'POST',
+                params: {
+                    descripcion: winO.down("textfield[name=txtDescripcion]").getValue(),
+                    idEvento: record[0].get('idEv')
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
                     loadingMask.hide();
 
                     if (result.success) {
-                    grid2.getView().refresh();
-                    grid2.getStore().load();
-                    winO.close();
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                   
-                }
-                else {
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                    // myapp.util.Util.showErrorMsg(result.msg);
-                }
-            },
-            failure: function (form, action) {
-                var result = action.result;
-                loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        grid2.getView().refresh();
+                        grid2.getStore().load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
-            }
-        });
-    }
-    else { 
-          var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
-        loadingMask.show();
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
-        record = grid2.getSelectionModel().getSelection();
-           
-         Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'lineamiento/lineamiento/actualizarLineamiento',
-            method: 'POST',
-            params: {
-                descripcion: winO.down("textfield[name=txtDescripcion]").getValue(),
-                idLineam: record[0].get('idLin')
-            },
-            success:  function(result, request){
-                   result=Ext.JSON.decode(result.responseText);
+                }
+            });
+        }
+        else {
+            var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+            loadingMask.show();
+
+            record = grid2.getSelectionModel().getSelection();
+
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'lineamiento/lineamiento/actualizarLineamiento',
+                method: 'POST',
+                params: {
+                    descripcion: winO.down("textfield[name=txtDescripcion]").getValue(),
+                    idLineam: record[0].get('idLin')
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
                     loadingMask.hide();
 
                     if (result.success) {
-                    grid2.getView().refresh();
-                    grid2.getStore().load();
-                    winO.close();
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                   
-                }
-                else {
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                    // myapp.util.Util.showErrorMsg(result.msg);
-                }
-            },
-            failure: function (form, action) {
-                var result = action.result;
-                loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        grid2.getView().refresh();
+                        grid2.getStore().load();
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
-            }
-        });
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
-    }
-       
+                }
+            });
+
+        }
+
     },
     onClickLimpiarLineamiento: function (button, e, options) {
-         
-        
+
+
     },
 });

@@ -40,4 +40,16 @@ class Lineamiento_model extends CI_Model {
          return  $this->db->update('lineamiento');
     }
 
+       public function  buscarLineamiento($id){         
+            $query = $this->db->query("select count(*) as cuantos
+
+                                    from prevengo.lineamiento
+                                    
+                                    where  prevengo.lineamiento.evento=$id and 					 												   
+                                           prevengo.lineamiento.estatus=1
+                                 ");
+       
+            return $query; 
+    }
+
 }// fin de la clase

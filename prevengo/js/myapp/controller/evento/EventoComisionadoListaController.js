@@ -63,8 +63,6 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
             },
             success: function (result, request) {
                 result = Ext.JSON.decode(result.responseText);
-               console.log(result.cuanto);
-
                 if (result.cuanto==0){
                    
                      if (item.data.estatus == '<font color=#FF0000> Sin Plan </font>')

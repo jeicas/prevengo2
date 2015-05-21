@@ -382,7 +382,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
         for (i = 0; i < storeS.data.items.length; ++i)
         {
-            console.log(storeS.data.items[i]);
+           
             if (storeS.data.items[i].data['id'] == valor) {
                 winTE.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
                 winTE.down("textfield[name=valor]").setValue(storeS.data.items[i].data['valor']);
