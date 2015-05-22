@@ -184,7 +184,7 @@ Ext.define('myapp.view.evento.ListaAsignarUsuario', {
                         xtype: 'button',
                         name: 'btnGuardar',
                         text: 'Guardar',
-                        iconCls: 'editar'
+                        iconCls: 'save'
                     }  
                              
                     

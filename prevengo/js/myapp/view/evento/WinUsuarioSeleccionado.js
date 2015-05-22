@@ -100,7 +100,7 @@ extend: 'Ext.window.Window',
           },
           {
             xtype   : 'button',
-            iconCls :'save',
+            iconCls :'useredit1',
             name    :'btnCambiar', 
             text    : 'Cambiar Responsable',
             disabled:false,

@@ -7,6 +7,9 @@
 .aceptar {
   background-image:url('../imagen/btn/accept.png') !important;
 }
+.useradd1{
+  background-image:url('../imagen/btn/useradd1.png') !important;
+}
 .icon-save {
   background-image:url('../imagen/btn/icon-save.png') !important;
 }
@@ -84,6 +87,9 @@
 
 .useredit {
   background-image:url('../imagen/btn/useredit.png') !important;
+}
+.useredit1 {
+  background-image:url('../imagen/btn/useredit1.png') !important;
 }
 .agregar {
   background-image:url('../imagen/btn/agregar.jpg') !important;
@@ -188,6 +194,12 @@
 .icon-buscar{
   background-image:url('../imagen/btn/icon-buscar.png') !important;
 }
+.icon-agregarUs{
+  background-image:url('../imagen/btn/agregarUsuarios.png') !important;
+}
+.icon-eliminarUs{
+  background-image:url('../imagen/btn/eliminarUsuarios.png') !important;
+}
 .icon-responsable{
   background-image:url('../imagen/btn/icon-responsable.png') !important;
 }
@@ -200,8 +212,19 @@
    font-weight: bold;
    font-size: 26px;
 }
+.x-btn-green {  
+     border-color: #D8D8D8;  
+     background-color:#F2F2F2;  
+} 
+
 .eliminar{
   background:transparent url(../imagen/btn/eliminar2.png) 0 0 no-repeat!important;
+}
+.agregarNuevo{
+  background:transparent url(../imagen/btn/useradd.png) 0 0 no-repeat!important;
+}
+.editarNuevo{
+  background:transparent url(../imagen/btn/useredit.png) 0 0 no-repeat!important;
 }
 .ajustar-texto-grid{
   white-space: normal;
