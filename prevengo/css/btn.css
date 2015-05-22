@@ -195,10 +195,19 @@
   background-image:url('../imagen/btn/icon-buscar.png') !important;
 }
 .icon-agregarUs{
-  background-image:url('../imagen/btn/agregarUsuarios.png') !important;
+  background-image:url('../imagen/btn/useradd1.png') !important;
 }
 .icon-eliminarUs{
-  background-image:url('../imagen/btn/eliminarUsuarios.png') !important;
+  background-image:url('../imagen/btn/userdelete1.png') !important;
+}
+.icon-eliminar{
+  background-image:url('../imagen/btn/eliminar.png') !important;
+}
+.icon-aceptar{
+  background-image:url('../imagen/btn/acepta.png') !important;
+}
+.icon-nuevoAvance{
+  background-image:url('../imagen/btn/pencil_add.png') !important;
 }
 .icon-responsable{
   background-image:url('../imagen/btn/icon-responsable.png') !important;

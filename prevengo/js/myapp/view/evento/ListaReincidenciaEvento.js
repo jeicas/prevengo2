@@ -50,7 +50,7 @@ Ext.define('myapp.view.evento.ListaReincidenciaEvento', {
                         xtype: 'button',
                         name: 'btnEliminarReincidencia',
                         text: 'Eliminar',
-                        iconCls: 'eliminar2'
+                        iconCls: 'icon-eliminar'
                     },
                     
                      {

@@ -248,7 +248,7 @@ Ext.define('myapp.view.avance.GridListaAvance', {
                         xtype: 'button',
                         name: 'btnAgregarAvance',
                         text: 'Registrar Avance',
-                        iconCls: 'useredit'
+                        iconCls: 'icon-nuevoAvance'
                     }]
             }];
     }

@@ -61,14 +61,14 @@ Ext.define('myapp.view.evento.ListaLineamientoPorEvento', {
                         name: 'btnEditarLineamiento',
                         text: 'Editar',
                         hidden: false,
-                        iconCls: 'editar'
+                        iconCls: 'useredit'
                     },
                      {
                         xtype: 'button',
                         name: 'btnEliminarLineamiento',
                         text: 'Eliminar',
                         hidden: false,
-                        iconCls: 'cancelar'
+                        iconCls: 'icon-eliminar'
                     }
                 ]
             }];

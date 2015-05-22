@@ -45,12 +45,12 @@ Ext.define('myapp.view.evento.ListaComisionadoEvento', {
                         xtype: 'button',
                         name: 'btnNuevoComisionado',
                         text: 'Asignar Comisionado',
-                        iconCls: 'agregarUsuarios'
+                        iconCls: 'icon-agregarUs'
                     },{  
                         xtype: 'button',
                         name: 'btnEliminarComisionado',
                         text: 'Eliminar Comisionado',
-                        iconCls: 'eliminarUsuario'
+                        iconCls: 'icon-eliminarUs'
                     },
                     
                      {
