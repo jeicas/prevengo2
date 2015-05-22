@@ -67,12 +67,13 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                 id: item.data.idEv
             },
             success: function (result, request) {
-                
               
                 result = Ext.JSON.decode(result.responseText);
                 if (result.cuanto == 0) {
                  
-                    if (item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                    if (item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
+                            || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
+                            || item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
                     {
                       
                         store = newGrid2.getStore();
@@ -85,20 +86,18 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
 
                 }
                 else {
-                   
+                    
                     if (item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
                             || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
-                            || item.data.estatus == '<font color=#FF0000> Sin Plan </font>') {
-
+                            || item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                    {
+                      
                         store = newGrid2.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();
-                        win.setTitle("Reincidencias del Evento");
+                        win.setTitle("Reincidencias del evento: " + item.data.titulo);
                         win.show();
-                    }
-                    else {
-
-                        store = newGrid2.getStore();
+                    }else { store = newGrid2.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();
                         newGrid2.down('button[name=btnNuevoReincidencia]').setVisible(false);
@@ -106,6 +105,8 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                         win.setTitle("Reincidencias del Evento");
                         win.show();
                     }
+                  
+                       
                 }
 
             },

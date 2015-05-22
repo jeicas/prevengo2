@@ -53,6 +53,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
 
         grid = this.getListaEventosComisionados();
         record = grid.getSelectionModel().getSelection();
+         win = Ext.create('myapp.view.evento.WinComisionadoEvento');
         newGrid = this.getListaComisionadoEvento();
         
         Ext.Ajax.request({//AQUI ENVIO LA DATA 
@@ -85,7 +86,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
                             || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
                             || item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
                     {
-                        win = Ext.create('myapp.view.evento.WinComisionadoEvento');
+                        
                         
                         store = newGrid.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
@@ -94,7 +95,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
                         win.show();
                     } else
                     {
-                        win = Ext.create('myapp.view.evento.WinComisionadoEvento');
+                       
                         store = newGrid.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();
@@ -221,45 +222,7 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
 
             }
         });
-        // }
-        /* else { 
-         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
-         loadingMask.show();
-         
-         record = grid2.getSelectionModel().getSelection();
-         
-         Ext.Ajax.request({//AQUI ENVIO LA DATA 
-         url: BASE_URL + 'lineamiento/lineamiento/actualizarComisionado',
-         method: 'POST',
-         params: {
-         descripcion: winO.down("textfield[name=txtDescripcion]").getValue(),
-         idLineam: record[0].get('idLin')
-         },
-         success:  function(result, request){
-         result=Ext.JSON.decode(result.responseText);
-         loadingMask.hide();
-         
-         if (result.success) {
-         grid2.getView().refresh();
-         grid2.getStore().load();
-         winO.close();
-         Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-         
-         }
-         else {
-         Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-         // myapp.util.Util.showErrorMsg(result.msg);
-         }
-         },
-         failure: function (form, action) {
-         var result = action.result;
-         loadingMask.hide();
-         Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-         
-         }
-         });
-         
-         }*/
+       
 
     },
     onClickLimpiarComisionado: function (button, e, options) {
