@@ -20,6 +20,11 @@ class TipoUsuario_model extends CI_Model {
             $query->free - result();
         }
     }
+    
+       public function guardarTipoUsuario($data){
+        return $this->db->insert('bdgenerica.tipousuario',$data);
+      }
+      
 
 }// fin de la clase
 

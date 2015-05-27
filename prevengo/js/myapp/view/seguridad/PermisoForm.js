@@ -132,6 +132,7 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
                         store: Ext.create('myapp.store.menu.MenuStore'),
                         valueField: 'id',
                         displayField: 'nombre',
+                        disabled: true,
                         emptyText: 'Seleccione',
                         queryMode: 'local',
                         allowBlank: false,
@@ -141,6 +142,7 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
                     {
                         xtype: 'button',
                         text: 'Añadir',
+                        disabled: true,
                         name: 'btnAgregarMenu', 
                         iconCls: 'agregarNuevo'
                     }

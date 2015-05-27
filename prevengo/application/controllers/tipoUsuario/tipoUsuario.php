@@ -39,6 +39,32 @@ class TipoUsuario extends CI_Controller
         }
     }
     
+      public function registrarTipoUsuario()
+   {
+        $nombre = $this->input->post('txtNombre');
+        $estatus = 1;
+
+        $data= array(
+            'nombre' => $nombre,
+            'estatus' => $estatus,
+        );
+
+        $result = $this->tipoUsuario_model->guardarTipoUsuario($data);
+
+        if ($result) {
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
+            ));
+        } else {
+
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+            ));
+        }
+    }
+    
     
 
 

@@ -27,11 +27,17 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
             "permisoForm combobox[name=cmbTipoUsuario]":{
                 change: this.onClickCargarGrid
             },
+            "permisoForm combobox[name=cmbMenu]":{
+                change: this.onClickHabilitarBoton
+            },
             "permisoForm button[name=btnNuevoTipoUsuario]":{
                 click: this.onClickNuevoTipoUsuario
             },
              "permisoForm button[name=btnAgregarMenu]":{
                 click: this.onClickAgregarAMenu
+            },
+             "winMaestroTipoUsuario button[name=btnGuardar]":{
+                click: this.onClickGuardarTipoUsuario
             }
         }); 
     },   
@@ -41,8 +47,10 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
 
 
  onClickCargarGrid: function (form){
-        formulario = this.getPermisoForm();
-         valor = formulario.down("combobox[name=cmbTipoUsuario]").getValue();
+      formulario = this.getPermisoForm();
+
+       formulario.down("combobox[name=cmbMenu]").setDisabled(false);
+                valor = formulario.down("combobox[name=cmbTipoUsuario]").getValue();
 
          store1 = formulario.getStore();
           
@@ -51,16 +59,18 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
       
       
   },
-   onClickVerPlan2: function (record, item, index, e, eOpts ){
+  
+   onClickHabilitarBoton: function (form){
+      formulario = this.getPermisoForm();
+      formulario.down("button[name=btnAgregarMenu]").setDisabled(false);
+               
+  },
+  
+  
+   onClickNuevoTipoUsuario: function(button, e ,options){
     
-    var win = Ext.create('myapp.view.actividad.WinPlanEvento'); 
-          
-     newGrid=this.getListaPlanEvento();
-      store= newGrid.getStore();      
-      store.proxy.extraParams.id=item.data.idEvento;
-      store.load();
-      newGrid.down("label[name=lblIdEvento]").setText(item.data.idEvento);
-      win.setTitle("Plan de Accion para el Evento: "+ item.data.evento);
+    var win = Ext.create('myapp.view.maestroNombre.WinMaestroTipoUsuario'); 
+    win.setTitle('Nuevo Tipo de Usuario');
       win.show();
       
   },
@@ -71,7 +81,7 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
          valor = formulario.down("combobox[name=cmbMenu]").getValue();
          store= formulario.down("combobox[name=cmbMenu]").getStore();
          padre='';
-          store1 = formulario.getStore();
+         store1 = formulario.getStore();
           
            for (i = 0; i < store.data.items.length; ++i){
                if (store.data.items[i].data['id'] == valor) {
@@ -87,15 +97,16 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
                 Ext.MessageBox.show({ title: 'Alerta', msg: 'Este items ya esta registrado.Por favor seleccione otro', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
                 i = store1.data.items.length + 1;
             }
-            else {
-                i = store1.data.items.length + 1;
-                Ext.Ajax.request({ 
+            
+
+        }
+        Ext.Ajax.request({ 
                     url: BASE_URL + 'permiso/permiso/guardarPermiso',
                     method:'POST',
                        params: {
                         idMenu:valor,
                         tipousuario: formulario.down("combobox[name=cmbTipoUsuario]").getValue(),
-                        idpadre:padre,
+                        idpadre:padre
                         
                     },
                     success : function(form,action) {
@@ -113,15 +124,51 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
                         }
                     },
                 });
-            }
-
-        }
-         console.log('Padre: '+padre+ 'menu:'+ valor+ 'usuario:'+formulario.down("combobox[name=cmbTipoUsuario]").getValue())
+        console.log('padre'+padre+' tipoUss: '+formulario.down("combobox[name=cmbTipoUsuario]").getValue()+' menu'+valor );
+    
+  },
+   onClickGuardarTipoUsuario: function (button, e, options) {
        
+        winO = this.getWinMaestroTipoUsuario();
+
+        var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+        loadingMask.show();
+
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                url: BASE_URL + 'tipoUsuario/tipoUsuario/registrarTipoUsuario',
+                method: 'POST',
+                params: {
+                    txtNombre: winO.down("textfield[name=nombre]").getValue(),
+                },
+                success: function (result, request) {
+                    result = Ext.JSON.decode(result.responseText);
+                    loadingMask.hide();
+                    if (result.success) {
+
+                        
+                        winO.close();
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                    }
+                    else {
+                        Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        // myapp.util.Util.showErrorMsg(result.msg);
+                    }
+                },
+                failure: function (form, action) {
+                    var result = action.result;
+                    loadingMask.hide();
+                    Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+            });
         
       
-  }
-  
+        
+
+
+
+    }
   
   
 });
