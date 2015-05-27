@@ -66,6 +66,7 @@ class Evento extends CI_Controller {
                     'presupuesto' => $row['presupuesto'],
                     'nombrecompleto' => $nombre,
                     'estatus' => $estatus,
+                    'observacion' => $row['observacion'],
                 );
             }
             $output = array(

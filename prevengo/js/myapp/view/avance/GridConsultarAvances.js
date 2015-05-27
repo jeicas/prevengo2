@@ -37,7 +37,7 @@ Ext.define('myapp.view.consultar.GridConsultarAvances', {
 	 
 	buildColumns: function(){
 		return [
-       {
+                {
 			dataIndex: 'actividad',
 			flex: 1.5,
 			text: 'Actividad',

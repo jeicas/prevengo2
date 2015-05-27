@@ -134,6 +134,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         win.down('textfield[name=agente]').setValue(record[0].get('agente'));
         win.down('textfield[name=tipoEvento]').setValue(record[0].get('tipoEvento'));
         win.down('textfield[name=estatus]').setValue(record[0].get('estatus'));
+        win.down('textfield[name=observacion]').setValue(record[0].get('observacion'));
 
         // cargar las grid de lineamientos
         store = win.down('gridpanel[name=gridLineamiento]').getStore();

@@ -14,6 +14,7 @@ class Evento_model extends CI_Model {
                                     evento.fechatope as fechaEv,
                                     evento.fechapreaviso as fechaPA,
                                     evento.presupuesto as presupuesto,
+                                    evento.observacion as observacion,
                                     evento.estatus as estatus,
                                     alcance.nombre as alcance,
                                     agente.nombre as agente,

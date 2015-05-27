@@ -29,16 +29,16 @@ class Avance extends CI_Controller {
         $costo = $this->input->post('txtCosto');
         $fecharegistro = date('Y-m-d');
         $descripcion = $this->input->post('txtDescripcion');
-        $estatus = 0;
+       
         //busca los datos de la actividad.
         $resultadoAct = $this->actividad_model->buscarUnPlandeAccion($usuario, $actividad);
         if ($resultadoAct->num_rows() > 0) {
             foreach ($resultadoAct->result_array() AS $row) {
                 if ($tipo == 0) { //tipo final
                     $estatusAct = 3; // en Revision
+                     $estatus = 5;
 
-
-                    if ($row['estatus'] == 1) {
+                    if ($row['estatus'] == 1) { //actividad con estatus sin iniciar
                         $dataAvance = array(
                             'id' => $row['avance'],
                             'descripcion' => $descripcion,
@@ -193,6 +193,9 @@ class Avance extends CI_Controller {
                     case '4':
                         $estatus = 'Retrasado';
                         break;
+                     case '5':
+                        $estatus = 'Pendiente por Evaluar';
+                        break;
                    
                     default:
                         $estatus = 'Completado';
@@ -328,13 +331,65 @@ class Avance extends CI_Controller {
         else {
             echo json_encode(array(
                 "success" => false,
+                 'total' => count($data),
                 "msg" => "No hay datos para mostrar"
             ));
         }
     }
 
+
+   public function buscarEjecutor() {
+        $id = $this->input->post('id');
+        $avance= $this->avance_model->buscarEjecutorDeActividad($id);
+
+        if ($avance->num_rows() > 0) {
+
+            $row = $avance->row_array(); 
+
+                   $cuanto = $row['cuantos'];
+ 
+            $output = array(
+                'success' => true,
+                'cuanto' => $cuanto,
+            );  
+            echo json_encode($output);
+        } else {
+            echo json_encode(array(
+                "success" => false
+            ));
+        }
+    
+       
+    }//fin registrar
 //fin de la funcion
 
+    
+    
+       public function buscarAvance() {
+        $user=$this->session->userdata('datasession');
+         $id = $user['idusuario'];
+        $avance= $this->avance_model->buscarAvance($id);
+
+        if ($avance->num_rows() > 0) {
+
+            $row = $avance->row_array(); 
+
+                   $cuanto = $row['cuantos'];
+ 
+            $output = array(
+                'success' => true,
+                'cuanto' => $cuanto,
+            );  
+            echo json_encode($output);
+        } else {
+            echo json_encode(array(
+                "success" => false
+            ));
+        }
+    
+       
+    }
+    
     public function obtenerUsuarios() {
         
         $resultdbd = $this->avance_model->cargarUsuarios();

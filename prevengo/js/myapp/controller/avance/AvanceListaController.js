@@ -52,7 +52,8 @@ Ext.define('myapp.controller.avance.AvanceListaController', {
                     url: BASE_URL+'actividad/actividad/aprobarActividad',
                     method: 'POST',
                     params: {
-                        record:record[0].get('id')
+                        record:record[0].get('id'),
+                        idAvance:record[0].get('idAv')
                     },
                     
                      success: function(result, request){

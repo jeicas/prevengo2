@@ -153,7 +153,7 @@ Ext.define('myapp.controller.registrar.UsuarioController', {
                 var img = editWindow.down('image');
                  img.setSrc(BASE_PATH+'./empleados/_DSC' + record[0].get('foto'));
             }
-            edindow.setTitle(record[0].get('name'));
+            editWindow.setTitle(record[0].get('name'));
             editWindow.show();
             if (record[0].get('status')==0) {
                 Ext.Msg.alert( 'Error','Usuario esta inactivo, verifique su status');

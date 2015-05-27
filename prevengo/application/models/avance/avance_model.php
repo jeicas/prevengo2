@@ -61,7 +61,7 @@ class Avance_model extends CI_Model {
                 INNER JOIN evento ON actividad.evento=evento.id 
                 INNER JOIN bdgenerica.usuario ON av.usuario= bdgenerica.usuario.id 
                 INNER JOIN bdgenerica.persona ON bdgenerica.usuario.cedula=bdgenerica.persona.cedula
-                WHERE av.estatus in (0,2,3)    
+                WHERE av.estatus !=1    
                 ORDER BY av.fecharegistro, av.tipo ASC";
 
 
@@ -87,7 +87,7 @@ class Avance_model extends CI_Model {
              INNER JOIN evento ON actividad.evento=evento.id 
              INNER JOIN bdgenerica.usuario ON av.usuario= bdgenerica.usuario.id 
              INNER JOIN bdgenerica.persona ON bdgenerica.usuario.cedula=bdgenerica.persona.cedula 
-             WHERE av.estatus=0 and av.tipo=0 and actividad.estatus=3
+             WHERE av.estatus=5 and av.tipo=0 and actividad.estatus=3
              ORDER BY av.fecharegistro, id ASC";
 
 
@@ -150,6 +150,31 @@ class Avance_model extends CI_Model {
         return $query;
   }//fin de la funcion
     
+  
+     public function  buscarEjecutorDeActividad($id){         
+            $query = $this->db->query("select count(*) as cuantos
+
+                                    from prevengo.avance 
+                                    
+                                    where  prevengo.avance.actividad=$id 					 												   
+                                          
+                                 ");
+       
+            return $query; 
+    }
+    
+       public function  buscarAvance($id){         
+            $query = $this->db->query("select count(*) as cuantos
+                                        from actividad 
+                                        inner join avance on actividad.id=avance.actividad
+                                        inner join evento on evento.id=actividad.evento
+                                        where (evento.estatus in (1,2)) and (actividad.estatus in (1,2)) and (avance.usuario=$id)
+                                        order by actividad.estatus, actividad.id					 												   
+                                          
+                                 ");
+       
+            return $query; 
+    }
 }//fin de la clase
 
 

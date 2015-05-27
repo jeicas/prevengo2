@@ -14,6 +14,7 @@ class Actividad extends CI_Controller {
         $this->load->library('session');
         $this->load->model('actividad/actividad_model');
         $this->load->model('evento/evento_model');
+         $this->load->model('avance/avance_model');
     }
 
 //fin del constructor
@@ -65,7 +66,7 @@ class Actividad extends CI_Controller {
         $id = $this->input->post('record');
         $estatus = 0;
         $estatusDepende = 1;
-
+                    
         $data = array(
             'id' => $id,
             'estatus' => $estatus,
@@ -74,11 +75,17 @@ class Actividad extends CI_Controller {
             'id' => $id,
             'estatus' => $estatusDepende,
         );
-
+        
+        $dataAvance= array (
+            'id'=> $this->input->post('idAvance'),
+            'estatus' =>$estatus
+        );
+        
         $resultdbd = $this->actividad_model->cambiarEstatus($data);
         $resultdbd2 = $this->actividad_model->cambiarEstatusDependientes($dataDepende);
+         $resultdbd3 = $this->avance_model->cambiarEstatus($dataAvance);
 
-        if ($resultdbd && $resultdbd2) {
+        if ($resultdbd && $resultdbd2 && $resultdbd3) {
             echo json_encode(array(
                 "success" => true,
                 "msg" => "La actividad ha sido Completada exitosamente" //modificado en la base de datos

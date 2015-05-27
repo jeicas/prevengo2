@@ -20,7 +20,7 @@ Ext.define('myapp.view.registrar.Usuariolista', {
             }
         }
     },
-	store: Ext.create('myapp.store.usuario.UsuarioStore'),
+	store: Ext.create('myapp.store.usuario.UsuarioListaStore'),
 	initComponent : function(){
 	    var me = this;
 	    me.columns= me.buildColumns();

@@ -3,7 +3,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
     alias: 'widget.EventoCompleto',
     itemId: 'winEventoCompleto',
     title: 'Evento',
-    height: 770,
+    height: 790,
     width: 691,
     modal: true,
     layout: {
@@ -18,7 +18,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
         return [
             {
                 xtype: 'container',
-                height: 740,
+                height: 770,
                 width: 787,
                 layout: 'absolute',
                 items: [
@@ -26,7 +26,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                         xtype: 'fieldset',
                         x: 10,
                         y: 5,
-                        height: 200,
+                        height: 230,
                         width: 660,
                         layout: 'absolute',
                         title: 'Datos del Evento',
@@ -82,7 +82,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                             {
                                 xtype: 'textfield',
                                 x: 330,
-                                y: 120,
+                                y: 100,
                                 width: 300,
                                 fieldLabel: 'Estado:',
                                 name: 'estatus'
@@ -95,13 +95,21 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                 width: 300,
                                 fieldLabel: 'Descripción',
                                 name: 'descripcion'
+                            },
+                             {
+                                xtype: 'textareafield',
+                                x: 330,
+                                y: 130,
+                                width: 300,
+                                fieldLabel: 'Observación',
+                                name: 'observacion'
                             }
                         ]
                     },
                     {
                         xtype: 'gridpanel',
                         x: 10,
-                        y: 220,
+                        y: 240,
                         height: 160,
                         width: 250,
                         title: 'Lineamientos',
@@ -124,7 +132,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                     {
                         xtype: 'gridpanel',
                         x: 10,
-                        y: 390,
+                        y: 410,
                         height: 160,
                         width: 250,
                         name: 'gridComisionado',
@@ -151,7 +159,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                     {
                         xtype: 'gridpanel',
                         x: 10,
-                        y: 560,
+                        y: 580,
                         height: 160,
                         width: 250,
                         name: 'gridReincidencia',
@@ -173,15 +181,14 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
 
                     },
                     {
-                        xtype: 'form',
-                        x: 280,
-                        y: 220,
+                       xtype: 'container',
+                        x: 270,
+                        y: 240,
                         height: 490,
                         width: 400,
                         layout: 'absolute',
-                        bodyPadding: 10,
-                        title: '',
-                        name: 'formPlan',
+                       
+                       
                         items: [
                             {
                                 xtype: 'fieldset',

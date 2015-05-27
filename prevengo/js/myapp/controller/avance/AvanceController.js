@@ -43,16 +43,36 @@ Ext.define('myapp.controller.avance.AvanceController', {
 
 
         });
-    }, 
-    
+   },
     //===================== Funciones de la Lista===============================
-    onClickAgregarAvance: function (button, e, options){
-         var win = Ext.create('myapp.view.avance.Gridbuscar');
-        win.setTitle("Nuevo Avance");
-        win.show();
-    },
-    
-    
+    onClickAgregarAvance: function (button, e, options) {
+       
+       
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'avance/avance/buscarAvance',
+            method: 'POST',
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+                console.log('cuanto'+ result.cuanto);
+                if (result.cuanto == 0) {
+
+                    Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene actividades pendientes", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                }
+                else {
+                    var win = Ext.create('myapp.view.avance.Gridbuscar');
+                    win.setTitle("Nuevo Avance");
+                    win.show();
+                }
+
+
+            },
+            failure: function (form, action) {
+                var result = action.result;
+
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+        });   },
     //===================== Funciones del formulario===============================
     onClickguardarAvance: function (button, e, options) {
         formulario = this.getAvance();
@@ -97,22 +117,22 @@ Ext.define('myapp.controller.avance.AvanceController', {
 
     cambiarFecha: function (form) {
         formulario = this.getAvance();
-        storeAct= formulario.down("combobox[name=cmbActividad]").getStore();
-        valor= formulario.down("combobox[name=cmbActividad]").getValue();
+        storeAct = formulario.down("combobox[name=cmbActividad]").getStore();
+        valor = formulario.down("combobox[name=cmbActividad]").getValue();
         //fec= storeAct.data.fecha;
         //console.log(storeAct);
-         for (i=0; i<storeAct.data.items.length; ++i)
-         { 
-            if(storeAct.data.items[i].data['id']==valor){    
-             formulario.down("label[name=lblFechaAsignacion]").setText(storeAct.data.items[i].data['fecha']);
-             formulario.down("label[name=lblNombreEvento]").setText(storeAct.data.items[i].data['evento']);
-              i=length+1;
+        for (i = 0; i < storeAct.data.items.length; ++i)
+        {
+            if (storeAct.data.items[i].data['id'] == valor) {
+                formulario.down("label[name=lblFechaAsignacion]").setText(storeAct.data.items[i].data['fecha']);
+                formulario.down("label[name=lblNombreEvento]").setText(storeAct.data.items[i].data['evento']);
+                i = length + 1;
             }
-             
-         }
-             
-        
+
+        }
+
+
     }
-    
-   
+
+
 });

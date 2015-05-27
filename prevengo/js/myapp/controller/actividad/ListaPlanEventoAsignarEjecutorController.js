@@ -42,24 +42,66 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
     onClickNuevaAsignacion: function (record, item, index, e, eOpts) {
         var win = Ext.create('myapp.view.actividad.WinAsignarEjecutorAPlan');
         newGrid = this.getListaEmpleadoPlan();
-        if (item.data.estatus == 'Completado')
-        {
-            store = newGrid.getStore();
-            store.proxy.extraParams.id = item.data.idAct;
-            store.load();
-            newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
-            newGrid.down("button[name=btnAsignarEmpleado]").setVisible(false);
-            win.setTitle("Asignar Empleados al plan de accion: " + item.data.actividad);
-            win.show();
-        } else {
 
-            store = newGrid.getStore();
-            store.proxy.extraParams.id = item.data.idAct;
-            store.load();
-            newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
-            win.setTitle("Asignar Empleados al plan de accion: " + item.data.actividad);
-            win.show();
-        }
+
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'avance/avance/buscarEjecutor',
+            method: 'POST',
+            params: {
+                id: item.data.idAct
+            },
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+                if (result.cuanto == 0) {
+
+
+                  
+                       if (item.data.estatus != 'Completado')
+                    {
+                        store = newGrid.getStore();
+                        store.proxy.extraParams.id = item.data.idAct;
+                        store.load();
+                        newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
+                        win.setTitle("Asignar Empleados al plan de accion: " + item.data.actividad);
+                        win.show();
+                    } 
+                      Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene Ejecutores registrados", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                }
+                else {
+
+                    if (item.data.estatus == 'Completado')
+                    {
+                        store = newGrid.getStore();
+                        store.proxy.extraParams.id = item.data.idAct;
+                        store.load();
+                        newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
+                        newGrid.down("button[name=btnAsignarEmpleado]").setVisible(false);
+                        win.setTitle("Asignar Empleados al plan de accion: " + item.data.actividad);
+                        win.show();
+                    } else {
+
+                        store = newGrid.getStore();
+                        store.proxy.extraParams.id = item.data.idAct;
+                        store.load();
+                        newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
+                        win.setTitle("Asignar Empleados al plan de accion: " + item.data.actividad);
+                        win.show();
+                    }
+                }
+
+
+            },
+            failure: function (form, action) {
+                var result = action.result;
+
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+        });
+
+
+
+
 
     }, // fin de la function 
 
