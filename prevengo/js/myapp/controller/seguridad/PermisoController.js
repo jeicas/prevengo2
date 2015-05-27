@@ -1,7 +1,7 @@
 Ext.define('myapp.controller.seguridad.PermisoController', {
     extend: 'Ext.app.Controller',
     views: ['seguridad.PermisoForm',
-            
+            'maestroNombre.WinMaestroTipoUsuario'
              
             ],
      requires: [
@@ -11,12 +11,12 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
    
     refs: [
            {
-              ref: 'ListaActividad',
-              selector: 'listaActividad'
+              ref: 'PermisoForm',
+              selector: 'permisoForm'
              },
               {
-              ref: 'ListaPlanEvento',
-              selector: 'listaPlanEvento'
+              ref: 'WinMaestroTipoUsuario',
+              selector: 'winMaestroTipoUsuario'
              },
              
             
@@ -24,11 +24,14 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
     
     init: function(application) {
         this.control({
-            "listaActividad":{
-                itemdblclick: this.onClickVerPlan
+            "permisoForm combobox[name=cmbTipoUsuario]":{
+                change: this.onClickCargarGrid
             },
-            "winActividad checkbox[name=cbfDepende]":{
-                selection: this.cargarActividad
+            "permisoForm button[name=btnNuevoTipoUsuario]":{
+                click: this.onClickNuevoTipoUsuario
+            },
+             "permisoForm button[name=btnAgregarMenu]":{
+                click: this.onClickAgregarAMenu
             }
         }); 
     },   
@@ -37,17 +40,15 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
 
 
 
- onClickVerPlan: function (record, item, index, e, eOpts ){
-    
-    var win = Ext.create('myapp.view.actividad.WinPlanEvento'); 
+ onClickCargarGrid: function (form){
+        formulario = this.getPermisoForm();
+         valor = formulario.down("combobox[name=cmbTipoUsuario]").getValue();
+
+         store1 = formulario.getStore();
           
-     newGrid=this.getListaPlanEvento();
-      store= newGrid.getStore();      
-      store.proxy.extraParams.id=item.data.idEvento;
-      store.load();
-      newGrid.down("label[name=lblIdEvento]").setText(item.data.idEvento);
-      win.setTitle("Plan de Accion para el Evento: "+ item.data.evento);
-      win.show();
+         store1.proxy.extraParams.id = valor
+         store1.load();
+      
       
   },
    onClickVerPlan2: function (record, item, index, e, eOpts ){
@@ -61,6 +62,63 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
       newGrid.down("label[name=lblIdEvento]").setText(item.data.idEvento);
       win.setTitle("Plan de Accion para el Evento: "+ item.data.evento);
       win.show();
+      
+  },
+  
+    onClickAgregarAMenu:function(button, e ,options){
+     
+         formulario = this.getPermisoForm();
+         valor = formulario.down("combobox[name=cmbMenu]").getValue();
+         store= formulario.down("combobox[name=cmbMenu]").getStore();
+         padre='';
+          store1 = formulario.getStore();
+          
+           for (i = 0; i < store.data.items.length; ++i){
+               if (store.data.items[i].data['id'] == valor) {
+                padre= store.data.items[i].data['padre']; 
+                i = store1.data.items.length + 1;
+                }
+           }
+           
+           
+        for (i = 0; i < store1.data.items.length; ++i)
+        {
+            if (store1.data.items[i].data['id'] == valor) {
+                Ext.MessageBox.show({ title: 'Alerta', msg: 'Este items ya esta registrado.Por favor seleccione otro', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                i = store1.data.items.length + 1;
+            }
+            else {
+                i = store1.data.items.length + 1;
+                Ext.Ajax.request({ 
+                    url: BASE_URL + 'permiso/permiso/guardarPermiso',
+                    method:'POST',
+                       params: {
+                        idMenu:valor,
+                        tipousuario: formulario.down("combobox[name=cmbTipoUsuario]").getValue(),
+                        idpadre:padre,
+                        
+                    },
+                    success : function(form,action) {
+                        var result = Ext.JSON.decode(form.responseText);;
+                        
+                        if (result.success) {
+                            Ext.Msg.alert('Informaci&oacute;n','acceso guardado con Exito');
+                            formulario.getStore().load();
+                            
+                           
+                        }else{
+                             Ext.Msg.alert('Informaci&oacute;n',result.msg);
+                             formulario.getStore().load();
+                             
+                        }
+                    },
+                });
+            }
+
+        }
+         console.log('Padre: '+padre+ 'menu:'+ valor+ 'usuario:'+formulario.down("combobox[name=cmbTipoUsuario]").getValue())
+       
+        
       
   }
   

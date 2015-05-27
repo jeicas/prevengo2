@@ -1,4 +1,4 @@
-Ext.define('myapp.view.seguridad.PermisoForm', { 
+Ext.define('myapp.view.seguridad.PermisoForm', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.permisoForm',
     //itemId: 'listaAvanceFinal',
@@ -19,10 +19,9 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
             groupHeaderTpl: '<font size=2><font size=2>{name}</font>',
             hideGroupedHeader: true,
             enableGroupingMenu: false
-       }],
+        }],
     //store: Ext.create('myapp.store.avance.AvanceFinalStore'),
     viewConfig: {
-       
     },
     selType: 'checkboxmodel',
     columnLines: true,
@@ -32,10 +31,12 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
         me.dockedItems = me.buildDockedItems();
         me.callParent();
     },
+    store: Ext.create('myapp.store.permiso.PermisoStore'),
+    emptyText: 'No hay  tiene permisos registrados',
     buildColumns: function () {
         return [
-          {
-                flex: 0.5,
+            {
+                flex: 1,
                 dataIndex: 'nombre',
                 text: 'Opciones permitidas del menú',
                 items: {
@@ -60,9 +61,9 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
                     }
                 }
             }, {
-                flex: 0.5,
+                flex: 0.3,
                 dataIndex: 'apellido',
-                text: 'Apellido',
+                text: '',
                 items: {
                     xtype: 'textfield',
                     flex: 1,
@@ -88,38 +89,63 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
     },
     buildDockedItems: function () {
         return [{
-                    xtype: 'toolbar',
-                    x: 20,
-                    y: 10,
-                    height: 40,
-                    width: 440,
-                    items: [
-                        {
-                            xtype: 'combobox',
-                            width: 275,
-                            fieldLabel: 'Tipo de Usuario:'
-                        },
-                        {
-                            xtype: 'button',
-                            text: '+'
-                        },
-                         {
-                            xtype: 'label',
-                            text: '' ,
-                            width: 155,
-                        },
+                xtype: 'toolbar',
+                x: 20,
+                y: 10,
+                height: 40,
+                width: 440,
+                items: [
+                    {
+                        xtype: 'combobox',
+                        width: 275,
+                        fieldLabel: 'Tipo de Usuario:',
+                        name: 'cmbTipoUsuario',
+                        id: 'cmbTipoUsuario',
+                        editable: false,
+                        store: Ext.create('myapp.store.tipoUsuario.TipoUsuarioStore'),
+                        valueField: 'id',
+                        displayField: 'nombre',
+                        emptyText: 'Seleccione',
+                        queryMode: 'local',
+                        allowBlank: false,
+                        forceSelection: true,
+                        triggerAction: 'all'
+                    },
+                    {
+                        xtype: 'button',
                        
-                         {
-                                    xtype: 'combobox',
-                                    width: 275,
-                                    fieldLabel: 'Menú'
-                                },
-                                {
-                                    xtype: 'button',
-                                    text: 'Añadir'
-                                }
-                    ]
-                }];
+                        name: 'btnNuevoTipoUsuario', 
+                        iconCls: 'agregarNuevo'
+                    },
+                    {
+                        xtype: 'label',
+                        text: '',
+                        width: 155,
+                    },
+                    {
+                        xtype: 'combobox',
+                        width: 275,
+                        fieldLabel: 'Menú',
+                        name: 'cmbMenu',
+                        id: 'cmbMenu',
+                        editable: false,
+                        store: Ext.create('myapp.store.menu.MenuStore'),
+                        valueField: 'id',
+                        displayField: 'nombre',
+                        emptyText: 'Seleccione',
+                        queryMode: 'local',
+                        allowBlank: false,
+                        forceSelection: true,
+                        triggerAction: 'all'
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Añadir',
+                        name: 'btnAgregarMenu', 
+                        iconCls: 'agregarNuevo'
+                    }
+                ]
+            }];
     }
 });
 

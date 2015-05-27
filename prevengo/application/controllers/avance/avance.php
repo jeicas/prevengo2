@@ -1,7 +1,4 @@
 
-
-
-
 <?php
 
 if (!defined('BASEPATH'))
@@ -36,7 +33,7 @@ class Avance extends CI_Controller {
             foreach ($resultadoAct->result_array() AS $row) {
                 if ($tipo == 0) { //tipo final
                     $estatusAct = 3; // en Revision
-                     $estatus = 5;
+                     $estatus = 5;//pendiente por evaluar
 
                     if ($row['estatus'] == 1) { //actividad con estatus sin iniciar
                         $dataAvance = array(
@@ -72,6 +69,7 @@ class Avance extends CI_Controller {
                     $resultad = $this->actividad_model->cambiarEstatus($dataActividad);
                 }// iftipo
                 else { //tipo parcial
+                    $estatus=0;
                     if ($row['estatus'] == 1) {
                         $dataAvance = array('id' => $row['avance'],
                             'descripcion' => $descripcion,
