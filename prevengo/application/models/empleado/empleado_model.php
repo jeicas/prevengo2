@@ -22,7 +22,7 @@
 
 
     function obtenerEmpleadosGrid1($parametrouno,$parametrodos){
-     $db_generica =  $this->load->database('bdgenerica', TRUE); //Inicia la BD generica
+     $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
       $sql="SELECT persona.*,persona.fechanacimiento as fechanac,persona.telefono1 as tlf1, persona.telefono2 as tlf2,empleado.cedula,empleado.nacionalidad,empleado.cargo,persona.foto,
         empleado.tiponomina,dependencia.id as departamento,empleado.estatus,dependencia.nombre as dnombre, persona.telefono1, persona.telefono2, municipio.id as municipioid, municipio.nombre as municipionombre, parroquia.id as parroquiaid, parroquia.nombre as parroquianombre, estado.id as estadoid, estado.nombre as estadonombre
        FROM municipio, estado, parroquia, persona 
@@ -41,7 +41,7 @@
         }
     }  
     public function obtenerEmpleadosGrid2($parametro){
-     $db_generica =  $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
+     $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica
      $sql="SELECT persona.*,persona.fechanacimiento as fechanac,persona.telefono1 as tlf1, persona.telefono2 as tlf2,empleado.cedula,empleado.nacionalidad,empleado.cargo,persona.foto,
         empleado.tiponomina,dependencia.id as departamento,empleado.estatus,dependencia.nombre as dnombre, persona.telefono1, persona.telefono2, municipio.id as municipioid, municipio.nombre as municipionombre, parroquia.id as parroquiaid, parroquia.nombre as parroquianombre, estado.id as estadoid, estado.nombre as estadonombre
          FROM  municipio, estado, parroquia, persona 
@@ -141,7 +141,7 @@
 
 
     function cargarAutorizados(){
-          $db_generica =  $this->load->database('bdgenerica', TRUE); //Inicia la BD generica
+          $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
     $query = $this->db->query("SELECT persona1.foto, 
         persona1.nacionalidad, 
         persona1.cedula, 
@@ -219,14 +219,14 @@
         } 
     }
  function cargarEmpleado($nacionalidad,$usuario) {
-      $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica
+      $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
     $sql = "SELECT persona.*, persona.fechanacimiento as fechanac, persona.telefono1 as tlf1, persona.telefono2 as tlf2,
             empleado.cedula,
             empleado.nacionalidad, 
             empleado.cargo,
             empleado.tiponomina,
             dependencia.id as departamento, 
-            dependencia.dependenciaanterior as departamentoanterior, 
+            dependencia.dependencia as departamentoanterior, 
             persona.foto,
             empleado.estatus as eestatus,
             dependencia.nombre as dnombre 
@@ -259,7 +259,7 @@
         }
     }
     function existeempleado($nacionalidad,$cedula) {
-        $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica
+        $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
         $query = $db_generica->query("SELECT persona.*,empleado.cedula as empleado,
             empleado.cargo,
             empleado.tiponomina,
@@ -286,12 +286,12 @@
             return false;
         }
     }
-    function insertEmpleado($dataempleado){
-         $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica
+  function insertEmpleado($dataempleado){
+         $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
         return $db_generica->insert('empleado', $dataempleado);
     }
     function insertPersona($datapersona){
-       $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica
+       $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
         return $db_generica->insert('persona', $datapersona);
     }
     function updateEmpleado($dataempleado){
@@ -309,7 +309,7 @@
         return $db_generica->update('persona');
     }
     public function datosPersonas($cedula,$nacionalidad){   
-        $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica
+        $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
         $sql= "SELECT * FROM persona,ubicaciones
         WHERE persona.cedula=? 
         AND persona.nacionalidad=?
@@ -321,7 +321,7 @@
             return false;                
     }
     public function buscarDepartamentoUsuario($cedula,$nacionalidad){
-        $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica
+        $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
         $sql= "SELECT usuario.cedula, usuario.nacionalidad, usuario.tipousuario, dependencia.id , dependencia.nombre as nombre, dependencia.id as departamento
         FROM usuario inner join empleado on usuario.cedula=$cedula AND usuario.nacionalidad='$nacionalidad' AND empleado.cedula=usuario.cedula 
         AND empleado.nacionalidad=usuario.nacionalidad inner join dependencia
@@ -353,7 +353,7 @@
 */
 
      public function buscarDivisionUsuario($cedula,$nacionalidad){
-        $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica
+        $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
         $sql= "SELECT usuario.cedula, usuario.nacionalidad, empleado.division, division.id, division.nombre
         FROM usuario, empleado, division
         WHERE usuario.cedula=? 
