@@ -19,21 +19,9 @@ class Empleado extends CI_Controller
      //oriiii aqui estoy agregandole datos xq estoy usando lo que tiene esta grid si vas a cambiar algo de aqui me avisas
     public function obtenerEmpleadosGrid(){       
         $username = $this->session->userdata('datasession');        
-        if($username['usuario']=='PERSONAL' || $username['usuario']=='SPRIVADA'){
-            if($username['usuario']=='PERSONAL'){
-                $parametrouno=1;
-                $parametrodos=13;
-            }else{
-                $parametrouno=32;
-                $parametrodos=33;
-            }
-            $empleados=$this->empleado_model->obtenerEmpleadosGrid1($parametrouno,$parametrodos);
-        }if($username['usuario']=='AFINANZAS'){
-            $parametro=18;
-            $empleados=$this->empleado_model->obtenerEmpleadosGrid2($parametro);
-        }if($username['usuario']!='AFINANZAS' && $username['usuario']!='PERSONAL' && $username['usuario']!='SPRIVADA'){            
+                
             $empleados=$this->empleado_model->obtenerEmpleadosGrid3($username['cedula'],$username['nacionalidad']);
-        }
+       
                  
          
         if($empleados->num_rows()>0){
@@ -59,6 +47,9 @@ class Empleado extends CI_Controller
                     'cmbtiponomina'         => $row['tiponomina'],
                     'cmbcargo'              => $row['cargo'],
                     'cmbdepartamento'       => $row['departamento'],
+                    'cmbestado'             => $row['estadoid'],
+                    'cmbmunicipio'          => $row['municipioid'],
+                    'cmbparroquia'          => $row['parroquiaid'],
                 );
             }
             $output = array(
@@ -204,7 +195,7 @@ class Empleado extends CI_Controller
                         'divi3'=> $row5['division']
                     );
                  }
-                $divison3=$row5['division'];
+                $divison=$row5['division'];
             }
             $bdfoto=$this->empleado_model->buscarFoto($cedula,$nacionalidad);
             if($bdfoto!=false){
@@ -217,7 +208,7 @@ class Empleado extends CI_Controller
             if($bdfoto==false){
                 if($input=='1'){
                     if($this->input->post('existeFoto')=='0'){                        
-                        $nombrefoto2    = $nacionalidad.$cedula."."."jpg";
+                        $nombrefoto2    = $nacionalidad.$cedula."."."jpeg";
                     }
                 }if($input=='2'){                
                     $img_tipo       = explode('/', $_FILES['foto']['type']);
@@ -228,7 +219,20 @@ class Empleado extends CI_Controller
                     $this->guardar_imagen($nombrefoto,$fotoType,$fotoTmp_name);                
                 }if($input=='3' && $fotoocul==''){
                     $nombrefoto2 =0;
+
                 }
+
+            }
+
+            elseif($row['foto']==0 ){
+              
+                    $img_tipo       = explode('/', $_FILES['foto']['type']);
+                    $nombrefoto     = "_DSC".$nacionalidad.$cedula;
+                    $nombrefoto2    = $nacionalidad.$cedula.".".$img_tipo[1];
+                    $fotoType       = $_FILES['foto']['type'];
+                    $fotoTmp_name   = $_FILES['foto']['tmp_name'];
+                    $this->guardar_imagen($nombrefoto,$fotoType,$fotoTmp_name);
+                 
             }else{
                 $nombrefoto2=$row['foto'];
             }
@@ -260,14 +264,14 @@ class Empleado extends CI_Controller
                 }
             }
             //#########################################ESTO YA NO SE UTILIZA########################################
-            $depa3=$this->empleado_model->buscarDepartamentoUsuario($username['cedula'],$username['nacionalidad']);
+         /*   $depa3=$this->empleado_model->buscarDepartamentoUsuario($username['cedula'],$username['nacionalidad']);
                 foreach ($depa3->result_array() as $row3){
                     $data[] = array( 
                         'depaU'=> $row3['departamento']
                     );
             }
             $departamento3=$row3['departamento'];
-            //######################################################################################################
+           */ //######################################################################################################
 
              $divi3=$this->empleado_model->buscarDivisionUsuario($username['cedula'],$username['nacionalidad']);
                 foreach ($divi3->result_array() as $row5){
@@ -299,20 +303,96 @@ class Empleado extends CI_Controller
                // 'departamentoanterior' =>  $departamento3,
                // 'deparlogueado'      =>  $departamento3,
             );
-            $datapersona = array(
-                'cedula'            =>   $this->input->post('txtcedulaempleado'),
-                'nacionalidad'      =>   $this->input->post('cmbnacionalidad'),
-                'nombre'            =>   strtoupper($this->input->post('nombres')),
-                'apellido'          =>   strtoupper($this->input->post('apellidos')),
-                'direccion'         =>   '',
-                'telefono1'         =>   $this->input->post('codTlf1').$this->input->post('movil'),
-                'telefono2'         =>   $this->input->post('codTlf2').$this->input->post('local'),
-                'correo'            =>   strtoupper($this->input->post('correo')),
-                'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
-                'foto'              =>   $nombrefoto2,
-                'sexo'              =>   strtoupper($this->input->post('sexo')),
-                'estatus'           =>   $status
-            );
+
+            if($this->input->post('cmbparroquia')!=0 && $this->input->post('seleccionfoto')!=1 && $this->input->post('seleccionfoto')!=2)
+            {
+
+                $datapersona = array(
+                    'cedula'            =>   $this->input->post('txtcedulaempleado'),
+                    'nacionalidad'      =>   $this->input->post('cmbnacionalidad'),
+                    'nombre'            =>   strtoupper($this->input->post('nombres')),
+                    'apellido'          =>   strtoupper($this->input->post('apellidos')),
+                    'direccion'         =>   '',
+                    'telefono1'         =>   $this->input->post('codTlf1').$this->input->post('movil'),
+                    'telefono2'         =>   $this->input->post('codTlf2').$this->input->post('local'),
+                    'correo'            =>   strtoupper($this->input->post('correo')),
+                    'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
+                    'parroquia'         =>   $this->input->post('cmbparroquia'),
+                    'sexo'              =>   strtoupper($this->input->post('sexo')),
+                    'estatus'           =>   $status
+                );
+            }
+            elseif($this->input->post('cmbparroquia')!=0)
+            {
+                $datapersona = array(
+                    'cedula'            =>   $this->input->post('txtcedulaempleado'),
+                    'nacionalidad'      =>   $this->input->post('cmbnacionalidad'),
+                    'nombre'            =>   strtoupper($this->input->post('nombres')),
+                    'apellido'          =>   strtoupper($this->input->post('apellidos')),
+                    'direccion'         =>   '',
+                    'telefono1'         =>   $this->input->post('codTlf1').$this->input->post('movil'),
+                    'telefono2'         =>   $this->input->post('codTlf2').$this->input->post('local'),
+                    'correo'            =>   strtoupper($this->input->post('correo')),
+                    'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
+                    'foto'              =>   $nombrefoto2,
+                    'parroquia'         =>   $this->input->post('cmbparroquia'),
+                    'sexo'              =>   strtoupper($this->input->post('sexo')),
+                    'estatus'           =>   $status
+                );
+            }
+            elseif($this->input->post('seleccionfoto')==3)
+            {
+                 $datapersona = array(
+                    'cedula'            =>   $this->input->post('txtcedulaempleado'),
+                    'nacionalidad'      =>   $this->input->post('cmbnacionalidad'),
+                    'nombre'            =>   strtoupper($this->input->post('nombres')),
+                    'apellido'          =>   strtoupper($this->input->post('apellidos')),
+                    'direccion'         =>   '',
+                    'telefono1'         =>   $this->input->post('codTlf1').$this->input->post('movil'),
+                    'telefono2'         =>   $this->input->post('codTlf2').$this->input->post('local'),
+                    'correo'            =>   strtoupper($this->input->post('correo')),
+                    'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
+                    'foto'              =>   0,
+                    'sexo'              =>   strtoupper($this->input->post('sexo')),
+                    'estatus'           =>   $status
+                );
+            }
+            elseif($this->input->post('seleccionfoto')!=1 && $this->input->post('seleccionfoto')!=2)
+            {
+                $datapersona = array(
+                    'cedula'            =>   $this->input->post('txtcedulaempleado'),
+                    'nacionalidad'      =>   $this->input->post('cmbnacionalidad'),
+                    'nombre'            =>   strtoupper($this->input->post('nombres')),
+                    'apellido'          =>   strtoupper($this->input->post('apellidos')),
+                    'direccion'         =>   '',
+                    'telefono1'         =>   $this->input->post('codTlf1').$this->input->post('movil'),
+                    'telefono2'         =>   $this->input->post('codTlf2').$this->input->post('local'),
+                    'correo'            =>   strtoupper($this->input->post('correo')),
+                    'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
+                    'sexo'              =>   strtoupper($this->input->post('sexo')),
+                    'estatus'           =>   $status
+                );
+          
+            }
+          
+            else
+            {
+                $datapersona = array(
+                    'cedula'            =>   $this->input->post('txtcedulaempleado'),
+                    'nacionalidad'      =>   $this->input->post('cmbnacionalidad'),
+                    'nombre'            =>   strtoupper($this->input->post('nombres')),
+                    'apellido'          =>   strtoupper($this->input->post('apellidos')),
+                    'direccion'         =>   '',
+                    'telefono1'         =>   $this->input->post('codTlf1').$this->input->post('movil'),
+                    'telefono2'         =>   $this->input->post('codTlf2').$this->input->post('local'),
+                    'correo'            =>   strtoupper($this->input->post('correo')),
+                    'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
+                    'foto'              =>   $nombrefoto2,
+                    'sexo'              =>   strtoupper($this->input->post('sexo')),
+                    'estatus'           =>   $status
+                );
+            }
+
             $resultado=$this->empleado_model->existeempleado($nacionalidad,$cedula);
             if ($resultado->num_rows() > 0){
                 $result=$this->empleado_model->updatePersona($datapersona);

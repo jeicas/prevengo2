@@ -1,4 +1,4 @@
-Ext.define('myapp.store.usuario.UsuarioStore', {
+Ext.define('myapp.store.usuario.UsuarioListaStore', {
     extend: 'Ext.data.Store',    
     model: 'myapp.model.store.usuario.UsuarioListaStore',
     storeId: 'tipousuario',

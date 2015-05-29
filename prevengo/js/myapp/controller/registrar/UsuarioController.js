@@ -127,6 +127,10 @@ Ext.define('myapp.controller.registrar.UsuarioController', {
             var editWindow = Ext.create('myapp.view.registrar.Registro');
             editWindow.down('form').getForm().reset();
             editWindow.down('form').loadRecord(record[0]);
+            editWindow.down('textfield[name=cedula]').setReadOnly(true);
+            editWindow.down('textfield[name=nacionalidad]').setReadOnly(true);
+            editWindow.down('textfield[name=nombre]').setReadOnly(true);
+            editWindow.down('textfield[name=apellido]').setReadOnly(true);
             grid.close();
             win.close();
              if (record[0].get('foto')){
@@ -149,6 +153,8 @@ Ext.define('myapp.controller.registrar.UsuarioController', {
             editWindow.down('form').loadRecord(record[0]);
             editWindow.down('textfield[name=cedula]').setReadOnly(true);
             editWindow.down('textfield[name=nacionalidad]').setReadOnly(true);
+            editWindow.down('textfield[name=nombre]').setReadOnly(true);
+            editWindow.down('textfield[name=apellido]').setReadOnly(true);
             if (record[0].get('foto')){
                 var img = editWindow.down('image');
                  img.setSrc(BASE_PATH+'./empleados/_DSC' + record[0].get('foto'));

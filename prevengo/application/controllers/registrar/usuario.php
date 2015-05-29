@@ -42,13 +42,7 @@ class Usuario extends CI_Controller
     $username = $this->session->userdata('datasession');
     $cedula = $username['cedula'];
     $nacionalidad =$username['nacionalidad'];
-        if($username['usuario']=='PERSONAL'){
-            $parametro=13;
-        }
-        if($username['usuario']=='AFINANZAS'){
-            $parametro=18; 
-        }
-        if($username['usuario']!='AFINANZAS' && $username['usuario']!='PERSONAL' && $username['usuario']!='SPRIVADA'){            
+                
             $resultado=$this->usuario_model->usuariolog($cedula,$nacionalidad);
             foreach ($resultado->result_array() as $row2){
                 $dat[] = array( 
@@ -56,7 +50,7 @@ class Usuario extends CI_Controller
                 );
             }
             $parametro= $row2['departamento']; 
-        } 
+      
         if ($resultdbd=$this->usuario_model->cargarusuario($parametro)){
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array(
@@ -79,7 +73,7 @@ class Usuario extends CI_Controller
         $nacionalidad=$this->input->post('nacionalidad');
         $tipousuario=$this->input->post('tipousuario');
         $id=$this->input->post('id');
-        $status=$this->input->post('status');
+        $estatus=$this->input->post('status');
         $verificausuario=$this->usuario_model->verificarusuario($cedula,$nacionalidad);
 
         $config['upload_path'] = './imagen/foto';
@@ -87,9 +81,9 @@ class Usuario extends CI_Controller
         $this->load->library('upload', $config);
         $password = "e10adc3949ba59abbe56e057f20f883e"; //123456 - default password
         if ($this->input->post('status')=='Activo'){
-            $status=1;
+            $estatus=1;
         }else{
-            $status=0;
+            $estatus=0;
         }
         $datausuario = array(
             'id' =>             $this->input->post('id'),
@@ -98,7 +92,7 @@ class Usuario extends CI_Controller
             'usuario' =>        $this->input->post('usuario'),
             'tipousuario' =>    $this->input->post('tipousuario'),
             'clave'=>        $password,
-            'status'=>          $status
+            'estatus'=>          $estatus
         );
         if ($verificausuario==''){
             $datapersona = array(

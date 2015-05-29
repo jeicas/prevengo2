@@ -1,16 +1,19 @@
-Ext.define('myapp.model.store.usuario.UsuarioStore', { 
+Ext.define('myapp.model.store.usuario.UsuarioListaStore', { 
    extend: 'Ext.data.Model',
     idProperty: 'id',
-    fields: [    
+   fields: [    
         { name: 'id' }, 
-        { name: 'cedula' },
-         { name: 'idEmpl' },
-        { name: 'foto' },
-        { name: 'nombrecompleto' },
-        { name: 'apellido' },
-        { name: 'ente' },
-        { name: 'division' },
+        { name: 'usuario' },
+        { name: 'password' },
         { name: 'tipousuario' },
- 
+        { name: 'ntipousuario' },
+        { name: 'cedula' },
+        { name: 'nacionalidad' },
+        { name: 'apellido' },
+        { name: 'correo' },
+        { name: 'nombre' },
+        { name: 'foto' },
+        { name: 'status' },
+        { name: 'fotoo' }
     ] 
 });

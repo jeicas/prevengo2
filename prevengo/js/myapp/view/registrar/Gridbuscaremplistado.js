@@ -1,7 +1,7 @@
-Ext.define('myapp.view.registrar.GridListaAvance', {
+Ext.define('myapp.view.registrar.Gridbuscaremplistado', {
 	extend: 'Ext.grid.Panel',
-	alias: 'widget.gridListaAvance',
-	itemId: 'gridListaAvance',
+	alias: 'widget.gridbuscaremplistado',
+	itemId: 'gridbuscaremplistado',
 
 	requires: [
         'Ext.selection.CellModel', 
@@ -20,13 +20,9 @@ Ext.define('myapp.view.registrar.GridListaAvance', {
     	hideGroupedHeader: true,
     	enableGroupingMenu: false
     }], 
-    
-
-	store: Ext.create('myapp.store.avance.AvanceStore'),
-
-	viewConfig: {
-    	 		
+    viewConfig: {
     },
+	store: Ext.create('myapp.store.empleado.EmpleadosGrid'),
 	selType: 'checkboxmodel',
 	columnLines: true,
 	initComponent : function(){
@@ -37,11 +33,17 @@ Ext.define('myapp.view.registrar.GridListaAvance', {
 	 },
 	 
 	buildColumns: function(){
-		return [
-       {
-			dataIndex: 'actividad',
-			flex: 1.5,
-			text: 'Actividad',
+		return [{
+			text:'Foto',
+			dataIndex:'foto',
+			flex: 0.3,
+			renderer: function(value, metadata, record){
+				return '<img width="50" height="50" src="../../empleados/_DSC'+ value +'">';
+			}
+		},{ 
+			dataIndex: 'nacionalidad',
+			flex: 0.2,
+			text: 'Nac.',
 			items    : {
 				xtype: 'textfield',
 				flex : 1,
@@ -53,7 +55,7 @@ Ext.define('myapp.view.registrar.GridListaAvance', {
 			           	store.clearFilter();
 			            if (this.value) {
 		                   	store.filter({
-		                        property     : 'actividad',
+		                        property     : 'nacionalidad',
 		                        value         : this.value,
 		                        anyMatch      : true,
 		                        caseSensitive : false
@@ -63,64 +65,10 @@ Ext.define('myapp.view.registrar.GridListaAvance', {
 				    buffer: 500
 				}
 			}
-		},
-		{			
-			dataIndex: 'descripcion',
-			flex: 1.5,
-			text: 'Descripcion',
-			items    : {
-				xtype: 'textfield',
-				flex : 1,
-				margin: 2,
-				enableKeyEvents: true,
-				listeners: {
-				    keyup: function() {
-			           	var store = this.up('grid').store;
-			           	store.clearFilter();
-			            if (this.value) {
-		                   	store.filter({
-		                        property     : 'descripcion',
-		                        value         : this.value,
-		                        anyMatch      : true,
-		                        caseSensitive : false
-		                    });
-			            }
-				    },
-				    buffer: 500
-				}
-			}
-		},
-     {			
-			dataIndex: 'tipo',
-			flex: 1,
-			text: 'Tipo',
-			items    : {
-				xtype: 'textfield',
-				flex : 1,
-				margin: 2,
-				enableKeyEvents: true,
-				listeners: {
-				    keyup: function() {
-			           	var store = this.up('grid').store;
-			           	store.clearFilter();
-			            if (this.value) {
-		                   	store.filter({
-		                        property     : 'tipo',
-		                        value         : this.value,
-		                        anyMatch      : true,
-		                        caseSensitive : false
-		                    });
-			            }
-				    },
-				    buffer: 500
-				}
-			}
-		},
-
-		{ 
-			dataIndex: 'fecha',
+		},{ 
+			dataIndex: 'cedula',
 			flex: 0.5,
-			text: 'Fecha:',
+			text: 'Cédula',
 			items    : {
 				xtype: 'textfield',
 				flex : 1,
@@ -132,7 +80,7 @@ Ext.define('myapp.view.registrar.GridListaAvance', {
 			           	store.clearFilter();
 			            if (this.value) {
 		                   	store.filter({
-		                        property     : 'fecha',
+		                        property     : 'cedula',
 		                        value         : this.value,
 		                        anyMatch      : true,
 		                        caseSensitive : false
@@ -143,9 +91,9 @@ Ext.define('myapp.view.registrar.GridListaAvance', {
 				}
 			}
 		},{
-			flex: 0.5,
+			flex: 1,
 			dataIndex: 'nombre',
-			text: 'Nombre',
+			text: 'Nombres',
 			items    : {
 				xtype: 'textfield',
 				flex : 1,
@@ -168,9 +116,9 @@ Ext.define('myapp.view.registrar.GridListaAvance', {
 				}
 			}
 		},{
-			flex: 0.5,
+			flex: 1,
 			dataIndex: 'apellido',
-			text: 'Apellido',
+			text: 'Apellidos',
 			items    : {
 				xtype: 'textfield',
 				flex : 1,
@@ -201,10 +149,10 @@ Ext.define('myapp.view.registrar.GridListaAvance', {
 			store:this.store,
 			displayInfo:true,
 			items: [{ 
-					xtype   : 'button',
-                    name    : 'btnAgregarAvance',
-        			text    : 'Registrar Avance',
-        			iconCls : 'useredit'
+					xtype: 'button',
+                    name      :'agregarempleado',
+        			text    : 'Editar Empleado',
+        			iconCls:'useredit'
                  }]
 		}];
 	}
