@@ -63,18 +63,22 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
 
     },
     onClickAgregarAMenu: function (button, e, options) {
-
+      
         formulario = this.getPermisoForm();
         valor = formulario.down("combobox[name=cmbMenu]").getValue();
         store = formulario.down("combobox[name=cmbMenu]").getStore();
         padre = '';
         store1 = formulario.getStore();
-
+ 
+ 
+     // ciclo para obtener el valor del padre del menu. 
         for (i = 0; i < store.data.items.length; ++i) {
             if (store.data.items[i].data['id'] == valor) {
                 padre = store.data.items[i].data['padre'];
-                i = store1.data.items.length + 1;
+                i = store.data.items.length + 1;
+                
             }
+            
         }
 
 
