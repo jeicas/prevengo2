@@ -23,7 +23,7 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
     //store: Ext.create('myapp.store.avance.AvanceFinalStore'),
     viewConfig: {
     },
-    selType: 'checkboxmodel',
+  
     columnLines: true,
     initComponent: function () {
         var me = this;
@@ -64,12 +64,13 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
 	        xtype: 'actioncolumn',
 	        flex: 0.1,
 	        id: 'eliminar',
+                name: 'eliminar',
 	        sortable: false,
 	        menuDisabled: true,
 	        items: [{
 	            icon: '../../imagen/btn/eliminar.png',
 	            tooltip: 'eliminar',
-	            scope: this,
+	            scope: this
 	        }]
 	    }]
     },
@@ -99,13 +100,15 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
                     },
                     {
                         xtype: 'button',
-                       
+                        tooltip:'nuevo tipo de usuario',
                         name: 'btnNuevoTipoUsuario', 
+                         disabled: true,
                         iconCls: 'agregarNuevo'
                     },
                     {
                         xtype: 'label',
                         text: '',
+                      
                         width: 155,
                     },
                     {
@@ -129,6 +132,7 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
                         xtype: 'button',
                         text: 'Añadir',
                         disabled: true,
+                        tooltip:'agregar al items seleccionado a el menú ',
                         name: 'btnAgregarMenu', 
                         iconCls: 'agregarNuevo'
                     }

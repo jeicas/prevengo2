@@ -12,7 +12,6 @@ class Permiso extends CI_Controller {
         $this->load->database();
         $this->load->library('session');
         $this->load->model('permiso/permiso_model');
-   
     }
 
     public function obtenerMenuConPermiso() {
@@ -20,6 +19,27 @@ class Permiso extends CI_Controller {
 
         $resultdbd = array();
         if ($resultdbd = $this->permiso_model->cargarMenuConPermiso($id)) {
+            $output = array(
+                'success' => true,
+                'total' => count($resultdbd),
+                'data' => array_splice($resultdbd, $this->input->get("start"), $this->input->get("limit"))
+            );
+            echo json_encode($output);
+        }
+    }
+
+    public function eliminarMenu() {
+        $menu = $this->input->post('menu');
+        $tipousuario = $this->input->post('tipousuario');
+        
+        $data = array(
+                'tipousuario' => $tipousuario,
+                'menu' => $menu,
+            );
+        
+        
+        $resultdbd = array();
+        if ($resultdbd = $this->permiso_model->quitarPermiso($data)) {
             $output = array(
                 'success' => true,
                 'total' => count($resultdbd),

@@ -26,7 +26,11 @@ class Permiso_model extends CI_Model {
      public function guardarPermiso($data) {
         return $this->db->insert('bdgenerica.permiso', $data);
     }
-    
+      public function quitarPermiso($data) {
+          $this->db->where('menu', $data['menu']);
+           $this->db->where('tipousuario', $data['tipousuario']);
+        return $this->db->delete('bdgenerica.permiso');
+    }
     
      public function buscarPadre($id, $tipUs) {
 
