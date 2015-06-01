@@ -101,7 +101,7 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
                 
 
                 if (result.success) {
-                    Ext.Msg.alert('Informaci&oacute;n', 'acceso guardado con Exito');
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
                     formulario.getStore().load();
 
 
@@ -131,7 +131,7 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
                         method: 'POST',
                         params: {
                             menu: rec.get('id'),
-                            tipoUsuario:grid.down("combobox[name=cmbTipoUsuario]").getValue(),
+                            tipousuario:grid.down("combobox[name=cmbTipoUsuario]").getValue(),
                         },
                         success: function (result, request) {
                             result = Ext.JSON.decode(result.responseText);

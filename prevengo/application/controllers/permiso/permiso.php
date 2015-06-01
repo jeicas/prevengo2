@@ -40,12 +40,16 @@ class Permiso extends CI_Controller {
         
         $resultdbd = array();
         if ($resultdbd = $this->permiso_model->quitarPermiso($data)) {
-            $output = array(
-                'success' => true,
-                'total' => count($resultdbd),
-                'data' => array_splice($resultdbd, $this->input->get("start"), $this->input->get("limit"))
-            );
-            echo json_encode($output);
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se eliminó con Éxito." //modificado en la base de datos
+            ));
+        }
+        else {
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo eliminar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+            ));
         }
     }
 
@@ -79,7 +83,7 @@ class Permiso extends CI_Controller {
         if ($result && $resultP) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
+                "msg" => "Items registrado con Éxito." //modificado en la base de datos
             ));
         } else {
 
