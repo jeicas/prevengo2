@@ -14,7 +14,7 @@ class Actividad extends CI_Controller {
         $this->load->library('session');
         $this->load->model('actividad/actividad_model');
         $this->load->model('evento/evento_model');
-         $this->load->model('avance/avance_model');
+        $this->load->model('avance/avance_model');
     }
 
 //fin del constructor
@@ -66,7 +66,7 @@ class Actividad extends CI_Controller {
         $id = $this->input->post('record');
         $estatus = 0;
         $estatusDepende = 1;
-                    
+
         $data = array(
             'id' => $id,
             'estatus' => $estatus,
@@ -75,15 +75,15 @@ class Actividad extends CI_Controller {
             'id' => $id,
             'estatus' => $estatusDepende,
         );
-        
-        $dataAvance= array (
-            'id'=> $this->input->post('idAvance'),
-            'estatus' =>$estatus
+
+        $dataAvance = array(
+            'id' => $this->input->post('idAvance'),
+            'estatus' => $estatus
         );
-        
+
         $resultdbd = $this->actividad_model->cambiarEstatus($data);
         $resultdbd2 = $this->actividad_model->cambiarEstatusDependientes($dataDepende);
-         $resultdbd3 = $this->avance_model->cambiarEstatus($dataAvance);
+        $resultdbd3 = $this->avance_model->cambiarEstatus($dataAvance);
 
         if ($resultdbd && $resultdbd2 && $resultdbd3) {
             echo json_encode(array(
@@ -162,10 +162,10 @@ class Actividad extends CI_Controller {
 
 //fin de la funcion
 
-    public function obtenerEventosConPlandeAccion() { 
-        $user=$this->session->userdata('datasession');
-         $usuario = $user['idusuario'];
-        
+    public function obtenerEventosConPlandeAccion() {
+        $user = $this->session->userdata('datasession');
+        $usuario = $user['idusuario'];
+
         $resultdbd = $this->actividad_model->cargarEventosPA($usuario);
 
         if ($resultdbd->num_rows() > 0) {
@@ -199,9 +199,9 @@ class Actividad extends CI_Controller {
 
     public function obtenerPlandeAccionDeEvento() {
         $id = $this->input->get('id');
- $user=$this->session->userdata('datasession');
-         $usuario = $user['idusuario'];
-        $resultdbd = $this->actividad_model->cargarPlandeAccionDeEvento($id,$usuario);
+        $user = $this->session->userdata('datasession');
+        $usuario = $user['idusuario'];
+        $resultdbd = $this->actividad_model->cargarPlandeAccionDeEvento($id, $usuario);
 
         if ($resultdbd->num_rows() > 0) {
             foreach ($resultdbd->result_array() as $row) {
@@ -315,7 +315,7 @@ class Actividad extends CI_Controller {
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
 
-        $estatusEv = 2;
+        $estatusEv = 1;
 
 
         $datoAct = $this->actividad_model->buscarIdActividad($evento);
@@ -380,7 +380,7 @@ class Actividad extends CI_Controller {
         if ($result and $resultEve) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito.".$usuario //modificado en la base de datos
+                "msg" => "Se Guardo con Éxito." . $usuario //modificado en la base de datos
             ));
         } else {
 
@@ -566,7 +566,7 @@ class Actividad extends CI_Controller {
                     case '5':
                         $estatus = '<font color=#FF0000> Expirado  </font>';
                         break;
-                     case '6':
+                    case '6':
                         $estatus = 'En Espera';
                         break;
 

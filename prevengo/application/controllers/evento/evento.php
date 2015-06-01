@@ -12,6 +12,7 @@ class Evento extends CI_Controller {
         $this->load->database();
         $this->load->library('session');
         $this->load->model('evento/evento_model');
+        $this->load->model('actividad/actividad_model');
     }
 
     public function listaEventos() {
@@ -22,7 +23,7 @@ class Evento extends CI_Controller {
 
             foreach ($eventos->result_array() as $row) {
 
-                 switch ($row['estatus']) {
+                switch ($row['estatus']) {
                     case '1':
                         $estatus = "<font color=#2E9AFE> Pendiente </font>";
                         break;
@@ -35,7 +36,7 @@ class Evento extends CI_Controller {
                     case '4':
                         $estatus = '<font color=#FF0000> Sin Plan </font>';
                         break;
-                     case '5':
+                    case '5':
                         $estatus = '<font color=#FF0000> Expirado  </font>';
                         break;
 
@@ -46,10 +47,8 @@ class Evento extends CI_Controller {
 
                 if ($row['nombre'] == NULL && $row['apellido'] == NULL) {
                     $nombre = " Por Asignar";
-                  
                 } else {
                     $nombre = $row['nombre'] . " " . $row['apellido'];
-                    
                 }
 
 
@@ -106,7 +105,7 @@ class Evento extends CI_Controller {
                     case '4':
                         $estatus = '<font color=#FF0000> Sin Plan </font>';
                         break;
-                     case '5':
+                    case '5':
                         $estatus = '<font color=#FF0000> Expirado  </font>';
                         break;
 
@@ -159,12 +158,12 @@ class Evento extends CI_Controller {
                     case '2':
                         $estatus = 'En Ejecución';
                         break;
-                     case '4':
+                    case '4':
                         $estatus = 'Sin Plan';
                         break;
-                    
+
                     default:
-                        
+
                         $estatus = 'Completado';
                         break;
                 }
@@ -211,12 +210,12 @@ class Evento extends CI_Controller {
 //fin 
 
     public function registrarEvento() {
-         $user=$this->session->userdata('datasession');
-         $usuario = $user['idusuario'];            
+        $user = $this->session->userdata('datasession');
+        $usuario = $user['idusuario'];
         $titulo = $this->input->post('txtTitulo');
         $descripcion = $this->input->post('txtDescripcion');
         $presupuesto = $this->input->post('txtPresupuesto');
-      
+
         $fecharegistro = date('Y-m-d');
         $fechaT = $this->input->post('dtfFechaT');
         $fechaPA = $this->input->post('dtfFechaPA');
@@ -290,6 +289,41 @@ class Evento extends CI_Controller {
                 "success" => false,
                 "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
             ));
+        }
+    }
+
+    public function cerrarEvento() {
+        $idEvento = $this->input->post('idEvento');
+        $estatus = 0;
+
+        $valor = $this->actividad_model->buscarActividadEvento($idEvento);
+
+        if ($valor->num_rows() > 0) {
+            $row = $valor->row_array();
+            if ($row['cuantos'] == 0) {
+                $dataEvento = array(
+                    'id' => $idEvento,
+                    'estatus' => $estatus
+                );
+                $result = $this->evento_model->cambiarEstatus($dataEvento);
+                if ($result) {
+                    echo json_encode(array(
+                        "success" => true,
+                        "msg" => "El evento ha finalizado con Éxito." //modificado en la base de datos
+                    ));
+                } else {
+
+                    echo json_encode(array(
+                        "success" => false,
+                        "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+                    ));
+                }
+            } else {
+                echo json_encode(array(
+                    "success" => false,
+                    "msg" => "Eno lo puede finalizar, porque el plan de accion no ha sido completado" //no se modifico en la base de datos
+                ));
+            }
         }
     }
 

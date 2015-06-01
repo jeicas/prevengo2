@@ -249,7 +249,20 @@ Ext.define('myapp.view.evento.ListaEventos', {
                         buffer: 500
                     }
                 }
-            }]
+            }, 
+        {
+	        xtype: 'actioncolumn',
+	        flex: 0.1,
+	        id: 'cerrarEvento',
+                name: 'cerrarEvento',
+	        sortable: false,
+	        menuDisabled: true,
+	        items: [{
+	            iconCls: 'icon-aceptar',
+	            tooltip: 'Cerrar Evento',
+	            scope: this,
+	        }]
+	    }]
     },
     buildDockedItems: function () {
         return [{

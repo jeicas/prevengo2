@@ -46,7 +46,7 @@ class Lineamiento extends CI_Controller {
 //fin listaEventos
     
     
-            public function buscarLineamiento() {
+    public function buscarLineamiento() {
         $id = $this->input->post('id');
         $valor= $this->lineamiento_model->buscarLineamiento($id);
 

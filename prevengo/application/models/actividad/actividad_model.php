@@ -36,7 +36,7 @@ class Actividad_model extends CI_Model{
 
  public function  buscarUnPlandeAccion($idUsuario,$idActividad){
 
-    $sql=" SELECT ava.id as avance, ava.actividad,ava.fechaasignacion, act.estatus 
+    $sql=" SELECT ava.id as avance,act.evento as evento, ava.actividad,ava.fechaasignacion, act.estatus 
               FROM avance AS ava 
               INNER JOIN actividad AS act ON ava.actividad=act.id 
               WHERE ava.usuario=$idUsuario and ava.actividad=$idActividad group by act.id";
@@ -45,6 +45,21 @@ class Actividad_model extends CI_Model{
        return $query;
 
     }
+    
+     public function  buscarActividadEvento($idEvento){
+
+    $sql=" select count(*) as cuantos
+
+                                  from prevengo.actividad
+                                    
+                                    where  prevengo.actividad.evento=$idEvento 					 												   
+                                          and actividad.estatus!=0";
+
+     $query = $this->db->query($sql);
+       return $query;
+
+    }
+    
     
  public function buscarIdActividad($evento){
 

@@ -14,6 +14,7 @@ class Avance extends CI_Controller {
         $this->load->library('session');
         $this->load->model('avance/avance_model');
         $this->load->model('actividad/actividad_model');
+          $this->load->model('evento/evento_model');
     }
 
     public function registrarAvance() {
@@ -26,7 +27,7 @@ class Avance extends CI_Controller {
         $costo = $this->input->post('txtCosto');
         $fecharegistro = date('Y-m-d');
         $descripcion = $this->input->post('txtDescripcion');
-       
+       $estatusEv=2;
         //busca los datos de la actividad.
         $resultadoAct = $this->actividad_model->buscarUnPlandeAccion($usuario, $actividad);
         if ($resultadoAct->num_rows() > 0) {
@@ -106,10 +107,15 @@ class Avance extends CI_Controller {
                         $resultado = true;
                     }//else row
                 }// else tipo 
+                
+                 $dataEvento = array('id' => $row["evento"],
+                            'estatus' => $estatusEv,
+                );
+                    $resultadoEv = $this->evento_model->cambiarEstatus($dataEvento);
             } //foreach
         }//if ResultadoAct  
-
-
+                    
+                    
 
 
         if ($result AND $resultad AND $resultado) {

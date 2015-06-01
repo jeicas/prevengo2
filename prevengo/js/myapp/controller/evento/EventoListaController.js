@@ -66,6 +66,9 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             "listaEventos button[name=btnCancelar]": {
                 click: this.onClickCancelarEvento
             },
+            "listaEventos actioncolumn[name=cerrarEvento]": {
+                click: this.onClickCerrarEvento
+            },
             "winEvento button[name=btnGuardar]": {
                 click: this.onClickGuardarEvento
             },
@@ -202,9 +205,9 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         record = grid.getSelectionModel().getSelection();
 
         if (record[0]) {
-            if (record[0].get('estatus')== '<font color=#2E9AFE> Pendiente </font>'
-               || record[0].get('estatus')== '<font color=#FF8000> En Ejecución  </font>'
-               || record[0].get('estatus')== '<font color=#FF0000> Sin Plan </font>') {
+            if (record[0].get('estatus') == '<font color=#2E9AFE> Pendiente </font>'
+                    || record[0].get('estatus') == '<font color=#FF8000> En Ejecución  </font>'
+                    || record[0].get('estatus') == '<font color=#FF0000> Sin Plan </font>') {
                 Ext.Msg.show({
                     title: 'Confirmar',
                     msg: 'Esta seguro que desea CANCELAR el Evento ' + record[0].get('titulo') + '?',
@@ -222,7 +225,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             }
             else {
                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                    msg: "El Evento "+ record[0].get('titulo') +" no lo puede cancelar, porque ha sido: "+record[0].get('estatus'),
+                    msg: "El Evento " + record[0].get('titulo') + " no lo puede cancelar, porque ha sido: " + record[0].get('estatus'),
                     buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
             }
 
@@ -232,6 +235,69 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                 msg: 'Debe seleccionar el evento que desea Cancelar',
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
+    },
+    onClickCerrarEvento: function (grid, record,rowIndex) {
+        var grid = this.getListaEventos();
+        store= grid.getStore();
+        rec = store.getAt(rowIndex);
+        console.log('seleccion'+rec.get('titulo'));
+        if (rec.get('estatus') == '<font color=#FF8000> En Ejecución  </font>') {
+            Ext.Msg.show({
+                title: 'Confirmar',
+                msg: 'Esta seguro que desea Cerrar el Evento ' + rec.get('titulo') + '?',
+                buttons: Ext.Msg.YESNO,
+                icon: Ext.Msg.QUESTION,
+                fn: function (buttonId) {
+                    if (buttonId == 'yes') {
+                        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+                            url: BASE_URL + 'evento/evento/cerrarEvento',
+                            method: 'POST',
+                            params: {
+                                idEvento: rec.get('idEv'),
+                            },
+                            success: function (result, request) {
+                                result = Ext.JSON.decode(result.responseText);
+                                if (result.success) {
+                                    grid.getView().refresh();
+                                    grid.getStore().load();
+                                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                                }
+                                else {
+                                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                                    // myapp.util.Util.showErrorMsg(result.msg);
+                                }
+                            },
+                            failure: function (form, action) {
+                                var result = action.result;
+                                loadingMask.hide();
+                                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                            }
+                        });
+
+                    }
+                }
+            });
+        }
+        else {
+            if (rec.get('estatus')=='<font color=#DF01D7> Cancelado  </font>'){
+                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha sido cancelado",
+                buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+            }else
+            
+             if (rec.get('estatus')=='<font color=#01DF3A> Completado </font>'){
+                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha finalizado",
+                buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+            }else
+            {
+                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                msg: "El Evento " + rec.get('titulo') + " no lo puede finalizar, porque el plan de accion no ha sido completado",
+                buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+            }
+           
+    }
     },
     //==============Funciones de la ventana Evento=====================================
 
@@ -383,7 +449,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
         for (i = 0; i < storeS.data.items.length; ++i)
         {
-           
+
             if (storeS.data.items[i].data['id'] == valor) {
                 winTE.down("textfield[name=nombre]").setValue(storeS.data.items[i].data['nombre']);
                 winTE.down("textfield[name=valor]").setValue(storeS.data.items[i].data['valor']);

@@ -60,32 +60,18 @@ Ext.define('myapp.view.seguridad.PermisoForm', {
                         buffer: 500
                     }
                 }
-            }, {
-                flex: 0.3,
-                dataIndex: 'apellido',
-                text: '',
-                items: {
-                    xtype: 'textfield',
-                    flex: 1,
-                    margin: 2,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keyup: function () {
-                            var store = this.up('grid').store;
-                            store.clearFilter();
-                            if (this.value) {
-                                store.filter({
-                                    property: 'apellido',
-                                    value: this.value,
-                                    anyMatch: true,
-                                    caseSensitive: false
-                                });
-                            }
-                        },
-                        buffer: 500
-                    }
-                }
-            }]
+            },{
+	        xtype: 'actioncolumn',
+	        flex: 0.1,
+	        id: 'eliminar',
+	        sortable: false,
+	        menuDisabled: true,
+	        items: [{
+	            icon: '../../imagen/btn/eliminar.png',
+	            tooltip: 'eliminar',
+	            scope: this,
+	        }]
+	    }]
     },
     buildDockedItems: function () {
         return [{
