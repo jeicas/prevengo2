@@ -14,7 +14,7 @@ class Avance extends CI_Controller {
         $this->load->library('session');
         $this->load->model('avance/avance_model');
         $this->load->model('actividad/actividad_model');
-          $this->load->model('evento/evento_model');
+        $this->load->model('evento/evento_model');
     }
 
     public function registrarAvance() {
@@ -27,7 +27,7 @@ class Avance extends CI_Controller {
         $costo = $this->input->post('txtCosto');
         $fecharegistro = date('Y-m-d');
         $descripcion = $this->input->post('txtDescripcion');
-       $estatusEv=2;
+        $estatusEv=2;
         //busca los datos de la actividad.
         $resultadoAct = $this->actividad_model->buscarUnPlandeAccion($usuario, $actividad);
         if ($resultadoAct->num_rows() > 0) {
@@ -35,7 +35,6 @@ class Avance extends CI_Controller {
                 if ($tipo == 0) { //tipo final
                     $estatusAct = 3; // en Revision
                      $estatus = 5;//pendiente por evaluar
-
                     if ($row['estatus'] == 1) { //actividad con estatus sin iniciar
                         $dataAvance = array(
                             'id' => $row['avance'],
@@ -215,6 +214,7 @@ class Avance extends CI_Controller {
                     'descripcion' => $row['descripcion'],
                     'tipo' => $tipo,
                     'fecha' => $row['fecha'],
+                    'idUs' => $row['idUs'],
                     'nombre' => $row['nombre'],
                     'apellido' => $row['apellido'],
                     'observacion' => $observacion,
@@ -394,6 +394,29 @@ class Avance extends CI_Controller {
        
     }
     
+
+
+       public function buscarUsuario() {
+         $user=$this->session->userdata('datasession');
+         $id = $user['idusuario'];
+          $idUsu= $this->input->post('idUsuario');
+
+
+        if ($idUs==$id) {
+                   $cuanto = 0;
+               }
+               else {
+                $cuanto = 1;
+               }
+
+            $output = array(
+                'success' => true,
+                'cuanto' => $cuanto,
+            );  
+            echo json_encode($output);
+
+    }
+
     public function obtenerUsuarios() {
         
         $resultdbd = $this->avance_model->cargarUsuarios();

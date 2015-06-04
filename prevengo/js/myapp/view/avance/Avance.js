@@ -54,7 +54,6 @@ Ext.define('myapp.view.registrar.Avance', {
                             emptyText     :'Seleccione',
                             queryMode     : 'local',
                             allowBlank    : false,
-                            forceSelection: true,
                             triggerAction : 'all'
                             
                         },
@@ -88,7 +87,6 @@ Ext.define('myapp.view.registrar.Avance', {
                     emptyText     :'Seleccione',
                     queryMode     : 'local',
                     allowBlank    : false,
-                    forceSelection: true,
                     triggerAction : 'all'
                     
                 },

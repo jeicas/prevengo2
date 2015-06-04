@@ -53,6 +53,7 @@ class Avance_model extends CI_Model {
                      av.fecharegistro AS fecha, 
                      av.observacion AS observacion,
                      av.estatus AS estatus,
+                     bdgenerica.usuario.id AS idUs,
                      bdgenerica.persona.nombre AS nombre, 
                      bdgenerica.persona.apellido AS apellido 
 

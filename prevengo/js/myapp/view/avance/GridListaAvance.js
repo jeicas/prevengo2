@@ -244,12 +244,26 @@ Ext.define('myapp.view.avance.GridListaAvance', {
                 dock: 'bottom',
                 store: this.store,
                 displayInfo: true,
-                items: [{
+                items: []
+            },
+               {
+                xtype: 'toolbar',
+                dock: 'top',
+                store: this.store,
+                displayInfo: true,
+                  items:[{
                         xtype: 'button',
                         name: 'btnAgregarAvance',
-                        text: 'Registrar Avance',
+                        text: 'Nuevo',
                         iconCls: 'icon-nuevoAvance'
-                    }]
+                    },
+                    {
+                        xtype: 'button',
+                        name: 'btnEditarAvance',
+                        text: 'Editar',
+                        iconCls: 'useredit'
+                    }
+                ]
             }];
     }
 });
