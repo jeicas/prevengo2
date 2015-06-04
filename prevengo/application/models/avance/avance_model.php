@@ -14,6 +14,7 @@ class Avance_model extends CI_Model {
     public function guardarAvance($dataAvance) {
         return $this->db->insert('avance', $dataAvance);
     }
+   
 
     public function actualizarAvance($dataAvance) {
 
@@ -47,10 +48,15 @@ class Avance_model extends CI_Model {
 
     public function consultarListaAvance() {
 
-        $sql = "SELECT av.descripcion AS descripcion, evento.titulo AS evento, 
-                     actividad.descripcion AS actividad, 
+        $sql = "SELECT av.descripcion AS descripcion, 
+                     evento.titulo AS evento, 
+                     actividad.descripcion AS actividad,
+                      av.id AS idAvance, 
+                     av.actividad AS idActividad, 
                      av.tipo AS tipo,
                      av.fecharegistro AS fecha, 
+                     av.fechaasignacion AS fechaAsig, 
+                     av.costo AS costo, 
                      av.observacion AS observacion,
                      av.estatus AS estatus,
                      bdgenerica.usuario.id AS idUs,

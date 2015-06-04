@@ -54,7 +54,7 @@ Ext.define('myapp.controller.seguridad.Usuarioisa', {
                     recordsToSend.push(Ext.apply(record.data));
                 });
                 recordsToSend = Ext.encode(recordsToSend);
-                //console.log(recordsToSend);
+                
                 Ext.Ajax.request({
                     method:'POST',
                     url : '../autorizacion/autorizacion/guardarAutorizacion',

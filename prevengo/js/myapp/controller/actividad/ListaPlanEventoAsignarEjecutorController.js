@@ -99,10 +99,6 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
             }
         });
 
-
-
-
-
     }, // fin de la function 
 
     onClickAsignarEmpleado: function (button, e, options) {
@@ -117,7 +113,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
         var gridUsu = this.getListaAsignarUsuario();
         var win = this.getWinAsignarUsuario();
         record = gridUsu.getSelectionModel().getSelection();
-    console.log(grid1.down("label[name=lblIdActividad]").getEl().dom.textContent);
+ 
         if (record[0]) {
 
             Ext.Ajax.request({

@@ -165,6 +165,59 @@ class Avance extends CI_Controller {
     }//AsignarEmpleado
 
 
+   
+     public function actualizarAvance() {
+        $idAvance = $this->input->post('idAvance');
+        $actividad = $this->input->post('cmbActividad');
+        $tipo = $this->input->post('cmbTipoAvance');
+        $costo = $this->input->post('txtCosto');
+        $fecharegistro = date('Y-m-d');
+        $descripcion = $this->input->post('txtDescripcion');
+      
+                   if ($tipo == 0) { //tipo final
+                    $estatusAct = 3; // en Revision
+                     $estatus = 5;//pendiente por evaluar
+                   }
+                   else{
+                       $estatusAct = 2; // en Revision
+                     $estatus = 0;//pendiente por evaluar
+                   }
+     
+         $dataAvance = array(
+                            'id' => $idAvance, 
+                           'actividad' => $actividad, 
+                            'descripcion' => $descripcion,
+                            'fecharegistro' => $fecharegistro,
+                            'tipo' => $tipo,
+                            'costo' => $costo,
+                            'estatus' => $estatus
+                        );
+         
+            //Actualiza el estatus de la actividad a "En Ejecucion"   
+                   $dataActividad = array('id' => $actividad,
+                        'estatus' => $estatusAct,
+                       );
+                        $resultad = $this->actividad_model->cambiarEstatus($dataActividad);
+             $result = $this->avance_model->actualizarAvance($dataAvance);
+                    
+
+
+        if ($result &&  $resultad) {
+            echo json_encode(array(
+                "success" => true,
+                "msg" => "Se actualizó con Éxito.".$idAvance
+       
+            ));
+        } else {
+
+            echo json_encode(array(
+                "success" => false,
+                "msg" => "No se pudo Guardar" 
+            ));
+        }
+    }//AsignarEmpleado 
+    
+    
     public function cargarGridAvance() {
 
 
@@ -210,11 +263,17 @@ class Avance extends CI_Controller {
                 $eventAct = "  Actividad: " . $row['actividad'] . "<br> <font color=#3F77E6> Evento: " . $row['evento'] . "</font></br>";
 
                 $data[] = array(
+                    'idAct' => $row['idActividad'],
+                    'idAv' => $row['idAvance'],
                     'actividad' => $eventAct,
+                    'actividadTitle' => $row['actividad'],
                     'descripcion' => $row['descripcion'],
                     'tipo' => $tipo,
                     'fecha' => $row['fecha'],
                     'idUs' => $row['idUs'],
+                    'evento' =>  $row['evento'],
+                    'fechaAsignacion' => $row['fechaAsig'],
+                    'costo' => $row['costo'],
                     'nombre' => $row['nombre'],
                     'apellido' => $row['apellido'],
                     'observacion' => $observacion,
@@ -399,14 +458,14 @@ class Avance extends CI_Controller {
        public function buscarUsuario() {
          $user=$this->session->userdata('datasession');
          $id = $user['idusuario'];
-          $idUsu= $this->input->post('idUsuario');
+         $idUsu= $this->input->post('idUsuario');
 
 
-        if ($idUs==$id) {
-                   $cuanto = 0;
+        if ($idUsu==$id) {
+                   $cuanto = 1;
                }
                else {
-                $cuanto = 1;
+                $cuanto = 0;
                }
 
             $output = array(
