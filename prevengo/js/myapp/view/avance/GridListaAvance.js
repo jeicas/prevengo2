@@ -255,7 +255,7 @@ Ext.define('myapp.view.avance.GridListaAvance', {
                         xtype: 'button',
                         name: 'btnAgregarAvance',
                         text: 'Nuevo',
-                        iconCls: 'icon-nuevoAvance'
+                        iconCls: 'useradd'
                     },
                     {
                         xtype: 'button',
