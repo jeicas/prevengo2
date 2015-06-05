@@ -22,7 +22,7 @@
                         xtype: 'fieldset',
                         layout: 'vbox',
                         margin:'20 20 20 20',
-                        width:700,
+                        width:600,
                         heigth:890,
                         itemId :'containerEmpleado',
                         title: 'Datos personales',
@@ -81,7 +81,7 @@
                                   xtype       : 'textfield',
                                   fieldLabel  : 'Nombres',
                                   margins     : '0 0 0 10',
-                                  width       : 655,
+                                  width: 460,
                                   name        :'nombres',
                                   vtype       : 'nombres',
                                   allowBlank  : false,
@@ -89,7 +89,7 @@
                               },{
                                 xtype       : 'textfield',
                                 fieldLabel  : 'Apellidos',
-                                width       : 655,
+                                width: 460,
                                 labelWidth: 150,
                                 name        :'apellidos',
                                 vtype       : 'nombres',
@@ -120,7 +120,7 @@
                             },{
                                 xtype       : 'textfield',
                                 fieldLabel  : 'E-mail',
-                                width       : 655,
+                                 width: 460,
                                 margins     : '0 0 0 10',
                                 labelWidth  : 150,
                                 name        :'correo',
@@ -135,7 +135,7 @@
                                 labelWidth: 150,
                                 margins     : '0 0 0 10',
                                 store       : Ext.create('myapp.store.persona.sexoStore'),
-                                width       : 655,
+                                 width: 460,
                                 valueField: 'id',
                                 displayField: 'nombre',
       
@@ -148,7 +148,7 @@
                                 labelWidth: 150,
                                 margins     : '0 0 0 10',
                                 store       : Ext.create('myapp.store.persona.estadoStore'),
-                                width       : 655,
+                                 width: 460,
                                 valueField: 'id',
                                 displayField: 'nombre',
       
@@ -162,7 +162,7 @@
                                 labelWidth: 150,
                                 margins     : '0 0 0 10',
                                 store       : Ext.create('myapp.store.persona.municipioStore'),
-                                width       : 655,
+                                  width: 460,
                                 valueField: 'id',
                                 displayField: 'nombre',
       
@@ -176,7 +176,7 @@
                                 labelWidth: 150,
                                 margins     : '0 0 0 10',
                                 store       : Ext.create('myapp.store.persona.parroquiaStore'),
-                                width       : 655,
+                                 width: 460,
                                 valueField: 'id',
                                 displayField: 'nombre',
       
@@ -199,7 +199,7 @@
                                   xtype       : 'textfield',
                                   flex        : 1,
                                   allowBlank:false,
-                                  width       : 420,
+                                  width       : 230,
                                   name        : 'movil',
                                   minLength   : 7,
                                   maxLength   : 7,
@@ -224,7 +224,7 @@
                                  },{
                                     xtype       : 'textfield',
                                     flex        : 1,
-                                    width       : 420,
+                                   width       : 230,
                                     name        : 'local',
                                     minLength   : 7,
                                     maxLength   : 7,
@@ -240,14 +240,14 @@
                 xtype: 'fieldset',
                 layout: 'vbox',
                 disabled:true,
-                width:700,
+                width:600,
                 height:130,
                 itemId:'filsetnivelocupacional',
                 margin:'0 20 0 20',
                 title: 'Datos Ocupacionales',
                 items: [{
                     xtype: 'combobox',
-                    width:'100%',
+                    width: 460,
                     labelWidth:150,
                     disabled:false,
                     name: 'cmbtiponomina',
@@ -263,7 +263,7 @@
                     fieldLabel: 'Tipo de Nomina'
                 },{
                     xtype: 'combobox',
-                     width:'100%',
+                     width: 460,
                     labelWidth:150,
                     disabled:false,
                     name: 'cmbcargo',
@@ -279,7 +279,7 @@
                     fieldLabel: 'Tipo de Cargo'
                 },{
                     xtype: 'combobox',
-                    width:'100%',
+                     width: 460,
                     labelWidth:150,
                     disabled:false,
                     //hidden:true,
@@ -297,7 +297,7 @@
                     fieldLabel: 'Status',
                     name: 'status', 
                     margins:'3 6 3 15',                    
-                    width:'100%',
+                    width: 460,
                     disabled:false,
                     hidden:true,
                     labelWidth:150,
@@ -316,7 +316,7 @@
         title: 'Foto',
         itemId:'fotofilset',
         margin:'20 0 10 0',
-        width: '36%',
+        width: '38%',
         items: [{ 
             xtype: 'radiogroup',
             //hideLabel: true,
@@ -338,8 +338,10 @@
               xtype: 'radiofield',
               name:'seleccionfoto',
               boxLabel: 'Buscar Foto',
-              style: 'margin-bottom: 20px',
+            
               inputValue: '2',
+              x:100,
+              y:10000,
             },{
               xtype: 'radiofield',
               name:'seleccionfoto',
@@ -391,17 +393,19 @@
               xtype:'form',
               itemId:'fotografia1',
               frame: true,
+              
               disabled:true,
               hidden:false,
               border: false,
               width:'100%',
               layout: 'fit',
-              height: 305,
+                height: 380,
+                width: 350,
               autoShow: true,
               items : [{
                 xtype: 'image',
-                height: 150,
-                width: 200,
+                height: 100,
+                width: 100,
                 name:'fotoFrontal1',
                 src: BASE_PATH+'imagen/foto/silueta.png'
               }]

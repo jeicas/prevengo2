@@ -28,7 +28,7 @@ class Evento extends CI_Controller {
                         $estatus = "<font color=#2E9AFE> Pendiente </font>";
                         break;
                     case '2':
-                        $estatus = '<font color=#FF8000> En Ejecución  </font>';
+                        $estatus = 'En Ejecucion';
                         break;
                     case '3':
                         $estatus = '<font color=#DF01D7> Cancelado  </font>';
@@ -97,7 +97,7 @@ class Evento extends CI_Controller {
                         $estatus = "<font color=#2E9AFE> Pendiente </font>";
                         break;
                     case '2':
-                        $estatus = '<font color=#FF8000> En Ejecución  </font>';
+                        $estatus = 'En Ejecucion';
                         break;
                     case '3':
                         $estatus = '<font color=#DF01D7> Cancelado  </font>';

@@ -287,12 +287,12 @@
         }
     }
   function insertEmpleado($dataempleado){
-         $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
-        return $db_generica->insert('empleado', $dataempleado);
+        
+        return $this->db->insert('bdgenerica.empleado', $dataempleado);
     }
     function insertPersona($datapersona){
-       $db_generica = $this->load->database('bdgenerica', TRUE);//Inicia la BD generica
-        return $db_generica->insert('persona', $datapersona);
+      
+        return $this->db->insert('bdgenerica.persona', $datapersona);
     }
     function updateEmpleado($dataempleado){
         $db_generica = $this->load->database($this->config->item('bdgenerica'), TRUE);//Inicia la BD generica

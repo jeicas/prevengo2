@@ -3,7 +3,7 @@ Ext.define('myapp.view.evento.ListaEventos', {
     alias: 'widget.listaEventos',
     requires: [
         'Ext.selection.CellModel',
-        'Ext.selection.CheckboxModel',
+        
         'Ext.ux.ajax.SimManager',
         'Ext.ux.grid.FiltersFeature',
     ],
@@ -18,19 +18,20 @@ Ext.define('myapp.view.evento.ListaEventos', {
             hideGroupedHeader: true,
             enableGroupingMenu: false
        }],
-    store: Ext.create('myapp.store.evento.EventoStore'),
-    emptyText: 'No hay Eventos registrados',
+    
     viewConfig: {
         getRowClass: function (record, index) {
             var c = record.get('estatus');
-            if (c == 'En Ejecución') {
+            if (c === 'En Ejecucion') {
                 return 'price-fall';
-            } else if (c == 'Completado') {
+            } else if (c == 
+                  'Completado') {
                 return 'price-rise';
             }
         }
     },
-    //selType: 'checkboxmodel',
+    store: Ext.create('myapp.store.evento.EventoStore'),
+    emptyText: 'No hay Eventos registrados',
     columnLines: true,
     initComponent: function () {
         var me = this;
