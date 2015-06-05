@@ -360,3 +360,10 @@ $config['proxy_ips'] = '';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
+//Agregamos las Variables para el uso de las Base de Datos 
+
+$config['bdgenerica'] = "bdgenerica";
+
+
+//Su utiliza de esta forma para concatenar en un sql -------> ".$this->config->item('bdgenerica')." <----------
+//Lo que se encuentra entre las flechas
