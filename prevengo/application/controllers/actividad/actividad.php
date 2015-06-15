@@ -170,13 +170,35 @@ class Actividad extends CI_Controller {
 
         if ($resultdbd->num_rows() > 0) {
             foreach ($resultdbd->result_array() as $row) {
+                    
+                switch ($row['estatus']) {
+                    case '1':
+                        $estatus = 'Pendiente';
+                        break;
+                    case '2':
+                        $estatus = 'En Ejecución';
+                        break;
+                    case '3':
+                        $estatus = 'Cancelado';
+                        break;
+                    case '4':
+                        $estatus = 'Sin Plan';
+                        break;
+                    case '5':
+                        $estatus = 'Expirado';
+                        break;
 
+                    default:
+                        $estatus = 'Completado';
+                        break;
+                }
 
                 $evento = "<br> <font color=#3F77E6> Evento: " . $row['evento'] . "</font>";
                 $data[] = array(
                     'idEvento' => $row['idEvento'],
                     'evento' => $row['evento'],
                     'descripcion' => $row['descripcion'],
+                     'estatus' => $estatus,
                     'fecha' => $row['fecha'],
                 );
             }

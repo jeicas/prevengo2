@@ -127,7 +127,8 @@ public function  cambiarEstatus($data){
         $sql="SELECT ev.id AS idEvento,
                      ev.titulo AS evento,
                      ev.descripcion AS descripcion,
-                     ev.fechatope AS fecha
+                     ev.fechatope AS fecha,
+                      ev.estatus AS estatus
                     
                          
                 FROM evento AS ev 

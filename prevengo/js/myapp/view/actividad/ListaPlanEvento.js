@@ -7,6 +7,36 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
         'Ext.selection.CheckboxModel',
         'Ext.ux.ajax.SimManager',
     ],
+         viewConfig: {
+        getRowClass: function (record, index) {
+            var c = record.get('estatus');
+            switch (c) {
+                    case 'Sin Iniciar':
+                       return 'price-riseSIniciar';
+                        break;
+                    case 'En Ejecución':
+                       return 'price-riseEEjecucion';
+                        break;
+                    case 'En Revision':
+                       return 'price-fallRevision';
+                        break;
+                    case 'Cancelado':
+                      return 'price-riseCancelado';
+                        break;
+                    case 'Expirado':
+                       return 'price-fallExpirado';
+                        break;
+
+                    case 'En Espera':
+                   return 'price-riseEEspera';
+                        break;
+                    default:
+                        return 'price-fallCompletado';
+                        break;
+                }
+
+        }
+    },
     
     store: Ext.create('myapp.store.actividad.ActividadEventoStore'),
     emptyText: 'No hay Plan de Acción registrado',
@@ -45,11 +75,13 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
              {
                 dataIndex: 'estatus',
                 flex: 0.5,
+                tdCls: 'x-change-cell',
                 text: 'Estatus',
             },
             {
                 dataIndex: 'observacion',
                 flex: 0.5,
+                renderer: renderTip,
                 text: 'Observacion',
             }
             ]

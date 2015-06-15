@@ -135,7 +135,7 @@
 
 //colores estatus
 .price-fallPendiente .x-change-cell {
-    background-color: #B9B9B9;
+    background-color: #70EB7C;
     color:#0B0B0A;
 }
 .price-fallCompletado .x-change-cell {
@@ -152,6 +152,11 @@
 }
 .price-fallRechazado .x-change-cell {
     background-color: #E6697A;
+    color:#0B0B0A;
+}
+
+.price-fallPend .x-change-cell {
+    background-color: #A4A4A4;
     color:#0B0B0A;
 }
 .price-fallExtenporaneo .x-change-cell {
@@ -171,8 +176,8 @@
      color:#0B0B0A;
 }
 .price-riseEEspera .x-change-cell {
-    background-color: #8B8886;
-    color:blue;
+    background-color: #FFBF00;
+   color:#0B0B0A;
 }
 .price-riseSIniciar .x-change-cell {
     background-color: #F1E60D;

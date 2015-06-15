@@ -19,7 +19,35 @@ Ext.define('myapp.view.actividad.ListaPlanEventoAsignarEjecutor', {
             enableGroupingMenu: false
        }],
     store: Ext.create('myapp.store.actividad.PlandeAccionStore'),
-    viewConfig: {
+   viewConfig: {
+        getRowClass: function (record, index) {
+            var c = record.get('estatus');
+            switch (c) {
+                    case 'Sin Iniciar':
+                       return 'price-riseSIniciar';
+                        break;
+                    case 'En Ejecución':
+                       return 'price-riseEEjecucion';
+                        break;
+                    case 'En Revision':
+                       return 'price-fallRevision';
+                        break;
+                    case 'Cancelado':
+                      return 'price-riseCancelado';
+                        break;
+                    case 'Expirado':
+                       return 'price-fallExpirado';
+                        break;
+
+                    case 'En Espera':
+                   return 'price-riseEEspera';
+                        break;
+                    default:
+                        return 'price-fallCompletado';
+                        break;
+                }
+
+        }
     },
     //selType: 'checkboxmodel',
     columnLines: true,
@@ -93,6 +121,7 @@ Ext.define('myapp.view.actividad.ListaPlanEventoAsignarEjecutor', {
             {
                 dataIndex: 'estatus',
                 flex: 0.3,
+                 tdCls: 'x-change-cell',
                 text: 'Estatus',
                 items: {
                     xtype: 'textfield',

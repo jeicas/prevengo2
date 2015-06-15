@@ -20,7 +20,29 @@ Ext.define('myapp.view.avance.GridListaAvance', {
             enableGroupingMenu: false
        }],
     store: Ext.create('myapp.store.avance.AvanceStore'),
-    viewConfig: {
+        viewConfig: {
+        getRowClass: function (record, index) {
+            var c = record.get('estatus');
+            switch (c) {
+                    case 'Cancelado':
+                         return 'price-riseCancelado';
+                        break;
+                    case 'Rechazado':
+                        return 'price-fallRechazado';
+                        break;
+                    case 'Extenporaneo':
+                         return 'price-fallExtenporaneo';
+                        break;
+                     case 'Pendiente por Evaluar':
+                        return 'price-fallPend';
+                        break;
+                   
+                    default:
+                         return 'price-fallCompletado';
+                        break;
+                }
+
+        }
     },
     columnLines: true,
     initComponent: function () {
@@ -189,6 +211,7 @@ Ext.define('myapp.view.avance.GridListaAvance', {
                 flex: 0.5,
                 dataIndex: 'estatus',
                 text: 'Estado',
+                tdCls: 'x-change-cell',
                 items: {
                     xtype: 'textfield',
                     flex: 1,

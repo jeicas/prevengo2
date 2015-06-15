@@ -71,6 +71,9 @@ Ext.define('myapp.controller.evento.EventoResponsableListaController', {
                  img.setSrc(BASE_PATH+'./empleados/_DSC' + record[0].get('foto'));
             }
               win.setTitle("Responsable Asignado");
+              if (item.data.estatus=='Sin Plan' || item.data.estatus=='Pendiente' ){
+                 win.down('button[name=btnCambiar]').setVisible(true);
+              }else {win.down('button[name=btnCambiar]').setVisible(false);}
         }
           win.show();
         
