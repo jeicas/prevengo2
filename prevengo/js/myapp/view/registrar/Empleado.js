@@ -235,7 +235,22 @@
                                     allowBlank:false,
                                     vtype       : 'numero'
                                 }]
-                             }]
+                             }, 
+                            {
+                                xtype       : 'combobox',
+                                fieldLabel  : 'Profesión:',
+                                name        : 'cmbprofesion',
+                                emptyText   :'Seleccionar',
+                                allowBlank  : false,
+                                editable    : false,
+                                labelWidth: 150,
+                                margins     : '0 0 0 10',
+                                store       : Ext.create('myapp.store.persona.profesionStore'),
+                                width: 460,
+                                valueField: 'id',
+                                displayField: 'nombre',
+      
+                            }]
                         }]
                      }]
                 }]

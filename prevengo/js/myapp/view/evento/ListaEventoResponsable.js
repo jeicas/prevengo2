@@ -14,6 +14,30 @@ Ext.define('myapp.view.evento.ListaEventoResponsable', {
     store: Ext.create('myapp.store.evento.EventoResponsableStore'),
     emptyText: 'No hay Eventos registrados',
     viewConfig: {
+        getRowClass: function (record, index) {
+            var c = record.get('estatus');
+            switch (c) {
+                case 'Pendiente':
+                    return 'price-fallPendiente';
+                    break;
+                case 'En Ejecución':
+                    return 'price-riseEEjecucion';
+                    break;
+                case 'Cancelado':
+                    return 'price-riseCancelado';
+                    break;
+                case 'Sin Plan':
+                    return 'price-riseSPlan';
+                    break;
+                case 'Expirado':
+                    return 'price-fallExpirado';
+                    break;
+                default:
+                    return 'price-fallCompletado';
+                    break;
+            }
+
+        }
     },
     columnLines: true,
     initComponent: function () {
@@ -158,6 +182,7 @@ Ext.define('myapp.view.evento.ListaEventoResponsable', {
                 flex: 0.5,
                 dataIndex: 'estatus',
                 text: 'Estado',
+                 tdCls: 'x-change-cell',
                 items: {
                     xtype: 'textfield',
                     flex: 1,

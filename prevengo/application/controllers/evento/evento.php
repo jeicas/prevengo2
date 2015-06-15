@@ -25,23 +25,23 @@ class Evento extends CI_Controller {
 
                 switch ($row['estatus']) {
                     case '1':
-                        $estatus = "<font color=#2E9AFE> Pendiente </font>";
+                        $estatus = "Pendiente";
                         break;
                     case '2':
-                        $estatus = 'En Ejecucion';
+                        $estatus = 'En Ejecución';
                         break;
                     case '3':
-                        $estatus = '<font color=#DF01D7> Cancelado  </font>';
+                        $estatus = 'Cancelado';
                         break;
                     case '4':
-                        $estatus = '<font color=#FF0000> Sin Plan </font>';
+                        $estatus = 'Sin Plan';
                         break;
                     case '5':
-                        $estatus = '<font color=#FF0000> Expirado  </font>';
+                        $estatus = 'Expirado';
                         break;
 
                     default:
-                        $estatus = '<font color=#01DF3A> Completado </font>';
+                        $estatus = 'Completado';
                         break;
                 }
 
@@ -94,23 +94,23 @@ class Evento extends CI_Controller {
 
                 switch ($row['estatus']) {
                     case '1':
-                        $estatus = "<font color=#2E9AFE> Pendiente </font>";
+                        $estatus = "Pendiente";
                         break;
                     case '2':
-                        $estatus = 'En Ejecucion';
+                        $estatus = 'En Ejecución';
                         break;
                     case '3':
-                        $estatus = '<font color=#DF01D7> Cancelado  </font>';
+                        $estatus = 'Cancelado';
                         break;
                     case '4':
-                        $estatus = '<font color=#FF0000> Sin Plan </font>';
+                        $estatus = 'Sin Plan';
                         break;
                     case '5':
-                        $estatus = '<font color=#FF0000> Expirado  </font>';
+                        $estatus = 'Expirado';
                         break;
 
                     default:
-                        $estatus = '<font color=#01DF3A> Completado </font>';
+                        $estatus = 'Completado';
                         break;
                 }
 

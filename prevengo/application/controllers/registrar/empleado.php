@@ -319,7 +319,7 @@ class Empleado extends CI_Controller
                     'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
                     'parroquia'         =>   $this->input->post('cmbparroquia'),
                     'sexo'              =>   strtoupper($this->input->post('sexo')),
-                     'profesion' =>2,
+                     'profesion' =>$this->input->post('cmbprofesion'),
                     'estatus'           =>   $status
                 );
             }
@@ -337,7 +337,7 @@ class Empleado extends CI_Controller
                     'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
                     'foto'              =>   $nombrefoto2,
                     'parroquia'         =>   $this->input->post('cmbparroquia'),
-                    'profesion' =>2,
+                    'profesion' =>$this->input->post('cmbprofesion'),
                     'sexo'              =>   strtoupper($this->input->post('sexo')),
                     'estatus'           =>   $status
                 );
@@ -355,7 +355,7 @@ class Empleado extends CI_Controller
                     'correo'            =>   strtoupper($this->input->post('correo')),
                     'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
                     'foto'              =>   0,
-                      'profesion' =>2,
+                      'profesion' =>$this->input->post('cmbprofesion'),
                     'sexo'              =>   strtoupper($this->input->post('sexo')),
                     'estatus'           =>   $status
                 );
@@ -373,7 +373,7 @@ class Empleado extends CI_Controller
                     'correo'            =>   strtoupper($this->input->post('correo')),
                     'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
                     'sexo'              =>   strtoupper($this->input->post('sexo')),
-                     'profesion' =>2,
+                     'profesion' =>$this->input->post('cmbprofesion'),
                     'estatus'           =>   $status
                 );
           
@@ -392,7 +392,7 @@ class Empleado extends CI_Controller
                     'correo'            =>   strtoupper($this->input->post('correo')),
                     'fechanacimiento'   =>   $this->input->post('fechanacimiento'),
                     'foto'              =>   $nombrefoto2,
-                     'profesion' =>2,
+                    'profesion' =>$this->input->post('cmbprofesion'),
                     'sexo'              =>   strtoupper($this->input->post('sexo')),
                     'estatus'           =>   $status
                 );

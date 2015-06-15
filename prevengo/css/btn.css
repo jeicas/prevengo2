@@ -132,14 +132,53 @@
   background-image:url('../imagen/btn/atras3.jpg') !important;
 }
 
-.price-fall .x-change-cell {
-    background-color: #FFB0C4;
-    color:red;
+
+//colores estatus
+.price-fallPendiente .x-change-cell {
+    background-color: #B9B9B9;
+    color:#0B0B0A;
 }
-.price-rise .x-change-cell {
-    background-color: #99CCFF;
+.price-fallCompletado .x-change-cell {
+    background-color: #70EB7C;
+    color:#0B0B0A;
+}
+.price-riseEEjecucion .x-change-cell {
+    background-color: #7CC3ED;
+    color:#0B0B0A;
+}
+.price-fallRevision .x-change-cell {
+    background-color: #60DCAC;
+    color:#0B0B0A;
+}
+.price-fallRechazado .x-change-cell {
+    background-color: #E6697A;
+    color:#0B0B0A;
+}
+.price-fallExtenporaneo .x-change-cell {
+    background-color: #776666;
+    color:#0B0B0A;
+}
+.price-riseCancelado .x-change-cell {
+    background-color: #C26CE7;
+    color:#0B0B0A;
+}
+.price-fallExpirado .x-change-cell {
+    background-color: #DA1731;
+    color:#0B0B0A;
+}
+.price-riseSPlan .x-change-cell {
+    background-color: #FA841C;
+     color:#0B0B0A;
+}
+.price-riseEEspera .x-change-cell {
+    background-color: #8B8886;
     color:blue;
 }
+.price-riseSIniciar .x-change-cell {
+    background-color: #F1E60D;
+   color:#0B0B0A;
+}
+
 .degradado
 {
   background:url('../imagen/logo/degradado.PNG') !important;

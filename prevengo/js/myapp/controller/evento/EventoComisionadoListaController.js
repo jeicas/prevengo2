@@ -66,10 +66,10 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
                 result = Ext.JSON.decode(result.responseText);
                 if (result.cuanto==0){
                    
-                     if (item.data.estatus == '<font color=#FF0000> Sin Plan </font>' ||
-                              item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
-                            || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
-                            || item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                     if (item.data.estatus == 'Sin Plan' ||
+                              item.data.estatus == ' Pendiente'
+                            || item.data.estatus == 'En Ejecución'
+                            || item.data.estatus == ' Sin Plan')
                        {
                            win = Ext.create('myapp.view.evento.WinComisionadoEvento');
                         
@@ -85,9 +85,9 @@ Ext.define('myapp.controller.evento.EventoComisionadoListaController', {
                 else { 
                    
 
-                   if(item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
-                            || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
-                            || item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                   if(item.data.estatus == 'Pendiente'
+                            || item.data.estatus == 'En Ejecución'
+                            || item.data.estatus == 'Sin Plan')
                     {
                         
                         

@@ -71,9 +71,9 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                 result = Ext.JSON.decode(result.responseText);
                 if (result.cuanto == 0) {
                  
-                    if (item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
-                            || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
-                            || item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                    if (item.data.estatus == 'Pendiente'
+                            || item.data.estatus == 'En Ejecución'
+                            || item.data.estatus == 'Sin Plan')
                     {
                       
                         store = newGrid2.getStore();
@@ -87,9 +87,9 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                 }
                 else {
                     
-                    if (item.data.estatus == '<font color=#2E9AFE> Pendiente </font>'
-                            || item.data.estatus == '<font color=#FF8000> En Ejecución  </font>'
-                            || item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                    if (item.data.estatus == 'Pendiente'
+                            || item.data.estatus == 'En Ejecución'
+                            || item.data.estatus == 'Sin Plan')
                     {
                       
                         store = newGrid2.getStore();

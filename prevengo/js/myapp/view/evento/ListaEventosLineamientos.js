@@ -18,18 +18,35 @@ Ext.define('myapp.view.evento.ListaEventosLineamientos', {
             hideGroupedHeader: true,
             enableGroupingMenu: false
        }],
-    store: Ext.create('myapp.store.evento.EventoLineamientoStore'),
-    emptyText: 'No hay Eventos registrados',
-    viewConfig: {
+       viewConfig: {
         getRowClass: function (record, index) {
-            var c = record.get('status');
-            if (c == 'En Ejecución') {
-                return 'price-fall';
-            } else if (c == 'Completado') {
-                return 'price-rise';
+            var c = record.get('estatus');
+            switch (c) {
+                case 'Pendiente':
+                    return 'price-fallPendiente';
+                    break;
+                case 'En Ejecución':
+                    return 'price-riseEEjecucion';
+                    break;
+                case 'Cancelado':
+                    return 'price-riseCancelado';
+                    break;
+                case 'Sin Plan':
+                    return 'price-riseSPlan';
+                    break;
+                case 'Expirado':
+                    return 'price-fallExpirado';
+                    break;
+                default:
+                    return 'price-fallCompletado';
+                    break;
             }
+
         }
     },
+    store: Ext.create('myapp.store.evento.EventoLineamientoStore'),
+    emptyText: 'No hay Eventos registrados',
+   
     //selType: 'checkboxmodel',
     columnLines: true,
     initComponent: function () {
@@ -227,6 +244,7 @@ Ext.define('myapp.view.evento.ListaEventosLineamientos', {
                 flex: 0.5,
                 dataIndex: 'estatus',
                 text: 'Estado',
+                tdCls: 'x-change-cell',
                 items: {
                     xtype: 'textfield',
                     flex: 1,

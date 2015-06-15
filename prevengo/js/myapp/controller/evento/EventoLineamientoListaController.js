@@ -68,7 +68,7 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
                 
 
                 if (result.cuanto == 0) {
-                    if (item.data.estatus == '<font color=#FF0000> Sin Plan </font>')
+                    if (item.data.estatus == 'Sin Plan')
                     {
 
                         store = newGrid.getStore();
@@ -81,9 +81,9 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
 
                 }
                 else {
-                    if (record[0].get('estatus') == '<font color=#2E9AFE> Pendiente </font>'
-                            || record[0].get('estatus') == '<font color=#FF8000> En Ejecución  </font>'
-                            || record[0].get('estatus') == '<font color=#FF0000> Sin Plan </font>')
+                    if (record[0].get('estatus') == 'Pendiente'
+                            || record[0].get('estatus') == 'En Ejecución'
+                            || record[0].get('estatus') == 'Sin Plan')
                     {
 
                         store = newGrid.getStore();

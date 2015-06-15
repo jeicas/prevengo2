@@ -3,7 +3,6 @@ Ext.define('myapp.view.evento.ListaEventos', {
     alias: 'widget.listaEventos',
     requires: [
         'Ext.selection.CellModel',
-        
         'Ext.ux.ajax.SimManager',
         'Ext.ux.grid.FiltersFeature',
     ],
@@ -17,17 +16,31 @@ Ext.define('myapp.view.evento.ListaEventos', {
             groupHeaderTpl: '<font size=2><font size=2>{name}</font>',
             hideGroupedHeader: true,
             enableGroupingMenu: false
-       }],
-    
+        }],
     viewConfig: {
         getRowClass: function (record, index) {
             var c = record.get('estatus');
-            if (c === 'En Ejecucion') {
-                return 'price-fall';
-            } else if (c == 
-                  'Completado') {
-                return 'price-rise';
+            switch (c) {
+                case 'Pendiente':
+                    return 'price-fallPendiente';
+                    break;
+                case 'En Ejecución':
+                    return 'price-riseEEjecucion';
+                    break;
+                case 'Cancelado':
+                    return 'price-riseCancelado';
+                    break;
+                case 'Sin Plan':
+                    return 'price-riseSPlan';
+                    break;
+                case 'Expirado':
+                    return 'price-fallExpirado';
+                    break;
+                default:
+                    return 'price-fallCompletado';
+                    break;
             }
+
         }
     },
     store: Ext.create('myapp.store.evento.EventoStore'),
@@ -41,7 +54,7 @@ Ext.define('myapp.view.evento.ListaEventos', {
     },
     buildColumns: function () {
         return [
-              {
+            {
                 dataIndex: 'fechaEvento',
                 flex: 0.4,
                 text: 'Fecha Limite',
@@ -94,7 +107,6 @@ Ext.define('myapp.view.evento.ListaEventos', {
                     }
                 }
             },
-          
             {
                 dataIndex: 'titulo',
                 flex: 1,
@@ -229,6 +241,7 @@ Ext.define('myapp.view.evento.ListaEventos', {
                 flex: 0.5,
                 dataIndex: 'estatus',
                 text: 'Estado',
+                tdCls: 'x-change-cell',
                 items: {
                     xtype: 'textfield',
                     flex: 1,
@@ -250,20 +263,20 @@ Ext.define('myapp.view.evento.ListaEventos', {
                         buffer: 500
                     }
                 }
-            }, 
-        {
-	        xtype: 'actioncolumn',
-	        flex: 0.1,
-	        id: 'cerrarEvento',
+            },
+            {
+                xtype: 'actioncolumn',
+                flex: 0.1,
+                id: 'cerrarEvento',
                 name: 'cerrarEvento',
-	        sortable: false,
-	        menuDisabled: true,
-	        items: [{
-	            iconCls: 'icon-aceptar',
-	            tooltip: 'Cerrar Evento',
-	            scope: this,
-	        }]
-	    }]
+                sortable: false,
+                menuDisabled: true,
+                items: [{
+                        iconCls: 'icon-aceptar',
+                        tooltip: 'Cerrar Evento',
+                        scope: this,
+                    }]
+            }]
     },
     buildDockedItems: function () {
         return [{

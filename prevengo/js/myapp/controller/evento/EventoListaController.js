@@ -205,9 +205,9 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         record = grid.getSelectionModel().getSelection();
 
         if (record[0]) {
-            if (record[0].get('estatus') == '<font color=#2E9AFE> Pendiente </font>'
-                    || record[0].get('estatus') == '<font color=#FF8000> En Ejecución  </font>'
-                    || record[0].get('estatus') == '<font color=#FF0000> Sin Plan </font>') {
+            if (record[0].get('estatus') == 'Pendiente'
+                    || record[0].get('estatus') == 'En Ejecución'
+                    || record[0].get('estatus') == 'Sin Plan') {
                 Ext.Msg.show({
                     title: 'Confirmar',
                     msg: 'Esta seguro que desea CANCELAR el Evento ' + record[0].get('titulo') + '?',
@@ -241,7 +241,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         store= grid.getStore();
         rec = store.getAt(rowIndex);
         console.log('seleccion'+rec.get('titulo'));
-        if (rec.get('estatus') == '<font color=#FF8000> En Ejecución  </font>') {
+        if (rec.get('estatus') == 'En Ejecución') {
             Ext.Msg.show({
                 title: 'Confirmar',
                 msg: 'Esta seguro que desea Cerrar el Evento ' + rec.get('titulo') + '?',
@@ -280,13 +280,13 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             });
         }
         else {
-            if (rec.get('estatus')=='<font color=#DF01D7> Cancelado  </font>'){
+            if (rec.get('estatus')=='Cancelado'){
                  Ext.MessageBox.show({title: 'Informaci&oacute;n',
                 msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha sido cancelado",
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
             }else
             
-             if (rec.get('estatus')=='<font color=#01DF3A> Completado </font>'){
+             if (rec.get('estatus')=='Completado'){
                  Ext.MessageBox.show({title: 'Informaci&oacute;n',
                 msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha finalizado",
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
