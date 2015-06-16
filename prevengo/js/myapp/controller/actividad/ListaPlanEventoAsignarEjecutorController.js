@@ -69,13 +69,13 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
                 }
                 else {
 
-                    if (item.data.estatus == 'Completado')
+                    if (item.data.estatus == 'Sin Iniciar' || item.data.estatus == 'En Ejecución' || item.data.estatus == 'En Espera')
                     {
                         store = newGrid.getStore();
                         store.proxy.extraParams.id = item.data.idAct;
                         store.load();
                         newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
-                        newGrid.down("button[name=btnAsignarEmpleado]").setVisible(false);
+                       
                         win.setTitle("Asignar Empleados al plan de accion: " + item.data.actividad);
                         win.show();
                     } else {
@@ -83,6 +83,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
                         store = newGrid.getStore();
                         store.proxy.extraParams.id = item.data.idAct;
                         store.load();
+                        newGrid.down("button[name=btnAsignarEmpleado]").setVisible(false);
                         newGrid.down("label[name=lblIdActividad]").setText(item.data.idAct);
                         win.setTitle("Asignar Empleados al plan de accion: " + item.data.actividad);
                         win.show();

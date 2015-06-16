@@ -233,32 +233,7 @@ Ext.define('myapp.view.avance.GridListaAvance', {
                         buffer: 500
                     }
                 }
-            }, {
-                flex: 1,
-                dataIndex: 'observacion',
-                text: 'Observacion',
-                items: {
-                    xtype: 'textfield',
-                    flex: 1,
-                    margin: 2,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keyup: function () {
-                            var store = this.up('grid').store;
-                            store.clearFilter();
-                            if (this.value) {
-                                store.filter({
-                                    property: 'observacion',
-                                    value: this.value,
-                                    anyMatch: true,
-                                    caseSensitive: false
-                                });
-                            }
-                        },
-                        buffer: 500
-                    }
-                }
-            },
+            }
         ]
     },
     buildDockedItems: function () {

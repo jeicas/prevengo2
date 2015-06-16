@@ -30,13 +30,17 @@ Ext.define('myapp.controller.avance.AvanceListaController', {
             "listaAvanceFinal button[name=btnAprobarAvance]":{
                 click: this.onClickAprobarAvance
             }, 
+             
             "listaAvanceFinal button[name=btnRechazarAvance]":{
                  click: this.onClickRechazarAvance              },
              
              "winObservacionAvanceRechazado button[name=btnGuardar]": {
                 click: this.onClickGuardarObservacionRechazar
-            }
-              
+            }, 
+            
+              "winObservacionAvanceRechazad button[name=btnGuardar]": {
+                click: this.onClickSalir
+            },   
 
         }); 
     },   
@@ -94,7 +98,7 @@ Ext.define('myapp.controller.avance.AvanceListaController', {
          record = grid.getSelectionModel().getSelection();
         // record = Ext.util.JSON.encode(record);
         
-       console.log('Rechazar');
+       
         
         if(record[0]){
             
@@ -167,5 +171,6 @@ Ext.define('myapp.controller.avance.AvanceListaController', {
 
 
     },
-
+    
+ 
 });

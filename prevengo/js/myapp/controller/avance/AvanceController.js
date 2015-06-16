@@ -18,6 +18,10 @@ Ext.define('myapp.controller.avance.AvanceController', {
             selector: '#gridListaAvance'
         },
         {
+            ref: 'WinObservacionAvanceRechazad',
+            selector: 'winObservacionAvanceRechazad'
+        },
+        {
             ref: 'Gridbuscar',
             selector: '#gridbuscar'
         }
@@ -42,8 +46,10 @@ Ext.define('myapp.controller.avance.AvanceController', {
             },
             "#gridListaAvance button[name=btnEditarAvance]": {
                 click: this.onClickEditarAvance
-            }
-
+            },
+            "#gridListaAvance": {
+                itemdblclick: this.onClickVerObservacion
+            },
         });
     },
     //===================== Funciones de la Lista===============================
@@ -159,30 +165,29 @@ Ext.define('myapp.controller.avance.AvanceController', {
                 }
             });
         } else {
-             record = grid.getSelectionModel().getSelection();
-            
-            if (formulario.down('combobox[name=cmbActividad]').getValue()!=record[0].get('actividadTitle')){
-                act=formulario.down('combobox[name=cmbActividad]').getValue();
-            }else
+            record = grid.getSelectionModel().getSelection();
+
+            if (formulario.down('combobox[name=cmbActividad]').getValue() != record[0].get('actividadTitle')) {
+                act = formulario.down('combobox[name=cmbActividad]').getValue();
+            } else
             {
-               act=record[0].get('idAct');
+                act = record[0].get('idAct');
             }
-            
-             Ext.Ajax.request({//AQUI ENVIO LA DATA 
+
+            Ext.Ajax.request({//AQUI ENVIO LA DATA 
                 url: BASE_URL + 'avance/avance/actualizarAvance',
                 method: 'POST',
                 params: {
-                     idAvance: record[0].get('idAv'),
-                     cmbActividad: act,
-                     cmbTipoAvance:formulario.down('combobox[name=cmbTipoAvance]').getValue(),
-                     txtCosto:formulario.down('numberfield[name=txtCosto]').getValue(),
-                     txtDescripcion:formulario.down('textfield[name=txtDescripcion]').getValue(),
+                    idAvance: record[0].get('idAv'),
+                    cmbActividad: act,
+                    cmbTipoAvance: formulario.down('combobox[name=cmbTipoAvance]').getValue(),
+                    txtCosto: formulario.down('numberfield[name=txtCosto]').getValue(),
+                    txtDescripcion: formulario.down('textfield[name=txtDescripcion]').getValue(),
                 },
-                   
                 success: function (result, request) {
-                        result = Ext.JSON.decode(result.responseText);
+                    result = Ext.JSON.decode(result.responseText);
                     loadingMask.hide();
-                   
+
                     if (result.success) {
                         grid.getView().refresh();
                         grid.getStore().load();
@@ -196,7 +201,7 @@ Ext.define('myapp.controller.avance.AvanceController', {
                 },
                 failure: function (form, action) {
                     var result = action.result;
-                 
+
                     loadingMask.hide();
                     Ext.MessageBox.show({title: 'Alerta', msg: "Ocurrio un error. Por favor verifique los datos", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
                 }
@@ -217,7 +222,7 @@ Ext.define('myapp.controller.avance.AvanceController', {
         formulario = this.getAvance();
         storeAct = formulario.down("combobox[name=cmbActividad]").getStore();
         valor = formulario.down("combobox[name=cmbActividad]").getValue();
-      
+
         for (i = 0; i < storeAct.data.items.length; ++i)
         {
             if (storeAct.data.items[i].data['id'] == valor) {
@@ -229,7 +234,49 @@ Ext.define('myapp.controller.avance.AvanceController', {
         }
 
 
-    }
+    },
+    onClickVerObservacion: function (record, item, index, e, eOpts) {
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'avance/avance/buscarUsuario',
+            method: 'POST',
+            params: {idUsuario:item.data.idUs },
+            success: function (result, request) {
+                result = Ext.JSON.decode(result.responseText);
+
+                if (result.cuanto == 0) {
+
+                    Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene privilegios para esta acción.", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                }
+                else {
+                if (item.data.estatus == 'Rechazado') {
+                    
+                    
+                    var win = Ext.create('myapp.view.observacion.WinObservacionAvanceRechazad');
+                    win.setTitle("Observacion: ");
+                    win.down("label[name=lblDescripcion]").setText('Su avance ha sido rechazado.');
+                    win.down("textareafield[name=txtDescripcion]").setValue(item.data.observacion);
+                    win.show();
+                } else
+                {
+                    Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene observaciones.", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+                }
+              }
+                
+            },
+            failure: function (form, action) {
+                var result = action.result;
+
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+        });
 
 
+
+
+
+
+
+    },
 });

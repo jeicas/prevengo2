@@ -139,15 +139,15 @@
     color:#0B0B0A;
 }
 .price-fallCompletado .x-change-cell {
-    background-color: #70EB7C;
+    background-color: #81F781;
     color:#0B0B0A;
 }
 .price-riseEEjecucion .x-change-cell {
-    background-color: #7CC3ED;
+    background-color: #A9F5F2;
     color:#0B0B0A;
 }
 .price-fallRevision .x-change-cell {
-    background-color: #60DCAC;
+    background-color: #E1F5A9;
     color:#0B0B0A;
 }
 .price-fallRechazado .x-change-cell {
@@ -156,31 +156,31 @@
 }
 
 .price-fallPend .x-change-cell {
-    background-color: #A4A4A4;
+    background-color: #F79F81;
     color:#0B0B0A;
 }
 .price-fallExtenporaneo .x-change-cell {
-    background-color: #776666;
+    background-color: #F781D8;
     color:#0B0B0A;
 }
 .price-riseCancelado .x-change-cell {
-    background-color: #C26CE7;
+    background-color: #D8CEF6;
     color:#0B0B0A;
 }
 .price-fallExpirado .x-change-cell {
-    background-color: #DA1731;
+    background-color: #F5A9BC;
     color:#0B0B0A;
 }
 .price-riseSPlan .x-change-cell {
-    background-color: #FA841C;
+    background-color: #F7BE81;
      color:#0B0B0A;
 }
 .price-riseEEspera .x-change-cell {
-    background-color: #FFBF00;
+    background-color: #F3F781;
    color:#0B0B0A;
 }
 .price-riseSIniciar .x-change-cell {
-    background-color: #F1E60D;
+    background-color:#D8D8D8;
    color:#0B0B0A;
 }
 
