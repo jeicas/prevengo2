@@ -180,12 +180,14 @@ class Empleado extends CI_Controller
             $nacionalidad=$this->input->post('cmbnacionalidad');
             $input=$this->input->post('seleccionfoto');
             $username = $this->session->userdata('datasession');
+            
             $foto=($this->cedula.'.jpg');
             $row['foto']=0;
             $config['upload_path'] = './imagen/foto';
             $config['allowed_types'] = 'gif|jpg|png';
             $this->load->library('upload', $config);
             $fotoocul=$this->input->post('foto');
+            
             if($this->input->post('cmbdepartamento')!=''){
                 $departamento=$this->input->post('cmbdepartamento');
             }else{

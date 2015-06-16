@@ -25,7 +25,9 @@ class Reincidencia_model extends CI_Model {
  
       public function  guardarReincidencia($data){         
          
-         return  $this->db->insert('reincidencia',$data);
+          
+          $this->db->insert('reincidencia',$data);
+        return  $this->db->insert_id();
     }
            
     public function  actualizarReincidencia($data){         

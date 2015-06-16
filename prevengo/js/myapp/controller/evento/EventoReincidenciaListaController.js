@@ -187,8 +187,8 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
 
         record = grid.getSelectionModel().getSelection();
 
-
-
+console.log(win.down("filefield[name=btnSubirArchivo]").getValue());
+           
         Ext.Ajax.request(
                 {//AQUI ENVIO LA DATA 
                     url: BASE_URL + 'reincidencia/reincidencia/registrarReincidencia',
@@ -197,6 +197,7 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                         idEv: record[0].get('idEv'),
                         descripcion: win.down("textfield[name=txtDescripcion]").getValue(),
                         costo: win.down("textfield[name=txtDescripcion]").getValue(),
+                        foto: win.down("filefield[name=btnSubirArchivo]").getValue(),
                     },
                     success: function (result, request) {
                         result = Ext.JSON.decode(result.responseText);
