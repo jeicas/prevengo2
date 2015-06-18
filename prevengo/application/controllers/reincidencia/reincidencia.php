@@ -78,12 +78,13 @@ class Reincidencia extends CI_Controller {
 
     public function registrarReincidencia() {
 
-        $idEv = $this->input->post('lblIdEv');
-        $descripcion = $this->input->post('txtDescripcion');
-        $costo = $this->input->post('txtCosto');
+        $idEv = $this->input->post('id');
+        $valores= $_POST[valores];
+        $descripcion = $valores['valores'];
+        $costo = $valores['valores'];
         $fecha = date('Y-m-d');
         $estatus = 1;
-       $resultFoto=false;
+        $resultFoto=false;
        
         $data = array(
             'evento' => $idEv,
@@ -101,14 +102,14 @@ class Reincidencia extends CI_Controller {
             $this->load->library('upload', $config);
             $fotoocul=$this->input->post('btnSubirArchivo');
             
-                 $img_tipo       = explode('/', $_FILES[$fotoocul]['type']);
+                   $img_tipo       = explode('/', $_FILES['btnSubirArchivo']['type']);
                     $nombrefoto     = "_AneRein".$result;
                     $nombrefoto2    = '_AneRein'.".".$img_tipo[1];
                     $fotoType       = $_FILES['btnSubirArchivo']['type'];
                     $fotoTmp_name   = $_FILES['btnSubirArchivo']['tmp_name'];
                     $this->guardar_Imagen_Reincidencia($nombrefoto,$fotoType,$fotoTmp_name);  
                     
-        if ($fotoocul != '') {
+        /*if ($fotoocul != '') {
             $dataAnexo = array(
                 'reincidencia' => $result,
                 'direccion' => substr($fotoocul, 12),
@@ -116,23 +117,25 @@ class Reincidencia extends CI_Controller {
                 'estatus' => 1
             );
             $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
-        }
+       
+        }  */
 
-
-
-
-        if ($resultFoto) {
+    if ($result!=0) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito." .$resultFoto//modificado en la base de datos
+                "msg" => "Se Guardo con Éxito.".$idEv//modificado en la base de datos
             ));
         } else {
 
             echo json_encode(array(
                 "success" => false,
-                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados". $resultFoto //no se modifico en la base de datos
+           
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
             ));
         }
+
+
+       
     }
 
 //fin registrar

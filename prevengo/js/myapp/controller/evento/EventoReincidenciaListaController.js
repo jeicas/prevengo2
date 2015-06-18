@@ -185,22 +185,21 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
         grid = this.getListaEventosReincidencia();
         grid2 = this.getListaReincidenciaEvento();
         win = this.getWinReincidencia();
-        // if (nuevo){     
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
-
         record = grid.getSelectionModel().getSelection();
 
         form= win.down('form[name=formReincidencia]').getForm();
-        
-         form.submit(
-                {//AQUI ENVIO LA DATA 
+          valores=form.getValues();
+         form.submit({//AQUI ENVIO LA DATA 
                     url: BASE_URL + 'reincidencia/reincidencia/registrarReincidencia',
                     method: 'POST',
-                    params: form.getValues(),
+                    params: {valores: valores, 
+                             id:record[0].get('idEv'),
+                         },
                     
-                    success: function (result, request) {
-                        result = Ext.JSON.decode(result.responseText);
+                    success: function(form, action){
+                        var result = action.result; 
                         loadingMask.hide();
 
                         if (result.success) {
@@ -221,10 +220,7 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                         Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
                     }
-                }
-
-
-        );
+                });
         // }
         /* else { 
          var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
