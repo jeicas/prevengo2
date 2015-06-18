@@ -66,24 +66,25 @@ class Reincidencia extends CI_Controller {
 
 //fin registrar
     
-        public function guardar_imagen($nombrefoto,$fotoType,$fotoTmp_name){        
+        public function guardar_Imagen_Reincidencia($nombrefoto,$fotoType,$fotoTmp_name){        
         if ($fotoTmp_name  == '') {
             echo ('foto obligatoria');
         } else if ($fotoTmp_name != '' && ($fotoType == "image/gif" || $fotoType== "image/jpeg" || $fotoType== "image/png")) {
             $img_tipo   = explode('/', $fotoType);
             $img_nombre = $nombrefoto.".".$img_tipo[1];
-            move_uploaded_file($fotoTmp_name,'empleados/'.$img_nombre);
+            move_uploaded_file($fotoTmp_name,'anexosReincidencia/'.$img_nombre);
         }
     }
 
     public function registrarReincidencia() {
 
-        $idEv = $this->input->post('idEv');
-        $descripcion = $this->input->post('descripcion');
-        $costo = $this->input->post('costo');
+        $idEv = $this->input->post('lblIdEv');
+        $descripcion = $this->input->post('txtDescripcion');
+        $costo = $this->input->post('txtCosto');
         $fecha = date('Y-m-d');
         $estatus = 1;
-
+       $resultFoto=false;
+       
         $data = array(
             'evento' => $idEv,
             'descripcion' => $descripcion,
@@ -94,20 +95,18 @@ class Reincidencia extends CI_Controller {
 
         $result = $this->reincidencia_model->guardarReincidencia($data);
 
-        
-        
-         $row['']=0;
+         
             $config['upload_path'] = './imagen/foto';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|pdf';
             $this->load->library('upload', $config);
             $fotoocul=$this->input->post('btnSubirArchivo');
             
-              $img_tipo       = explode('/', $_FILES[$fotoocul]['type']);
-                    $nombrefoto     = "_DSC".'jiji';
-                    $nombrefoto2    = 'jiji'.".".$img_tipo[1];
+                 $img_tipo       = explode('/', $_FILES[$fotoocul]['type']);
+                    $nombrefoto     = "_AneRein".$result;
+                    $nombrefoto2    = '_AneRein'.".".$img_tipo[1];
                     $fotoType       = $_FILES['btnSubirArchivo']['type'];
                     $fotoTmp_name   = $_FILES['btnSubirArchivo']['tmp_name'];
-                    $this->guardar_imagen($nombrefoto,$fotoType,$fotoTmp_name);  
+                    $this->guardar_Imagen_Reincidencia($nombrefoto,$fotoType,$fotoTmp_name);  
                     
         if ($fotoocul != '') {
             $dataAnexo = array(
@@ -122,10 +121,10 @@ class Reincidencia extends CI_Controller {
 
 
 
-        if ($result != 0) {
+        if ($resultFoto) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito." . $resultFoto//modificado en la base de datos
+                "msg" => "Se Guardo con Éxito." .$resultFoto//modificado en la base de datos
             ));
         } else {
 

@@ -41,7 +41,7 @@ Ext.define('myapp.controller.actividad.ListaActividadController', {
     
     var win = Ext.create('myapp.view.actividad.WinPlanEvento'); 
           
-     newGrid=this.getListaPlanEvento();
+      newGrid=this.getListaPlanEvento();
       store= newGrid.getStore();      
       store.proxy.extraParams.id=item.data.idEvento;
       store.load();

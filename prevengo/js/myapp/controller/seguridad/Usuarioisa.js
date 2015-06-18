@@ -118,7 +118,7 @@ Ext.define('myapp.controller.seguridad.Usuarioisa', {
         win.show();
     },
     onButtonClickagregar: function (button, e, options) {
-        console.log('holaaa')
+       
         
         var grid = this.getGridbuscaremp();
         var win=this.getGridbuscar();

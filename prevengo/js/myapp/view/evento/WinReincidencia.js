@@ -27,25 +27,13 @@ extend: 'Ext.window.Window',
             x:-15,
             y:-20,
             layout: 'absolute',
-            items: [
-                ,
-                {
-                    xtype: 'image',
-                    x: 400,
-                    y: 200,
-                    name:'img',
-                    id:'img',
-                    height: 80,
-                    width: 80
-                  },
-                     
-                myuploadform= new Ext.FormPanel({
+            items: [ {   
+                xtype: 'form',
                 fileUpload: true,
-                x: 30,
-                y: 190,
                 width: 500,
-                autoHeight: true,
-                bodyStyle: 'padding: 10px 10px 10px 10px;',
+                layout: 'absolute',
+                name: 'formReincidencia',
+                 id: 'formReincidencia',
                 labelWidth: 50,
                 defaults: {
                     anchor: '95%',
@@ -53,7 +41,16 @@ extend: 'Ext.window.Window',
                     msgTarget: 'side'
                 },
                 items:[
-                
+                {
+                    xtype: 'label',
+                    x: 400,
+                    y: 200,
+                    disable:true,
+                    name:'lblIdEvento',
+                    height: 80,
+                    text:'',
+                    width: 80
+                  },
                   {
                     xtype: 'fieldset',
                     x: 30,
@@ -82,17 +79,19 @@ extend: 'Ext.window.Window',
                             name:'txtCosto'
                         }
                     ]
-                },
+                },{
                     xtype: 'fileuploadfield',
                     id: 'btnSubirArchivo',
                     name: 'btnSubirArchivo',
+                    x:30,
+                    y:220,
                     width: 100,
                     emptyText: 'Seleccione el anexo...',
                     fieldLabel: 'Archivo',
                     buttonText: 'Seleccionar'
                 }],
                 
-            })
+            }
             ]
         }
     ]
@@ -127,62 +126,3 @@ extend: 'Ext.window.Window',
   }
 });
 
-//// -----------Funciones para la vista previa de la imagen y validar la extension de los archivos.---------
-var typeExtension="image";
-
-function checkFileExtension(elem) {
-       
-        var filePath = elem;
-
-        if(filePath.indexOf('.') == -1)
-            return false;
-                  
-        var validExtensions = new Array();
-        var ext = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-      
-        if (typeExtension=="image") {
-         validExtensions[0] = 'jpg';
-         validExtensions[1] = 'jpeg';
-         validExtensions[3] = 'png';
-         validExtensions[3] = 'pdf';
-         
-
-        }
-        
-        for(var i = 0; i < validExtensions.length; i++) {
-            if(ext == validExtensions[i])
-                return true;
-        }
-
-        Ext.Msg.alert('Advertencia', 'La extension .'+ext+' del archivo ' + filePath + ' no es permitida!');
-        
-        if (typeExtension=="image") {
-         document.getElementsByName('btnSubirArchivo')[0].value='';
-         
-        }
-        
-        return false;
-    }
-
-
-
-
-     function previewImage(input) {
-
-
-      var typeExtension="image";
-    if (!checkFileExtension(encodeURIComponent(document.getElementsByName("btnSubirArchivo")[0].value)))
-    {
-     return false;  
-    }
-    if (input) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-         //cambiar imagenArea por el id de la imagen que se esta usando en el js. 
-       document.getElementById('img').src = e.target.result
-      }
-      reader.readAsDataURL(input);
-    }
-
-   }
-   //-----------------------------------------------------------------------------------------------------------------------

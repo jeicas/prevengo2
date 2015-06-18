@@ -80,6 +80,7 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();
                         win.setTitle("Reincidencias del evento: " + item.data.titulo);
+                    
                         win.show();
                     }
                     Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene Reincidencias registrados", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
@@ -121,9 +122,12 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
     }, // fin de la function
     // ====================funciones de la ventana listaComisionadoEvento================
     onClickNuevoReincidencia: function (button, e, options) {
-
+        var grid = this.getListaEventosReincidencia();
+        record = grid.getSelectionModel().getSelection();
+         console.log(record[0].get('idEv'));
         win = Ext.create('myapp.view.evento.WinReincidencia');
         win.setTitle("Nueva Reincidencia");
+        win.down("label[name=lblIdEvento]").setText(record[0].get('idEv'));
         win.show();
     },
     onClickEliminarReincidencia: function (button, e, options) {
@@ -187,18 +191,14 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
 
         record = grid.getSelectionModel().getSelection();
 
-console.log(win.down("filefield[name=btnSubirArchivo]").getValue());
-           
-        Ext.Ajax.request(
+        form= win.down('form[name=formReincidencia]').getForm();
+        
+         form.submit(
                 {//AQUI ENVIO LA DATA 
                     url: BASE_URL + 'reincidencia/reincidencia/registrarReincidencia',
                     method: 'POST',
-                    params: {
-                        idEv: record[0].get('idEv'),
-                        descripcion: win.down("textfield[name=txtDescripcion]").getValue(),
-                        costo: win.down("textfield[name=txtDescripcion]").getValue(),
-                        btnSubirArchivo: win.down("fileuploadfield[name=btnSubirArchivo]").getValue(),
-                    },
+                    params: form.getValues(),
+                    
                     success: function (result, request) {
                         result = Ext.JSON.decode(result.responseText);
                         loadingMask.hide();

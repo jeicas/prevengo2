@@ -78,7 +78,7 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
                 i = store.data.items.length + 1;
                 
             }
-            
+              
         }
 
 
