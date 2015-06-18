@@ -197,7 +197,7 @@ console.log(win.down("filefield[name=btnSubirArchivo]").getValue());
                         idEv: record[0].get('idEv'),
                         descripcion: win.down("textfield[name=txtDescripcion]").getValue(),
                         costo: win.down("textfield[name=txtDescripcion]").getValue(),
-                        foto: win.down("filefield[name=btnSubirArchivo]").getValue(),
+                        btnSubirArchivo: win.down("fileuploadfield[name=btnSubirArchivo]").getValue(),
                     },
                     success: function (result, request) {
                         result = Ext.JSON.decode(result.responseText);

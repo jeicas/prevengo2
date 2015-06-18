@@ -28,7 +28,33 @@ extend: 'Ext.window.Window',
             y:-20,
             layout: 'absolute',
             items: [
+                ,
                 {
+                    xtype: 'image',
+                    x: 400,
+                    y: 200,
+                    name:'img',
+                    id:'img',
+                    height: 80,
+                    width: 80
+                  },
+                     
+                myuploadform= new Ext.FormPanel({
+                fileUpload: true,
+                x: 30,
+                y: 190,
+                width: 500,
+                autoHeight: true,
+                bodyStyle: 'padding: 10px 10px 10px 10px;',
+                labelWidth: 50,
+                defaults: {
+                    anchor: '95%',
+                    allowBlank: false,
+                    msgTarget: 'side'
+                },
+                items:[
+                
+                  {
                     xtype: 'fieldset',
                     x: 30,
                     y: 30,
@@ -57,44 +83,16 @@ extend: 'Ext.window.Window',
                         }
                     ]
                 },
-                {
-                    xtype: 'image',
-                    x: 400,
-                    y: 200,
-                    name:'img',
-                    id:'img',
-                    height: 80,
-                    width: 80
-                  },
-                     
-                {
-                    xtype: 'fieldset',
-                    x: 30,
-                    y: 190,
-                    height: 90,
-                    width: 360,
-                    layout: 'absolute',
-                    title: 'Anexo',
-                    items: [
-                        {
-                            xtype: 'filefield',
-                            x: 10,
-                            y: 20,
-                            width: 320,
-                            buttonText: 'Seleccione Archivo',
-                            name:'btnSubirArchivo',
-                            id:'btnSubirArchivo',
-                            fieldLabel: 'Subir archivo:',
-                            onChange: function()
-                            {
-                                      previewImage(Ext.getCmp('btnSubirArchivo').getEl().down('input[type=file]').dom.files[0]);
-                                  }
-                           
-                 }
-
-                       
-                    ]
-                }
+                    xtype: 'fileuploadfield',
+                    id: 'btnSubirArchivo',
+                    name: 'btnSubirArchivo',
+                    width: 100,
+                    emptyText: 'Seleccione el anexo...',
+                    fieldLabel: 'Archivo',
+                    buttonText: 'Seleccionar'
+                }],
+                
+            })
             ]
         }
     ]

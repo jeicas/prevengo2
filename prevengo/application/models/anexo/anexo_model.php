@@ -11,13 +11,20 @@ class Anexo_model extends CI_Model {
         parent::__construct();
     }
 
-    public function guardarAnexo($dataAvance) {
+    public function guardarAnexo($data) {
            
+          $config['upload_path'] = './imagen/foto';
+          $config['allowed_types'] = 'gif|jpg|png';
+          $this->load->library('upload', $config);
+         
+          $nombrefoto     = "_Anex".$data['reincidencia'];
+      
+          $fotoType       =$data['tipoarchivo']; 
+          $fotoTmp_name   = $data['direccion'];
         
+          move_uploaded_file($fotoTmp_name,'empleados/'.$nombrefoto);
         
-        
-        
-        return $this->db->insert('avance', $dataAvance);
+        return $this->db->insert('anexo', $data);
     }
    
 
