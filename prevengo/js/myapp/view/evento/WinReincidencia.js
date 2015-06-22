@@ -27,36 +27,14 @@ extend: 'Ext.window.Window',
             x:-15,
             y:-20,
             layout: 'absolute',
-            items: [ {   
-                xtype: 'form',
-                fileUpload: true,
-                width: 500,
-                layout: 'absolute',
-                name: 'formReincidencia',
-                 id: 'formReincidencia',
-                labelWidth: 50,
-                defaults: {
-                    anchor: '95%',
-                    allowBlank: false,
-                    msgTarget: 'side'
-                },
-                items:[
-                {
-                    xtype: 'label',
-                    x: 400,
-                    y: 200,
-                    disable:true,
-                    name:'lblIdEvento',
-                    height: 80,
-                    text:'',
-                    width: 80
-                  },
-                  {
+            items: [ 
+             //===================================================================
+                 {
                     xtype: 'fieldset',
                     x: 30,
                     y: 30,
-                    height: 150,
-                    width: 450,
+                    height: 170,
+                    width: 370,
                     layout: 'absolute',
                     title: 'Datos de la Reincidencia',
                     items: [
@@ -65,33 +43,45 @@ extend: 'Ext.window.Window',
                             x: 10,
                             y: 10,
                             height: 62,
-                            width: 310,
-                            fieldLabel: 'Descripción:',
-                            name:'txtDescripcion'
-                            
+                            width: 320,
+                            name:'txtDescripcion',
+                            fieldLabel: 'Descripción:'
                         },
                         {
                             xtype: 'numberfield',
                             x: 10,
                             y: 90,
-                            width: 310,
-                            fieldLabel: 'Costo',
-                            name:'txtCosto'
+                            width: 320,
+                            name:'txtCosto',
+                            fieldLabel: 'Costo'
                         }
                     ]
-                },{
-                    xtype: 'fileuploadfield',
-                    id: 'btnSubirArchivo',
-                    name: 'btnSubirArchivo',
-                    x:30,
-                    y:220,
-                    width: 100,
-                    emptyText: 'Seleccione el anexo...',
-                    fieldLabel: 'Archivo',
-                    buttonText: 'Seleccionar'
-                }],
-                
-            }
+                },
+                {
+                    xtype: 'radiogroup',
+                    x: 50,
+                    y: 220,
+                    width: 310,
+                    name:'rdgAgregarAnexo',
+                    fieldLabel: 'Agregar Anexo?',
+                    items: [
+                        {
+                            xtype: 'radiofield',
+                            boxLabel: 'SI',
+                            name:'seleccion', 
+                            inputValue: '1'
+                        },
+                        {
+                            xtype: 'radiofield',
+                            boxLabel: 'NO',
+                            inputValue: '2',
+                             name:'seleccion'
+                        }
+                    ]
+                },
+            //===================================================================
+          
+                  
             ]
         }
     ]

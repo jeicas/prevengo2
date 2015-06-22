@@ -79,9 +79,9 @@ class Reincidencia extends CI_Controller {
     public function registrarReincidencia() {
 
         $idEv = $this->input->post('id');
-        $valores= $_POST[valores];
-        $descripcion = $valores['valores'];
-        $costo = $valores['valores'];
+       
+        $descripcion =$this->input->post('txtDescripcion');
+        $costo =$this->input->post('txtCosto');
         $fecha = date('Y-m-d');
         $estatus = 1;
         $resultFoto=false;
@@ -96,7 +96,7 @@ class Reincidencia extends CI_Controller {
 
         $result = $this->reincidencia_model->guardarReincidencia($data);
 
-         
+         /*
             $config['upload_path'] = './imagen/foto';
             $config['allowed_types'] = 'gif|jpg|png|pdf';
             $this->load->library('upload', $config);
@@ -123,13 +123,12 @@ class Reincidencia extends CI_Controller {
     if ($result!=0) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito.".$idEv//modificado en la base de datos
+                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
             ));
         } else {
 
             echo json_encode(array(
                 "success" => false,
-           
                 "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
             ));
         }
