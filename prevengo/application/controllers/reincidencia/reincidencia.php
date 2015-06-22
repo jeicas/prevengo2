@@ -96,20 +96,20 @@ class Reincidencia extends CI_Controller {
 
         $result = $this->reincidencia_model->guardarReincidencia($data);
 
-         /*
+         
             $config['upload_path'] = './imagen/foto';
             $config['allowed_types'] = 'gif|jpg|png|pdf';
             $this->load->library('upload', $config);
-            $fotoocul=$this->input->post('btnSubirArchivo');
+            $fotoocul=$this->input->post('txtArchivo');
             
-                   $img_tipo       = explode('/', $_FILES['btnSubirArchivo']['type']);
+                    $img_tipo       = explode('/', $_FILES['txtArchivo']['type']);
                     $nombrefoto     = "_AneRein".$result;
                     $nombrefoto2    = '_AneRein'.".".$img_tipo[1];
-                    $fotoType       = $_FILES['btnSubirArchivo']['type'];
-                    $fotoTmp_name   = $_FILES['btnSubirArchivo']['tmp_name'];
+                    $fotoType       = $_FILES['txtArchivo']['type'];
+                    $fotoTmp_name   = $_FILES['txtArchivo']['tmp_name'];
                     $this->guardar_Imagen_Reincidencia($nombrefoto,$fotoType,$fotoTmp_name);  
                     
-        /*if ($fotoocul != '') {
+        if ($fotoocul != '') {
             $dataAnexo = array(
                 'reincidencia' => $result,
                 'direccion' => substr($fotoocul, 12),
@@ -118,7 +118,7 @@ class Reincidencia extends CI_Controller {
             );
             $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
        
-        }  */
+        }  
 
     if ($result!=0) {
             echo json_encode(array(

@@ -25,7 +25,6 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
             ref: 'ListaReincidenciaEvento',
             selector: 'listaReincidenciaEvento'
         },
-        
         {
             ref: 'WinReincidenciaEvento',
             selector: 'winReincidenciaEvento'
@@ -34,7 +33,7 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
             ref: 'WinReincidencia',
             selector: 'winReincidencia'
         },
-         {
+        {
             ref: 'WinAnexo',
             selector: 'winAnexo'
         },
@@ -50,7 +49,7 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
             "listaReincidenciaEvento button[name=btnEliminarReincidencia]": {
                 click: this.onClickEliminarReincidencia
             },
-               "winReincidencia radiogroup[name=rdgAgregarAnexo]": {
+            "winReincidencia radiogroup[name=rdgAgregarAnexo]": {
                 change: this.changeRadio
             },
             "winReincidencia button[name=btnGuardar]": {
@@ -58,16 +57,17 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
             },
             "winReincidencia button[name=btnSubirArchivo]": {
                 change: this.previewImage
-            }
-
-
+            },
+            "winAnexo radiogroup[name=rdgTipoAnexo]": {
+                change: this.changeTipoAnexo
+            },
         });
     },
     //==============Funciones de la listaEventosComisionados  =====================================
     onClickVerReincidencia: function (record, item, index, e, eOpts) {
-         win = Ext.create('myapp.view.evento.WinReincidenciaEvento');
-         newGrid2 = this.getListaReincidenciaEvento();
-         
+        win = Ext.create('myapp.view.evento.WinReincidenciaEvento');
+        newGrid2 = this.getListaReincidenciaEvento();
+
         Ext.Ajax.request({//AQUI ENVIO LA DATA 
             url: BASE_URL + 'reincidencia/reincidencia/buscarReincidencia',
             method: 'POST',
@@ -75,38 +75,39 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                 id: item.data.idEv
             },
             success: function (result, request) {
-              
+
                 result = Ext.JSON.decode(result.responseText);
                 if (result.cuanto == 0) {
-                 
+
                     if (item.data.estatus == 'Pendiente'
                             || item.data.estatus == 'En Ejecución'
                             || item.data.estatus == 'Sin Plan')
                     {
-                      
+
                         store = newGrid2.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();
                         win.setTitle("Reincidencias del evento: " + item.data.titulo);
-                    
+
                         win.show();
                     }
                     Ext.MessageBox.show({title: 'Mensaje', msg: "No tiene Reincidencias registrados", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
                 }
                 else {
-                    
+
                     if (item.data.estatus == 'Pendiente'
                             || item.data.estatus == 'En Ejecución'
                             || item.data.estatus == 'Sin Plan')
                     {
-                      
+
                         store = newGrid2.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();
                         win.setTitle("Reincidencias del evento: " + item.data.titulo);
                         win.show();
-                    }else { store = newGrid2.getStore();
+                    } else {
+                        store = newGrid2.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();
                         newGrid2.down('button[name=btnNuevoReincidencia]').setVisible(false);
@@ -114,8 +115,8 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                         win.setTitle("Reincidencias del Evento");
                         win.show();
                     }
-                  
-                       
+
+
                 }
 
             },
@@ -132,10 +133,11 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
     onClickNuevoReincidencia: function (button, e, options) {
         var grid = this.getListaEventosReincidencia();
         record = grid.getSelectionModel().getSelection();
-         console.log(record[0].get('idEv'));
+
         win = Ext.create('myapp.view.evento.WinReincidencia');
         win.setTitle("Nueva Reincidencia");
-         win.down('button[name=btnGuardar]').setVisible(false);
+        win.down('button[name=btnGuardar]').setVisible(false);
+         win.down('form[name=formAnexo]').setVisible(false);
         win.show();
     },
     onClickEliminarReincidencia: function (button, e, options) {
@@ -187,125 +189,111 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
         }
     },
     // ====================funciones de la ventana listaAsignarComisionado================
-changeRadio:function(grupo,cmp){
-     win = this.getWinReincidencia();
-    if(cmp.seleccionfoto==1)
-    {
-         
-         win1 = Ext.create('myapp.view.evento.WinAnexo');
-         win1.setTitle("Anexo de reincidencia"+ win.down('button[name=txtDescripcion]').getValue());
-         win1.down('button[name=btnGuardar]').setVisible(false);
-         win1.show();
-    }
-    else {
-       win.down('button[name=btnGuardar]').setVisible(true); 
-    }
-}
-, 
+    changeRadio: function (grupo, cmp) {
+        win = this.getWinReincidencia();
+        if (cmp.seleccionAgregar == 1)
+        {
+            win.down('button[name=btnGuardar]').setVisible(false);
+            win.down('form[name=formAnexo]').setVisible(true);
+            win.down('textfield[name=txtDireccion]').setVisible(false);
+            win.down('filefield[name=txtArchivo]').setVisible(false);
+          
+        }
+        else {
+
+            win.down('button[name=btnGuardar]').setVisible(true);
+        }
+    },
     onClickGuardarReincidencia: function (button, e, options) {
 
         grid = this.getListaEventosReincidencia();
         grid2 = this.getListaReincidenciaEvento();
         win = this.getWinReincidencia();
-     
+
         record = grid.getSelectionModel().getSelection();
 
-          Ext.Ajax.request({//AQUI ENVIO LA DATA 
-                    url: BASE_URL + 'reincidencia/reincidencia/registrarReincidencia',
-                    method: 'POST',
-                    params: {
-                             txtDescripcion: win.down('textfield[name=txtDescripcion]').getValue(),
-                             txtCosto: win.down('textfield[name=txtCosto]').getValue(),
-                             id:record[0].get('idEv'),
-                         },
-                    
-                    success: function (result, request) {
-                                data = Ext.JSON.decode(result.responseText);
+        Ext.Ajax.request({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'reincidencia/reincidencia/registrarReincidencia',
+            method: 'POST',
+            params: {
+                txtDescripcion: win.down('textfield[name=txtDescripcion]').getValue(),
+                txtCosto: win.down('textfield[name=txtCosto]').getValue(),
+                id: record[0].get('idEv'),
+            },
+            success: function (result, request) {
+                data = Ext.JSON.decode(result.responseText);
 
-                       if (data.success) {
-                            grid2.getView().refresh();
-                            grid2.getStore().load();
-                            win.close();
-                            Ext.MessageBox.show({title: 'Alerta', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                if (data.success) {
+                    grid2.getView().refresh();
+                    grid2.getStore().load();
+                    win.close();
+                    Ext.MessageBox.show({title: 'Alerta', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
-                        }
-                        else {
-                            Ext.MessageBox.show({title: 'Alerta', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                            // myapp.util.Util.showErrorMsg(result.msg);
-                        }
-                    },
-                    failure: function (result, request) {
-                        var result = action.result;
-                        loadingMask.hide();
-                        Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                        
-                    }
-                });
+                }
+                else {
+                    Ext.MessageBox.show({title: 'Alerta', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    // myapp.util.Util.showErrorMsg(result.msg);
+                }
+            },
+            failure: function (result, request) {
+                var result = action.result;
+                loadingMask.hide();
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
-
-    },
-    onClickLimpiarComisionado: function (button, e, options) {
+            }
+        });
 
 
     },
-//// -----------Funciones para la vista previa de la imagen y validar la extension de los archivos.---------
-    /**
-     checkFileExtension:function (elem) {
-     
-     var filePath = elem;
-     
-     if(filePath.indexOf('.') == -1)
-     return false;
-     
-     var validExtensions = new Array();
-     var ext = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
-     
-     if (typeExtension=="image") {
-     validExtensions[0] = 'jpg';
-     validExtensions[1] = 'jpeg';
-     validExtensions[3] = 'png';
-     
-     
-     }
-     
-     for(var i = 0; i < validExtensions.length; i++) {
-     if(ext == validExtensions[i])
-     return true;
-     }
-     
-     Ext.Msg.alert('Advertencia', 'La extension .'+ext+' del archivo ' + filePath + ' no es permitida!');
-     
-     if (typeExtension=="image") {
-     document.getElementsByName('btnSubirArchivo[]')[0].value='';
-     
-     }
-     
-     return false;
-     },
-     */
+    changeTipoAnexo: function (grupo, cmp) {
+        win = this.getWinReincidencia();
+        form =  win.getForm();
+        if (cmp.seleccion == 1)
+        {
+            win.down('button[name=btnGuardar]').setVisible(true);
+            form.down('textfield[name=txtDireccion]').setVisible(true);
+            form.down('filefield[name=txtArchivo]').setVisible(false);
+        }
+        else {
+            win.down('button[name=btnGuardar]').setVisible(true);
+            win.down('textfield[name=txtDireccion]').setVisible(false);
+            win.down('textfield[name=txtArchivo]').setVisible(true);
+        }
+    },
+    onClickGuardarAnexo: function (button, e, options) {
+        win = this.getWinReincidencia();
+        
+        formulario= win1.down('form[name=formAnexo]').getForm();
+        formulario.submit({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'reincidencia/anexo/guardarEmpleado',
+            method: 'POST',
+            params: formulario.getValues(),
+            success: function (form, action) {
+
+                if (result.success) {
+
+                } else {
+
+                }
+            },
+            failure: function(form,action) {
+                var result = action.result;
+                loadingMask.hide();
+                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+
+            }
+
+        });
 
 
 
-    previewImage: function (fieldfile) {
+    },
+//// -----------Funciones los anecos---------
 
 
-      
-        /*
-         if (!checkFileExtension(encodeURIComponent(document.getElementsByName("btnSubirArchivo[]")[0].value)))
-         {
-         return false;  
-         }
-         if (input) {
-         var reader = new FileReader();
-         reader.onload = function (e) {
-         //cambiar imagenArea por el id de la imagen que se esta usando en el js. 
-         document.getElementById('img').src = e.target.result
-         }
-         reader.readAsDataURL(input);
-         }*/
 
-    }
-    //-----------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------
 
 
 });

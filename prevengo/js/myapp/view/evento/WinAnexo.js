@@ -28,14 +28,13 @@ extend: 'Ext.window.Window',
             y:-20,
             layout: 'absolute',
             items: [ 
-            
-             
            {
                     xtype: 'form',
                     x: 30,
-                    y: 270,
-                    height: 140,
-                    width: 340,
+                    y: 30,
+                    name:'formAnexo',
+                    height: 100,
+                    width: 350,
                   
                     items: [
                         {
@@ -47,11 +46,13 @@ extend: 'Ext.window.Window',
                                 {
                                     xtype: 'radiofield',
                                     boxLabel: 'Dirección', 
+                                    inputValue: '1',
                                     name:'seleccion'
                                 },
                                 {
                                     xtype: 'radiofield',
                                     boxLabel: 'Archivo', 
+                                     inputValue: '2',
                                      name:'seleccion'
                                 }
                             ]
@@ -59,11 +60,15 @@ extend: 'Ext.window.Window',
                         {
                             xtype: 'textfield',
                             width: 340,
+                            name: 'txtDireccion',
+                            visible:false,
                             fieldLabel: 'Dirección:'
                         },
                         {
                             xtype: 'filefield',
                             width: 320,
+                            name: 'txtArchivo',
+                             visible:false,
                             fieldLabel: 'Subir archivo:', 
                         }
                     ]

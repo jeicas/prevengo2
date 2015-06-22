@@ -55,6 +55,8 @@ extend: 'Ext.window.Window',
                             name:'txtCosto',
                             fieldLabel: 'Costo'
                         }
+                        
+          
                     ]
                 },
                 {
@@ -68,17 +70,63 @@ extend: 'Ext.window.Window',
                         {
                             xtype: 'radiofield',
                             boxLabel: 'SI',
-                            name:'seleccion', 
+                            name:'seleccionAgregar', 
                             inputValue: '1'
                         },
                         {
                             xtype: 'radiofield',
                             boxLabel: 'NO',
                             inputValue: '2',
-                             name:'seleccion'
+                             name:'seleccionAgregar'
                         }
                     ]
                 },
+                
+                 {
+                    xtype: 'form',
+                    x: 30,
+                    y: 280,
+                    name:'formAnexo',
+                    height: 100,
+                    width: 350,
+                  
+                    items: [
+                        {
+                            xtype: 'radiogroup',
+                            width: 420,
+                            name: 'rdgTipoAnexo',
+                            fieldLabel: 'Tipo de Anexo',
+                            items: [
+                                {
+                                    xtype: 'radiofield',
+                                    boxLabel: 'Dirección', 
+                                    inputValue: '1',
+                                    name:'seleccion'
+                                },
+                                {
+                                    xtype: 'radiofield',
+                                    boxLabel: 'Archivo', 
+                                     inputValue: '2',
+                                     name:'seleccion'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'textfield',
+                            width: 340,
+                            name: 'txtDireccion',
+                            visible:false,
+                            fieldLabel: 'Dirección:'
+                        },
+                        {
+                            xtype: 'filefield',
+                            width: 320,
+                            name: 'txtArchivo',
+                             visible:false,
+                            fieldLabel: 'Subir archivo:', 
+                        }
+                    ]
+                }
             //===================================================================
           
                   
