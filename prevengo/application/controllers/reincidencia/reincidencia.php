@@ -99,7 +99,7 @@ class Reincidencia extends CI_Controller {
           
             $img_tipo = explode('/', $_FILES['txtArchivo']['type']);
             $nombrefoto = "_AneRein" . $result;
-            $nombrefoto2 = '_AneRein' . "." . $img_tipo[1];
+            $nombrefoto2 = '_AneRein' . "." .$img_tipo[1];
             $fotoType = $_FILES['txtArchivo']['type'];
             $fotoTmp_name = $_FILES['txtArchivo']['tmp_name'];
             $this->guardar_Imagen_Reincidencia($nombrefoto, $fotoType, $fotoTmp_name);
