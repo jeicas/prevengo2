@@ -65,27 +65,26 @@ class Reincidencia extends CI_Controller {
     }
 
 //fin registrar
-    
-        public function guardar_Imagen_Reincidencia($nombrefoto,$fotoType,$fotoTmp_name){        
-        if ($fotoTmp_name  == '') {
+
+    public function guardar_Imagen_Reincidencia($nombrefoto, $fotoType, $fotoTmp_name) {
+        if ($fotoTmp_name == '') {
             echo ('foto obligatoria');
-        } else if ($fotoTmp_name != '' && ($fotoType == "image/gif" || $fotoType== "image/jpeg" || $fotoType== "image/png")) {
-            $img_tipo   = explode('/', $fotoType);
-            $img_nombre = $nombrefoto.".".$img_tipo[1];
-            move_uploaded_file($fotoTmp_name,'anexosReincidencia/'.$img_nombre);
+        } else if ($fotoTmp_name != '' && ($fotoType == "image/gif" || $fotoType == "image/jpeg" || $fotoType == "image/png")) {
+            $img_tipo = explode('/', $fotoType);
+            $img_nombre = $nombrefoto . "." . $img_tipo[1];
+            move_uploaded_file($fotoTmp_name, 'anexosReincidencia/' . $img_nombre);
         }
     }
 
     public function registrarReincidencia() {
 
-        $idEv = $this->input->post('id');
-       
-        $descripcion =$this->input->post('txtDescripcion');
-        $costo =$this->input->post('txtCosto');
+        $idEv = $this->input->post('txtIdEvento');
+        $descripcion = $this->input->post('txtDescripcion');
+        $costo = $this->input->post('txtCosto');
         $fecha = date('Y-m-d');
         $estatus = 1;
-        $resultFoto=false;
-       
+        $resultFoto = false;
+
         $data = array(
             'evento' => $idEv,
             'descripcion' => $descripcion,
@@ -96,45 +95,47 @@ class Reincidencia extends CI_Controller {
 
         $result = $this->reincidencia_model->guardarReincidencia($data);
 
-         
-            $config['upload_path'] = './imagen/foto';
-            $config['allowed_types'] = 'gif|jpg|png|pdf';
-            $this->load->library('upload', $config);
-            $fotoocul=$this->input->post('txtArchivo');
+        if ($this->input->post('txtSeleccion') == 2) {
+          
+            $img_tipo = explode('/', $_FILES['txtArchivo']['type']);
+            $nombrefoto = "_AneRein" . $result;
+            $nombrefoto2 = '_AneRein' . "." . $img_tipo[1];
+            $fotoType = $_FILES['txtArchivo']['type'];
+            $fotoTmp_name = $_FILES['txtArchivo']['tmp_name'];
+            $this->guardar_Imagen_Reincidencia($nombrefoto, $fotoType, $fotoTmp_name);
+          
+               $dataAnexo = array(
+                    'reincidencia' => $result,
+                    'direccion' => $nombrefoto,
+                    'tipoarchivo' =>   ,
+                    'estatus' => 1
+                );
+                $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
             
-                    $img_tipo       = explode('/', $_FILES['txtArchivo']['type']);
-                    $nombrefoto     = "_AneRein".$result;
-                    $nombrefoto2    = '_AneRein'.".".$img_tipo[1];
-                    $fotoType       = $_FILES['txtArchivo']['type'];
-                    $fotoTmp_name   = $_FILES['txtArchivo']['tmp_name'];
-                    $this->guardar_Imagen_Reincidencia($nombrefoto,$fotoType,$fotoTmp_name);  
-                    
-        if ($fotoocul != '') {
+        } else {
+
             $dataAnexo = array(
                 'reincidencia' => $result,
-                'direccion' => substr($fotoocul, 12),
-                'tipoarchivo' => substr($fotoocul, -3),
+                'direccion' => $this->input->post('txtDireccion'),
+                'tipoarchivo' => 'html',
                 'estatus' => 1
             );
             $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
-       
-        }  
+        }
 
-    if ($result!=0) {
+
+        if ($resultFoto) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito." //modificado en la base de datos
+                "msg" => "Se Guardo con Éxito.".$dataAnexo['reincidencia'] //modificado en la base de datos
             ));
         } else {
 
             echo json_encode(array(
                 "success" => false,
-                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados ".$data['reincidencia']//no se modifico en la base de datos
             ));
         }
-
-
-       
     }
 
 //fin registrar

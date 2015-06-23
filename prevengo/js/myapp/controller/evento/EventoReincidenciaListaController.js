@@ -58,7 +58,7 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
             "winReincidencia button[name=btnSubirArchivo]": {
                 change: this.previewImage
             },
-            "winAnexo radiogroup[name=rdgTipoAnexo]": {
+            "winReincidencia radiogroup[name=rdgTipoAnexo]": {
                 change: this.changeTipoAnexo
             },
         });
@@ -136,8 +136,9 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
 
         win = Ext.create('myapp.view.evento.WinReincidencia');
         win.setTitle("Nueva Reincidencia");
+        win.down('textfield[name=txtIdEvento]').setValue(record[0].get('idEv'));
         win.down('button[name=btnGuardar]').setVisible(false);
-         win.down('form[name=formAnexo]').setVisible(false);
+         win.down('fieldset[name=formAnexo]').setVisible(false);
         win.show();
     },
     onClickEliminarReincidencia: function (button, e, options) {
@@ -191,10 +192,12 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
     // ====================funciones de la ventana listaAsignarComisionado================
     changeRadio: function (grupo, cmp) {
         win = this.getWinReincidencia();
+        
         if (cmp.seleccionAgregar == 1)
         {
+             win.setHeight(450);
             win.down('button[name=btnGuardar]').setVisible(false);
-            win.down('form[name=formAnexo]').setVisible(true);
+            win.down('fieldset[name=formAnexo]').setVisible(true);
             win.down('textfield[name=txtDireccion]').setVisible(false);
             win.down('filefield[name=txtArchivo]').setVisible(false);
           
@@ -202,6 +205,8 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
         else {
 
             win.down('button[name=btnGuardar]').setVisible(true);
+            win.down('fieldset[name=formAnexo]').setVisible(false);
+            win.setHeight(370);
         }
     },
     onClickGuardarReincidencia: function (button, e, options) {
@@ -211,83 +216,53 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
         win = this.getWinReincidencia();
 
         record = grid.getSelectionModel().getSelection();
-
-        Ext.Ajax.request({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'reincidencia/reincidencia/registrarReincidencia',
-            method: 'POST',
-            params: {
-                txtDescripcion: win.down('textfield[name=txtDescripcion]').getValue(),
-                txtCosto: win.down('textfield[name=txtCosto]').getValue(),
-                id: record[0].get('idEv'),
-            },
-            success: function (result, request) {
-                data = Ext.JSON.decode(result.responseText);
-
-                if (data.success) {
-                    grid2.getView().refresh();
-                    grid2.getStore().load();
-                    win.close();
-                    Ext.MessageBox.show({title: 'Alerta', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-
-                }
-                else {
-                    Ext.MessageBox.show({title: 'Alerta', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                    // myapp.util.Util.showErrorMsg(result.msg);
-                }
-            },
-            failure: function (result, request) {
-                var result = action.result;
-                loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-
-            }
-        });
+        formulario= win.down('form[name=formReincidencia]').getForm();
+        formulario.submit({ //AQUI ENVIO LA DATA 
+                    url: BASE_URL+'reincidencia/reincidencia/registrarReincidencia',
+                    method:'POST',
+                    params:formulario.getValues(),
+                    success: function(form, action){
+                        var result = action.result;           
+                       grid.getView().refresh(true);
+                        grid.getStore().load();
+                        if (result.success){
+                            win.close();
+                            myapp.util.Util.showbienMsg(result.msg); 
+                              
+                        }else{
+                            
+                            myapp.util.Util.showErrorMsg(result.msg);
+                        }
+                    },
+                    failure : function(form,action){
+                        
+                            Ext.MessageBox.show({ title: 'Alerta', msg: 'Se ha detectado algun error', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                        }
+                    
+                });
+     
 
 
     },
     changeTipoAnexo: function (grupo, cmp) {
         win = this.getWinReincidencia();
-        form =  win.getForm();
+       
         if (cmp.seleccion == 1)
         {
+           
             win.down('button[name=btnGuardar]').setVisible(true);
-            form.down('textfield[name=txtDireccion]').setVisible(true);
-            form.down('filefield[name=txtArchivo]').setVisible(false);
+            win.down('textfield[name=txtDireccion]').setVisible(true);
+            win.down('filefield[name=txtArchivo]').setVisible(false);
+            win.down('textfield[name=txtSeleccion]').setValue(cmp.seleccion);
         }
         else {
             win.down('button[name=btnGuardar]').setVisible(true);
             win.down('textfield[name=txtDireccion]').setVisible(false);
             win.down('textfield[name=txtArchivo]').setVisible(true);
+            win.down('textfield[name=txtSeleccion]').setValue(cmp.seleccion);
         }
     },
-    onClickGuardarAnexo: function (button, e, options) {
-        win = this.getWinReincidencia();
-        
-        formulario= win1.down('form[name=formAnexo]').getForm();
-        formulario.submit({//AQUI ENVIO LA DATA 
-            url: BASE_URL + 'reincidencia/anexo/guardarEmpleado',
-            method: 'POST',
-            params: formulario.getValues(),
-            success: function (form, action) {
 
-                if (result.success) {
-
-                } else {
-
-                }
-            },
-            failure: function(form,action) {
-                var result = action.result;
-                loadingMask.hide();
-                Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-
-            }
-
-        });
-
-
-
-    },
 //// -----------Funciones los anecos---------
 
 

@@ -21,11 +21,10 @@ extend: 'Ext.window.Window',
   buildItem : function(){
     return [
     {
-            xtype: 'container',
-            height: 318,
-            width: 581,
-            x:-15,
-            y:-20,
+            xtype: 'form',
+            height: 400,
+            width: 500,
+           name:'formReincidencia',
             layout: 'absolute',
             items: [ 
              //===================================================================
@@ -54,7 +53,14 @@ extend: 'Ext.window.Window',
                             width: 320,
                             name:'txtCosto',
                             fieldLabel: 'Costo'
-                        }
+                        }, 
+                        {
+                            xtype: 'textfield',
+                            width: 340,
+                            name: 'txtIdEvento',
+                           hidden:true
+                            
+                        },
                         
           
                     ]
@@ -83,13 +89,12 @@ extend: 'Ext.window.Window',
                 },
                 
                  {
-                    xtype: 'form',
+                    xtype: 'fieldset',
                     x: 30,
-                    y: 280,
+                    y: 250,
                     name:'formAnexo',
-                    height: 100,
-                    width: 350,
-                  
+                    height: 80,
+                    width: 370,
                     items: [
                         {
                             xtype: 'radiogroup',
@@ -111,6 +116,14 @@ extend: 'Ext.window.Window',
                                 }
                             ]
                         },
+                         {
+                            xtype: 'textfield',
+                            width: 340,
+                            name: 'txtSeleccion',
+                           hidden:true
+                            
+                        },
+                        
                         {
                             xtype: 'textfield',
                             width: 340,
