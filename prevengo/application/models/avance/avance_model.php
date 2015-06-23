@@ -12,7 +12,8 @@ class Avance_model extends CI_Model {
     }
 
     public function guardarAvance($dataAvance) {
-        return $this->db->insert('avance', $dataAvance);
+        $this->db->insert('avance', $dataAvance);
+        return $this->db->insert_id();
     }
    
 

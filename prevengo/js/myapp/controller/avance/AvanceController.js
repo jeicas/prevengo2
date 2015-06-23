@@ -50,6 +50,12 @@ Ext.define('myapp.controller.avance.AvanceController', {
             "#gridListaAvance": {
                 itemdblclick: this.onClickVerObservacion
             },
+             "#formAvance radiogroup[name=rdgAgregarAnexo]": {
+                change: this.changeRadio
+            },
+             "#formAvance radiogroup[name=rdgTipoAnexo]": {
+                change: this.changeTipoAnexo
+            },
         });
     },
     //===================== Funciones de la Lista===============================
@@ -68,6 +74,7 @@ Ext.define('myapp.controller.avance.AvanceController', {
                 else {
                     var win = Ext.create('myapp.view.avance.Gridbuscar');
                     win.setTitle("Nuevo Avance");
+                     win.down('button[name=btnGuardar]').setVisible(false);
                     nuevo = true;
                     win.show();
                 }
@@ -278,5 +285,42 @@ Ext.define('myapp.controller.avance.AvanceController', {
 
 
 
+    },
+     changeRadio: function (grupo, cmp) {
+        win = this.getAvance();
+        win1= this.getGridbuscar();
+        if (cmp.seleccionAgregar == 1)
+        {
+            win1.setHeight(550);
+            win.down('button[name=btnGuardar]').setVisible(false);
+            win.down('fieldset[name=formAnexo]').setVisible(true);
+            win.down('textfield[name=txtDireccion]').setVisible(false);
+            win.down('filefield[name=txtArchivo]').setVisible(false);
+          
+        }
+        else {
+            win.down('button[name=btnGuardar]').setVisible(true);
+            win.down('fieldset[name=formAnexo]').setVisible(false);
+            win1.setHeight(440);
+        }
+    },
+    
+        changeTipoAnexo: function (grupo, cmp) {
+        win = this.getAvance();
+       
+        if (cmp.seleccion == 1)
+        {
+           
+            win.down('button[name=btnGuardar]').setVisible(true);
+            win.down('textfield[name=txtDireccion]').setVisible(true);
+            win.down('filefield[name=txtArchivo]').setVisible(false);
+            win.down('textfield[name=txtSeleccion]').setValue(cmp.seleccion);
+        }
+        else {
+            win.down('button[name=btnGuardar]').setVisible(true);
+            win.down('textfield[name=txtDireccion]').setVisible(false);
+            win.down('textfield[name=txtArchivo]').setVisible(true);
+            win.down('textfield[name=txtSeleccion]').setValue(cmp.seleccion);
+        }
     },
 });

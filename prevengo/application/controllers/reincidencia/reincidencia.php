@@ -95,45 +95,57 @@ class Reincidencia extends CI_Controller {
 
         $result = $this->reincidencia_model->guardarReincidencia($data);
 
-        if ($this->input->post('txtSeleccion') == 2) {
-          
-            $img_tipo = explode('/', $_FILES['txtArchivo']['type']);
-            $nombrefoto = "_AneRein" . $result;
-            $nombrefoto2 = '_AneRein' . "." .$img_tipo[1];
-            $fotoType = $_FILES['txtArchivo']['type'];
-            $fotoTmp_name = $_FILES['txtArchivo']['tmp_name'];
-            $this->guardar_Imagen_Reincidencia($nombrefoto, $fotoType, $fotoTmp_name);
-          
-               $dataAnexo = array(
+
+
+        if ($this->input->post('txtSeleccion') == 1 || $this->input->post('txtSeleccion') == 2) {
+            if ($this->input->post('txtSeleccion') == 2) {
+
+                $img_tipo = explode('/', $_FILES['txtArchivo']['type']);
+                $nombrefoto = "_AneRein" . $result;
+                $nombrefoto2 = '_AneRein' . "." . $img_tipo[1];
+                $fotoType = $_FILES['txtArchivo']['type'];
+                $fotoTmp_name = $_FILES['txtArchivo']['tmp_name'];
+                $this->guardar_Imagen_Reincidencia($nombrefoto, $fotoType, $fotoTmp_name);
+
+                $dataAnexo = array(
                     'reincidencia' => $result,
                     'direccion' => $nombrefoto,
                     'tipoarchivo' => substr($_FILES['txtArchivo']['name'], -3),
                     'estatus' => 1
                 );
                 $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
-            
-        } else {
+            } else {
 
-            $dataAnexo = array(
-                'reincidencia' => $result,
-                'direccion' => $this->input->post('txtDireccion'),
-                'tipoarchivo' => 'html',
-                'estatus' => 1
-            );
-            $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
+                $dataAnexo = array(
+                    'reincidencia' => $result,
+                    'direccion' => $this->input->post('txtDireccion'),
+                    'tipoarchivo' => 'html',
+                    'estatus' => 1
+                );
+                $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
+            }
+        } else {
+            if ($result==0){
+                $resultFoto=false;
+            }
+            else 
+            {
+                $resultFoto=true;
+            }
+                    
         }
 
 
         if ($resultFoto) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito.".$_FILES['txtArchivo']['name'] //modificado en la base de datos
+                "msg" => "Se Guardo con Éxito." . $_FILES['txtArchivo']['name'] //modificado en la base de datos
             ));
         } else {
 
             echo json_encode(array(
                 "success" => false,
-                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados ".$data['reincidencia']//no se modifico en la base de datos
+                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados " . $data['reincidencia']//no se modifico en la base de datos
             ));
         }
     }

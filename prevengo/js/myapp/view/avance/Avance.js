@@ -121,7 +121,83 @@ Ext.define('myapp.view.registrar.Avance', {
                             name:'lblFechaAsignacion',
                             id:'lblFechaAsignacion',
                             text: ''
+                        },
+                        {
+                    xtype: 'radiogroup',
+                     x: 10,
+                    y: 310,
+                    width: 310,
+                    name:'rdgAgregarAnexo',
+                    fieldLabel: 'Agregar Anexo?',
+                    items: [
+                        {
+                            xtype: 'radiofield',
+                            boxLabel: 'SI',
+                            name:'seleccionAgregar', 
+                            inputValue: '1'
+                        },
+                        {
+                            xtype: 'radiofield',
+                            boxLabel: 'NO',
+                            inputValue: '2',
+                             name:'seleccionAgregar'
                         }
+                    ]
+                },
+                        
+                          {
+                    xtype: 'fieldset',
+                    x: 10,
+                    y: 350,
+                    name:'formAnexo',
+                    height: 80,
+                   
+                    width: 460,
+                    items: [
+                        {
+                            xtype: 'radiogroup',
+                            width: 420,
+                            name: 'rdgTipoAnexo',
+                            fieldLabel: 'Tipo de Anexo',
+                            items: [
+                                {
+                                    xtype: 'radiofield',
+                                    boxLabel: 'Dirección', 
+                                    inputValue: '1',
+                                    name:'seleccion'
+                                },
+                                {
+                                    xtype: 'radiofield',
+                                    boxLabel: 'Archivo', 
+                                     inputValue: '2',
+                                     name:'seleccion'
+                                }
+                            ]
+                        },
+                         {
+                            xtype: 'textfield',
+                            width: 340,
+                            name: 'txtSeleccion',
+                           hidden:true
+                            
+                        },
+                        
+                        {
+                            xtype: 'textfield',
+                            width: 340,
+                            name: 'txtDireccion',
+                            visible:false,
+                            fieldLabel: 'Dirección:'
+                        },
+                        {
+                            xtype: 'filefield',
+                            width: 320,
+                            name: 'txtArchivo',
+                             visible:false,
+                            fieldLabel: 'Subir archivo:', 
+                        }
+                    ]
+                }
                
 
              

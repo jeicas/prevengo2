@@ -104,7 +104,7 @@ Ext.define('myapp.controller.avance.AvanceListaController', {
             
              Ext.Msg.show({
                     title: 'Confirmar',
-                    msg: 'Esta seguro que desea CANCELAR el Evento ' + record[0].get('descripcion') + '?',
+                    msg: 'Esta seguro que desea Rechazar el avance ' + record[0].get('descripcion') + '?',
                     buttons: Ext.Msg.YESNO,
                     icon: Ext.Msg.QUESTION,
                     fn: function (buttonId) {

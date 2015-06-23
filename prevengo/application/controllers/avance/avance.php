@@ -15,8 +15,17 @@ class Avance extends CI_Controller {
         $this->load->model('avance/avance_model');
         $this->load->model('actividad/actividad_model');
         $this->load->model('evento/evento_model');
+         $this->load->model('anexo/anexo_model');
     }
-
+  public function guardar_Imagen_Anexo($nombrefoto, $fotoType, $fotoTmp_name) {
+        if ($fotoTmp_name == '') {
+            echo ('foto obligatoria');
+        } else if ($fotoTmp_name != '' && ($fotoType == "image/gif" || $fotoType == "image/jpeg" || $fotoType == "image/png")) {
+            $img_tipo = explode('/', $fotoType);
+            $img_nombre = $nombrefoto . "." . $img_tipo[1];
+            move_uploaded_file($fotoTmp_name, 'anexosAvance/' . $img_nombre);
+        }
+    }
     public function registrarAvance() {
        $user=$this->session->userdata('datasession');
          $usuario = $user['idusuario'];
@@ -45,8 +54,9 @@ class Avance extends CI_Controller {
                             'costo' => $costo,
                             'estatus' => $estatus,
                         );
-                        $resultado = $this->avance_model->actualizarAvance($dataAvance);
-                        $result = true;
+                          $result = $this->avance_model->actualizarAvance($dataAvance);
+                          $idAvance=$row['avance'];
+                       
                     } //if row
                     else {
                         $dataAvance = array('actividad' => $actividad,
@@ -59,8 +69,14 @@ class Avance extends CI_Controller {
                             'estatus' => $estatus,
                         );
 
-                        $result = $this->avance_model->guardarAvance($dataAvance);
-                        $resultado = true;
+                       $idAvance = $this->avance_model->guardarAvance($dataAvance);
+                       if ($idAvance!=0){
+                           $result= true;
+                       }
+                       else {
+                           $result=false;
+                       }
+                      
                     }//else row
                     //Actualiza el estatus de la actividad a "En Revision"       
                     $dataActividad = array('id' => $actividad,
@@ -86,8 +102,8 @@ class Avance extends CI_Controller {
                             'estatus' => $estatusAct,
                         );
                         $resultad = $this->actividad_model->cambiarEstatus($dataActividad);
-                        $resultado = $this->avance_model->actualizarAvance($dataAvance);
-                        $result = true;
+                         $result = $this->avance_model->actualizarAvance($dataAvance);
+                       $idAvance=$row['avance'];
                     } //if row
                     else {
                         $dataAvance = array('actividad' => $actividad,
@@ -101,9 +117,15 @@ class Avance extends CI_Controller {
                         );
 
 
-                        $result = $this->avance_model->guardarAvance($dataAvance);
+                        $idAvance = $this->avance_model->guardarAvance($dataAvance);
                         $resultad = true;
-                        $resultado = true;
+                         if ($idAvance!=0){
+                           $result= true;
+                       }
+                       else {
+                           $result=false;
+                       }
+                       
                     }//else row
                 }// else tipo 
                 
@@ -114,10 +136,50 @@ class Avance extends CI_Controller {
             } //foreach
         }//if ResultadoAct  
                     
+               
+    if ($this->input->post('txtSeleccion') == 1 || $this->input->post('txtSeleccion') == 2) {
+            if ($this->input->post('txtSeleccion') == 2) {
+
+                $img_tipo = explode('/', $_FILES['txtArchivo']['type']);
+                $nombrefoto = "_AneAva" . $idAvance;
+                $nombrefoto2 = '_AneAva' . "." . $img_tipo[1];
+                $fotoType = $_FILES['txtArchivo']['type'];
+                $fotoTmp_name = $_FILES['txtArchivo']['tmp_name'];
+                $this->guardar_Imagen_Anexo($nombrefoto, $fotoType, $fotoTmp_name);
+
+                $dataAnexo = array(
+                    'avance' => $result,
+                    'direccion' => $nombrefoto,
+                    'tipoarchivo' => substr($_FILES['txtArchivo']['name'], -3),
+                    'estatus' => 1
+                );
+                $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
+            } else {
+
+                $dataAnexo = array(
+                    'avance' => $result,
+                    'direccion' => $this->input->post('txtDireccion'),
+                    'tipoarchivo' => 'html',
+                    'estatus' => 1
+                );
+                $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
+            }
+        } else {
+            if ($result==0){
+                $resultFoto=false;
+            }
+            else 
+            {
+                $resultFoto=true;
+            }
                     
+        }
+        
+        
+        
 
 
-        if ($result AND $resultad AND $resultado) {
+        if ($result AND $resultad AND $resultFoto) {
             echo json_encode(array(
                 "success" => true,
                 "msg" => "Se Guardo con Éxito." //modificado en la base de datos

@@ -3,7 +3,7 @@ extend: 'Ext.window.Window',
   alias: 'widget.gridbuscar',
   itemId: 'gridbuscar',
   title:'Avance',
-  height: 410,
+  height: 440,
   width: 490,
   modal:true,
   requires: [
