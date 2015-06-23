@@ -107,7 +107,7 @@ class Reincidencia extends CI_Controller {
                $dataAnexo = array(
                     'reincidencia' => $result,
                     'direccion' => $nombrefoto,
-                    'tipoarchivo' =>   ,
+                    'tipoarchivo' => substr($_FILES['txtArchivo']['name'], -3),
                     'estatus' => 1
                 );
                 $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
@@ -127,7 +127,7 @@ class Reincidencia extends CI_Controller {
         if ($resultFoto) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se Guardo con Éxito.".$dataAnexo['reincidencia'] //modificado en la base de datos
+                "msg" => "Se Guardo con Éxito.".$_FILES['txtArchivo']['name'] //modificado en la base de datos
             ));
         } else {
 

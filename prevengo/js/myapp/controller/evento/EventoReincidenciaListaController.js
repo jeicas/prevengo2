@@ -223,15 +223,17 @@ Ext.define('myapp.controller.evento.EventoReincidenciaListaController', {
                     params:formulario.getValues(),
                     success: function(form, action){
                         var result = action.result;           
-                       grid.getView().refresh(true);
-                        grid.getStore().load();
+                      
                         if (result.success){
-                            win.close();
-                            myapp.util.Util.showbienMsg(result.msg); 
+                         Ext.MessageBox.show({title: 'Mensaje', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                                    grid2.getView().refresh();
+                                    grid2.getStore().load();
+                                    win.close();    
                               
                         }else{
                             
-                            myapp.util.Util.showErrorMsg(result.msg);
+                             Ext.MessageBox.show({title: 'Mensaje', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                        
                         }
                     },
                     failure : function(form,action){
