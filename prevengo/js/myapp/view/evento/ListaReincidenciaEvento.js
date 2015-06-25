@@ -29,6 +29,29 @@ Ext.define('myapp.view.evento.ListaReincidenciaEvento', {
                 flex: 1.5,
                 text: 'Descripcion',
               
+            }, 
+             {
+                dataIndex: 'anexo',
+                flex: 0.5,
+                text: 'Anexo',
+                renderer: function(value, metadata, record){
+				return '<img width="50" height="50" src="'+ value +'">';
+			}
+              
+            }, 
+            {
+                dataIndex: 'direccion',
+                flex: 1,
+                text: 'Direccion',
+               renderer  : function(myValue, metadata,record) {
+                   if (myValue==''){
+                        return '';
+                   }else{
+                       return '<a href="'+myValue+'">'+'<img width="80" height="50" src="../../anexosReincidencia/icono-ver.png"></a>';
+                   }
+                            
+                        }
+              
             }
              
             ]

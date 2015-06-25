@@ -12,10 +12,14 @@ class Reincidencia_model extends CI_Model {
                                           reincidencia.evento AS idEv,
                                        
                                         reincidencia.descripcion AS descripcion, 
-                                        reincidencia.fecha AS fecha
-                                  FROM reincidencia 
+                                        reincidencia.fecha AS fecha,
+                                        anexo.direccion as anexo,
+                                        anexo.tipoarchivo as extension
+                                  FROM reincidencia left join anexo on reincidencia.id =anexo.reincidencia
                                  
-                                 WHERE reincidencia.evento=$id and estatus=1
+                              
+                                 
+                                 WHERE reincidencia.evento=$id and reincidencia.estatus=1
                                  ");
        
             return $query;
