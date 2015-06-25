@@ -11,13 +11,13 @@ class TipoUsuario extends CI_Controller {
         $this->load->helper('url');
         $this->load->database();
         $this->load->library('session');
-        $this->load->model('tipoUsuario/tipousuario_model');
+        $this->load->model('tipoUsuario/tipoUsuario_model');
         $this->load->model('menu/menu_model');
     }
 
     public function obtenerTipoUsuario() {
         $resultdbd = array();
-        if ($resultdbd = $this->tipousuario_model->cargarTipoUsuario()) {
+        if ($resultdbd = $this->tipoUsuario_model->cargarTipoUsuario()) {
             $output = array(
                 'success' => true,
                 'total' => count($resultdbd),
@@ -48,7 +48,7 @@ class TipoUsuario extends CI_Controller {
             'estatus' => $estatus,
         );
 
-        $result = $this->tipousuario_model->guardadrTipoUsuario($data);
+        $result = $this->tipoUsuario_model->guardadrTipoUsuario($data);
 
         if ($result) {
             echo json_encode(array(

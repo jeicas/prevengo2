@@ -47,7 +47,7 @@ Ext.define('myapp.view.evento.ListaReincidenciaEvento', {
                    if (myValue==''){
                         return '';
                    }else{
-                       return '<a href="'+myValue+'">'+'<img width="80" height="50" src="../../anexosReincidencia/icono-ver.png"></a>';
+                       return '<a target="_blank" href="'+myValue+'">'+'<img width="80" height="50" src="../../imagen/btn/icono-ver.png"></a>';
                    }
                             
                         }

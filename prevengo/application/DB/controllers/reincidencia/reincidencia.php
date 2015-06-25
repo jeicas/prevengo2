@@ -148,9 +148,9 @@ class Reincidencia extends CI_Controller {
         );
 
         $result = $this->reincidencia_model->guardarReincidencia($data);
-        echo $this->input->post('seleccion');
+        
         if ($this->input->post('seleccion') == 2) {
-            
+            echo $result;
              if ($result == 0) {
                     $resultFoto = false;
                 } else {
@@ -164,7 +164,6 @@ class Reincidencia extends CI_Controller {
                     $nombrefoto = "_AneRein" . $result;
                     $fotoType = $_FILES['txtArchivo']['type'];
                     $fotoTmp_name = $_FILES['txtArchivo']['tmp_name'];
-                    echo $fotoType;
                     $this->guardar_Imagen_Reincidencia($nombrefoto, $fotoType, $fotoTmp_name);
 
                     $dataAnexo = array(
