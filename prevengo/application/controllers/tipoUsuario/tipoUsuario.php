@@ -48,7 +48,7 @@ class TipoUsuario extends CI_Controller {
             'estatus' => $estatus,
         );
 
-        $result = $this->tipousuario_model->guardadrTipoUsuario($data);
+        $result = $this->tipousuario_model->guardarTipoUsuario($data);
 
         if ($result) {
             echo json_encode(array(

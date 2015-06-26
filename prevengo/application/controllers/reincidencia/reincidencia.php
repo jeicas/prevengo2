@@ -148,8 +148,8 @@ class Reincidencia extends CI_Controller {
         );
 
         $result = $this->reincidencia_model->guardarReincidencia($data);
-        echo $this->input->post('seleccion');
-        if ($this->input->post('seleccion') == 2) {
+      
+        if ($this->input->post('seleccionAgregar') == 2) {
             
              if ($result == 0) {
                     $resultFoto = false;
@@ -157,23 +157,30 @@ class Reincidencia extends CI_Controller {
                     $resultFoto = true;
                 }
         } else {
-            if ($this->input->post('txtSeleccion') == 1 || $this->input->post('txtSeleccion') == 2) {
-                if ($this->input->post('txtSeleccion') == 2) {
+            
+            if ($this->input->post('seleccion') == 1 || $this->input->post('seleccion') == 2) {
+               
+                if ($this->input->post('seleccion') == 2) {
 
                     $img_tipo = explode('/', $_FILES['txtArchivo']['type']);
                     $nombrefoto = "_AneRein" . $result;
                     $fotoType = $_FILES['txtArchivo']['type'];
                     $fotoTmp_name = $_FILES['txtArchivo']['tmp_name'];
-                    echo $fotoType;
+                  
                     $this->guardar_Imagen_Reincidencia($nombrefoto, $fotoType, $fotoTmp_name);
-
-                    $dataAnexo = array(
+                   
+                    if ($fotoType == "image/gif" || $fotoType == "image/jpeg" || $fotoType == "image/png" || $fotoType == "application/pdf" ){
+                          $dataAnexo = array(
                         'reincidencia' => $result,
                         'direccion' => $nombrefoto,
                         'tipoarchivo' => substr($_FILES['txtArchivo']['name'], -3),
                         'estatus' => 1
                     );
                     $resultFoto = $this->anexo_model->guardarAnexo($dataAnexo);
+                    }else {
+                       $resultFoto=false;
+                    }
+                  
                 } else {
 
                     $dataAnexo = array(
@@ -192,12 +199,7 @@ class Reincidencia extends CI_Controller {
                 }
             }
         }
-
-
-
-
-
-        if ($resultFoto) {
+        if ($resultFoto==1) {
             echo json_encode(array(
                 "success" => true,
                 "msg" => "Se Guardo con Éxito."//modificado en la base de datos

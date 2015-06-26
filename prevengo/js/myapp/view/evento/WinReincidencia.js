@@ -83,7 +83,7 @@ extend: 'Ext.window.Window',
                             xtype: 'radiofield',
                             boxLabel: 'NO',
                             inputValue: '2',
-                             name:'seleccionAgregar'
+                            name:'seleccionAgregar'
                         }
                     ]
                 },

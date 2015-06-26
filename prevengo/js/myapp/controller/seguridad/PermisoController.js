@@ -105,9 +105,13 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
                 
 
                 if (result.success) {
-                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    
+                  
+                   
                     formulario.getStore().load();
-
+                  
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    
 
                 } else {
                     Ext.Msg.alert('Informaci&oacute;n', result.msg);
@@ -167,7 +171,7 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
     onClickGuardarTipoUsuario: function (button, e, options) {
 
         winO = this.getWinMaestroTipoUsuario();
-
+        var form = this.getPermisoForm();
         var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
         loadingMask.show();
 
@@ -182,7 +186,7 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
                 loadingMask.hide();
                 if (result.success) {
 
-
+                   form.down("combobox[name=cmbTipoUsuario]").getStore().load();
                     winO.close();
                     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
