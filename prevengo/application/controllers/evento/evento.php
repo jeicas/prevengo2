@@ -25,7 +25,7 @@ class Evento extends CI_Controller {
 
                 switch ($row['estatus']) {
                     case '1':
-                        $estatus = "Pendiente";
+                        $estatus = 'Pendiente';
                         break;
                     case '2':
                         $estatus = 'En Ejecución';
@@ -94,7 +94,7 @@ class Evento extends CI_Controller {
 
                 switch ($row['estatus']) {
                     case '1':
-                        $estatus = "Pendiente";
+                        $estatus = 'Pendiente';
                         break;
                     case '2':
                         $estatus = 'En Ejecución';

@@ -75,9 +75,26 @@
   background-image:url('../imagen/btn/icon-discapacidad.png') !important;
 }
 .registro1{
-  background-image:url('../imagen/btn/registro1.png') !important;
+  background-image:url('../imagen/btn/abrir.png') !important;
 }
-
+.plan{
+  background-image:url('../imagen/btn/plandeacc.png') !important;
+}
+.avance{
+  background-image:url('../imagen/btn/avannce.png') !important;
+}
+.evento{
+  background-image:url('../imagen/btn/event.png') !important;
+}
+.seguridad{
+  background-image:url('../imagen/btn/config.png') !important;
+}
+.sesion{
+  background-image:url('../imagen/btn/usuarios.png') !important;
+}
+.funcionario{
+  background-image:url('../imagen/btn/empleado2.png') !important;
+}
 .icon-buscar{
   background-image:url('../imagen/btn/icon-buscar.png') !important;
 }
@@ -134,12 +151,16 @@
 
 
 //colores estatus
-.price-fallPendiente .x-change-cell {
+.price-fallPendien .x-change-cell {
     background-color: #70EB7C;
     color:#0B0B0A;
 }
 .price-fallCompletado .x-change-cell {
     background-color: #81F781;
+    color:#0B0B0A;
+}
+.price-fallPendi .x-change-cell {
+    background-color: #70EB7C;
     color:#0B0B0A;
 }
 .price-riseEEjecucion .x-change-cell {
