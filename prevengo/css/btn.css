@@ -281,7 +281,7 @@
   background-image:url('../imagen/btn/Button-Add-icon.png') !important;}
   
 .price{
-   background-color:#237ACC;
+   background-image:url('../imagen/btn/background.png') !important;
    color:white;
    font-weight: bold;
    font-size: 26px;

@@ -6,7 +6,11 @@ Ext.define('myapp.controller.Menu', {
   refs: [{
     ref: 'mainPanel',
 		selector: 'mainpanel'
-	}],
+	},
+    {
+    ref: 'Header',
+		selector: 'appheader'
+	},],
   init: function(application) {
     this.control({
       "mainmenu": {
@@ -20,7 +24,12 @@ Ext.define('myapp.controller.Menu', {
   onPanelRender: function(abstractcomponent, options) {
     this.getMenuStore().load(function(records, op, success){
       var menuPanel = Ext.ComponentQuery.query('mainmenu')[0];
+      var header = Ext.ComponentQuery.query('appheader')[0];
+      
+
       Ext.each(records, function(root){
+       header.items.items[4].setText(records[0].get('usuario'));
+       
         var menu = Ext.create('myapp.view.menu.Item',{
           title: root.get('text'),
           iconCls: root.get('iconCls'),

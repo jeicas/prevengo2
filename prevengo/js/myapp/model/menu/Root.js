@@ -16,6 +16,9 @@ idProperty: 'id',
 		},
 		{
 			name: 'controller'
+		}, 
+                {
+			name: 'usuario'
 		}
 	],
 	hasMany: {

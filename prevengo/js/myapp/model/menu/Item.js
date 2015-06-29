@@ -16,6 +16,9 @@ extend: 'Ext.data.Model',
 		name: 'parent_id'
 	},{
 		name: 'controller'
+	},
+         {
+		name: 'usuario'
 	}],
 	belongsTo: {
 		model: 'myapp.model.menu.Root',

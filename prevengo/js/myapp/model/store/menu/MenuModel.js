@@ -4,5 +4,9 @@ Ext.define('myapp.model.store.menu.MenuModel', {
        {name: 'id',          type: 'string'},
        {name: 'nombre',          type: 'string'},
        {name: 'padre',          type: 'string'},
+       {name: 'usuarioNombre',          type: 'string'},
+       {name: 'usuarioApellido',          type: 'string'},
+       
+      
     ]
 });
