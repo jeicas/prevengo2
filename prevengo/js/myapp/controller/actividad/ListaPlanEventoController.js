@@ -76,6 +76,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             editWindow.show();
             if (record[0].get('depende')!='null'){
                 tieneDepende=record[0].get('iddepende');
+                console.log("Tiene "+tieneDepende);
             }
                 
              else {tieneDepende=null;}
@@ -106,7 +107,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                         if (buttonId == 'yes') {
                             var win = Ext.create('myapp.view.observacion.WinObservacionActividad');
                             win.setTitle("Cancelar la actividad " + record[0].get('descripcion'));
-                            win.down('label[name=lblDescripcion]').setText("Indique la razón por la que desea cancelar el plan de accción  " + record[0].get('descripcion') + "?");
+                            win.down('label[name=lblDescripcion]').setText("Indique la razón por la que desea cancelar el plan de accción " + record[0].get('descripcion')+"?");
                             win.show();
                         }
                     }
@@ -178,11 +179,19 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                 
                 if (tieneDepende!=null)
                 {
-                    ActividadDependiente=tieneDepende
+                    if (tieneDepende==win.down("combobox[name=cmbActividadDepende]").getValue()){
+                        ActividadDependiente=tieneDepende
+                    }else 
+                    {
+                         ActividadDependiente=win.down("combobox[name=cmbActividadDepende]").getValue();
+                    }
+                    
                 }
                 else {
+                    
                     ActividadDependiente=win.down("combobox[name=cmbActividadDepende]").getValue();
                 }
+                console.log("Se va con "+ActividadDependiente);
               
                 Ext.Ajax.request({//AQUI ENVIO LA DATA 
                     url: BASE_URL + 'actividad/actividad/actualizarActividad',

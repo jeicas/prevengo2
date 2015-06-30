@@ -77,7 +77,7 @@ Ext.define('myapp.controller.seguridad.Contrasena', {
     var win = field.up('window'),
     formPanel = win.down('form'),
     formPanel1= win.down('toolbar');
-    formPanel1.down('button[name=guardar]').enable(true);
+    formPanel1.down('button[name=guardar]').setDisable(true);
   },
   onTextfieldSpecialKey: function(field, e, options) {
     if (e.getKey() == e.ENTER || e.getKey() == e.TAB){

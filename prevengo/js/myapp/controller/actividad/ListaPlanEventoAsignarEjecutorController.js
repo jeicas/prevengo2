@@ -129,8 +129,8 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoAsignarEjecutorController'
 
                     if (data.success) {
                         Ext.MessageBox.show({title: 'Mensaje', msg: data.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                        grid1.getView().refresh();
                         grid1.getStore().load();
+                        grid1.getView().refresh();
                         win.close();
                     }
                     else {

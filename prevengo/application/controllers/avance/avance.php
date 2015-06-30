@@ -267,7 +267,7 @@ class Avance extends CI_Controller {
         if ($result &&  $resultad) {
             echo json_encode(array(
                 "success" => true,
-                "msg" => "Se actualizó con Éxito.".$idAvance
+                "msg" => "Se actualizó con Éxito."
        
             ));
         } else {

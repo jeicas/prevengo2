@@ -18,7 +18,7 @@ Ext.define('myapp.view.evento.ListaEventoResponsable', {
             var c = record.get('estatus');
             switch (c) {
                 case 'Pendiente':
-                    return 'price-fallPendiente';
+                    return 'price-fallPendi';
                     break;
                 case 'En Ejecución':
                     return 'price-riseEEjecucion';

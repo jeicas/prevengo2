@@ -87,11 +87,15 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
             if (store1.data.items[i].data['id'] == valor) {
                 Ext.MessageBox.show({title: 'Alerta', msg: 'Este items ya esta registrado.Por favor seleccione otro', buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
                 i = store1.data.items.length + 1;
+                esta=1;
+            }else {
+                esta=0;
             }
-
-
         }
-        Ext.Ajax.request({
+        
+     
+        if (esta==0){
+            Ext.Ajax.request({
             url: BASE_URL + 'permiso/permiso/guardarPermiso',
             method: 'POST',
             params: {
@@ -119,7 +123,9 @@ Ext.define('myapp.controller.seguridad.PermisoController', {
 
                 }
             },
-        });
+        }); 
+      }
+       
       
     },
     onClickElininarMenu: function (grid, record, rowIndex) {

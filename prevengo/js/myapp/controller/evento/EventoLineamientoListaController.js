@@ -68,7 +68,7 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
                 
 
                 if (result.cuanto == 0) {
-                    if (item.data.estatus == 'Sin Plan')
+                    if (item.data.estatus == 'Sin Plan' || item.data.estatus== 'Pendiente' || item.data.estatus == 'En Ejecución' )
                     {
 
                         store = newGrid.getStore();
@@ -85,7 +85,6 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
                             || record[0].get('estatus') == 'En Ejecución'
                             || record[0].get('estatus') == 'Sin Plan')
                     {
-
                         store = newGrid.getStore();
                         store.proxy.extraParams.id = item.data.idEv;
                         store.load();
