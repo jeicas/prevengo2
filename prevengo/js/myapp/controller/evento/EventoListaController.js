@@ -355,54 +355,70 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 //Validaciones de los combos
             storeAct = win.down("combobox[name=cmbAgente]").getStore();
             valor = win.down("combobox[name=cmbAgente]").getValue();
+            console.log('Agente con '+ valor);
             for (i = 0; i < storeAct.data.items.length; ++i){
+                 console.log('entra con'+valor);
                 if (storeAct.data.items[i].data['nombre'] == valor) {
                     cmbAgente = storeAct.data.items[i].data['id'];
-                    i = length + 1;
-                     }
-                if (storeAct.data.items[i].data['id'] == valor){
+                    i = storeAct.data.items.length+ 1;
+                     }else {
+                           if (storeAct.data.items[i].data['id'] == valor){
                     cmbAgente = storeAct.data.items[i].data['id'];
-                    i = length + 1;
+                    i = storeAct.data.items.length + 1;
                     }
+                     }
+              
                }
-
+               
             storeTE = win.down("combobox[name=cmbTipoEvento]").getStore();
             valor4 = win.down("combobox[name=cmbTipoEvento]").getValue();
-            for (i = 0; i < storeTE.data.items.length; ++i){
-                if (storeTE.data.items[i].data['nombre'] == valor4) {
-                    cmbTipoEvento = storeTE.data.items[i].data['id'];
-                    i = length + 1;
+            console.log('TE con '+ valor4);
+            for (j = 0; j < storeTE.data.items.length; ++j){
+                console.log('TE con '+ valor4);
+                if (storeTE.data.items[j].data['nombre'] == valor4) {
+                    cmbTipoEvento = storeTE.data.items[j].data['id'];
+                    j = storeTE.data.items.length + 1;
+                }else {
+                     if (storeTE.data.items[j].data['id'] == valor4) {
+                    cmbTipoEvento = storeTE.data.items[j].data['id'];
+                    j = storeTE.data.items.length + 1;
                 }
-                if (storeTE.data.items[i].data['id'] == valor4) {
-                    cmbTipoEvento = storeTE.data.items[i].data['id'];
-                    i = length + 1;
                 }
+               
             }
 
             storeAl = win.down("combobox[name=cmbAlcance]").getStore();
             valor1 = win.down("combobox[name=cmbAlcance]").getValue();
-            for (i = 0; i < storeAl.data.items.length; ++i){
-                if (storeAl.data.items[i].data['nombre'] == valor1) {
-                    cmbAlcance = storeAl.data.items[i].data['id'];
-                    i = length + 1;
+            console.log('AC con '+ valor1);
+            for (k = 0; k < storeAl.data.items.length; ++k){
+                  console.log('AC con '+ valor1 + ' i'+k);
+                if (storeAl.data.items[k].data['nombre'] == valor1) {
+                    cmbAlcance = storeAl.data.items[k].data['id'];
+                    k = storeAl.data.items.length + 1;
+                }else {
+                    if (storeAl.data.items[k].data['id'] == valor1){
+                    cmbAlcance = storeAl.data.items[k].data['id'];
+                    k = storeAl.data.items.length+ 1;
                 }
-                if (storeAl.data.items[i].data['id'] == valor1){
-                    cmbAlcance = storeAl.data.items[i].data['id'];
-                    i = length + 1;
                 }
+                
             }
             storeS = win.down("combobox[name=cmbSector]").getStore();
             valor3 = win.down("combobox[name=cmbSector]").getValue();
-            for (i = 0; i < storeS.data.items.length; ++i){
-                if (storeS.data.items[i].data['nombre'] == valor3) {
-                    cmbSector = storeS.data.items[i].data['id'];
-                    i = length + 1;
+             console.log('SC con '+ valor3);
+            for (l = 0; l < storeS.data.items.length; ++l){
+                 console.log('SC con '+ valor3);
+                if (storeS.data.items[l].data['nombre'] == valor3) {
+                    cmbSector = storeS.data.items[l].data['id'];
+                    l = storeS.data.items.length+ 1;
+                }else {
+                     if (storeS.data.items[l].data['id'] == valor3){
+                  console.log(l);
+                    cmbSector = storeS.data.items[l].data['id'];
+                    l = storeS.data.items.length + 1;
                 }
-                if (storeS.data.items[i].data['id'] == valor3){
-
-                    cmbSector = storeS.data.items[i].data['id'];
-                    i = length + 1;
                 }
+               
             }
 //Validaciones de los combos
 
