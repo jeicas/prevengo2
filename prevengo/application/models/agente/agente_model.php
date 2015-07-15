@@ -11,7 +11,7 @@ class Agente_model extends CI_Model {
         $query = $this->db->query("SELECT * 
                                  FROM agente where estatus=1");
         $resultado = array();
-        $resultdb = array();
+       
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
                 $resultado[] = $row;

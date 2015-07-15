@@ -39,6 +39,9 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             "listaPlanEvento button[name=btnCancelarPlan]": {
                 click: this.onClickCancelarPlan
             },
+             "listaPlanEvento": {
+                itemdblclick: this.onClickVerObservacion
+            },
             "winActividad button[name=btnGuardar]": {
                 click: this.onClickGuardarPlan
             },
@@ -76,7 +79,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             editWindow.show();
             if (record[0].get('depende')!='null'){
                 tieneDepende=record[0].get('iddepende');
-                console.log("Tiene "+tieneDepende);
+                
             }
                 
              else {tieneDepende=null;}
@@ -126,6 +129,22 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
 
+    },
+    
+      onClickVerObservacion: function (record, item, index, e, eOpts) {
+         
+               if (item.data.estatus=='Cancelado')
+               {
+                    var win = Ext.create('myapp.view.observacion.WinObservacionAvanceRechazad');
+                    win.setTitle("Observacion: ");
+                    win.down("label[name=lblDescripcion]").setText('Actividad '+item.data.descripcion+' ha sido CANCELADA por: ');
+                    win.down("textareafield[name=txtDescripcion]").setValue(item.data.observacion);
+                    win.down("textareafield[name=txtDescripcion]").setReadOnly(true);
+                    win.show()
+               }else {
+                    Ext.MessageBox.show({title: 'Alerta', msg: "No tiene observaciones registradas", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                   
+               }
     },
 //=======================Funciones del WinActividad=========================================
     onClickGuardarPlan: function (button, e, options) {
@@ -191,7 +210,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                     
                     ActividadDependiente=win.down("combobox[name=cmbActividadDepende]").getValue();
                 }
-                console.log("Se va con "+ActividadDependiente);
+                
               
                 Ext.Ajax.request({//AQUI ENVIO LA DATA 
                     url: BASE_URL + 'actividad/actividad/actualizarActividad',

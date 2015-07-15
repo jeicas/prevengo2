@@ -8,7 +8,7 @@ Ext.define('myapp.view.registrar.Contrasena', {
    modal:true,
    resizable:false,
    draggable:false,
-   title: 'Cambio de password',
+   title: 'Cambio de password23',
    layout: {
        type: 'fit'
    },

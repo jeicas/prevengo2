@@ -16,6 +16,12 @@ class Anexo_model extends CI_Model {
         return $this->db->insert('anexo', $data);
     }
    
+    
+       public function  eliminarAnexo($data){         
+         $this->db->set('estatus',$data['estatus']);
+         $this->db->where('reincidencia',$data['reincidencia']);
+         return  $this->db->update('anexo');
+    }
 
 }//fin de la clase
 

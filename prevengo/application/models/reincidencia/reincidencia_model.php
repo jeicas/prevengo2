@@ -16,9 +16,6 @@ class Reincidencia_model extends CI_Model {
                                         anexo.direccion as anexo,
                                         anexo.tipoarchivo as extension
                                   FROM reincidencia left join anexo on reincidencia.id =anexo.reincidencia
-                                 
-                              
-                                 
                                  WHERE reincidencia.evento=$id and reincidencia.estatus=1
                                  ");
        

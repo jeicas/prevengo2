@@ -8,7 +8,7 @@ Ext.define('myapp.view.seguridad.Contrasena', {
     modal:true,
     resizable:false,
     draggable:false,
-    title: 'Cambio de Contraseña',
+    title: 'Cambio de password',
     layout: {
         type: 'fit'
     },

@@ -3,8 +3,8 @@ Ext.define('myapp.controller.seguridad.Contrasena', {
   views: [
     'seguridad.Contrasena'
   ],
-  refs:[{
-    ref: 'contrasenaForm',
+refs:[{
+    ref: 'contrasena',
     selector: '#contrasenawindow #contrasenaform'
   }],
   requires: [
@@ -17,23 +17,24 @@ Ext.define('myapp.controller.seguridad.Contrasena', {
         specialkey: this.onTextfieldSpecialKey
       },
       "contrasena  textfield[name=pass]": {
-        specialkey: this.onTextfieldSpecialKey1
+        specialkey: this.onTextfieldSpecialKey1,
+         change: this.onActivarBoton
       },
-      "contrasena  textfield": {
-        change: this.onActivarBoton
-      }, 
-      "contrasena toolbar button#guardar":  {       // #1  
-        click: this.onButtonClickSubmit // #2 
-      }, 
+      
+      "contrasena toolbar button#guardar":  {
+        click: this.onButtonClickSubmit
+      },
     });
   },
-  onActivarBoton : function(button, e, options){
-    var win = button.up('window'),
-    formPanel = button.up('form');
+onActivarBoton: function (button, e, options){
+        
+   var win = button.up('window'),
+   formPanel = button.up('form');
     if (formPanel.getForm().isValid()) {
-      Ext.ComponentQuery.query('contrasena toolbar button[name=guardar]')[0].setDisabled(false);
+       
+        Ext.ComponentQuery.query('contrasena toolbar button[name=guardar]')[0].setDisabled(true); 
     }else{
-      Ext.ComponentQuery.query('contrasena toolbar button[name=guardar]')[0].setDisabled(true);
+        Ext.ComponentQuery.query('contrasena toolbar button[name=guardar]')[0].setDisabled(false);
     }
   },
    onButtonClickSubmit: function(button, e, options){ 
@@ -45,7 +46,7 @@ Ext.define('myapp.controller.seguridad.Contrasena', {
     if (formPanel.getForm().isValid()) { 
       confcontrasena = myapp.util.Md5.encode(confcontrasena);
       Ext.Ajax.request({ 
-        url: BASE_URL + 'seguridad/Usuario/updatecontrasena',
+        url: BASE_URL+'seguridad/usuario/updatecontrasena',
         method:'POST',
         params: { 
           confcontrasena:confcontrasena,
@@ -68,19 +69,23 @@ Ext.define('myapp.controller.seguridad.Contrasena', {
           if (result.success) {
             myapp.util.Util.showbienMsg(result.msg);
             contrasena.close();
+            document.location= BASE_URL+'login/login/logout';
           } 
         }
       });
     } 
   },     
   onTextfieldSpecialKey1: function(field, e, options) {
+         
     var win = field.up('window'),
     formPanel = win.down('form'),
     formPanel1= win.down('toolbar');
-    formPanel1.down('button[name=guardar]').setDisable(true);
+    formPanel1.down('button[name=guardar]').enable(true);
   },
   onTextfieldSpecialKey: function(field, e, options) {
+   
     if (e.getKey() == e.ENTER || e.getKey() == e.TAB){
+        
       var win = field.up('window'),
       formPanel = win.down('form'),
       formPanel1= win.down('toolbar'),
@@ -88,7 +93,7 @@ Ext.define('myapp.controller.seguridad.Contrasena', {
       contrasena = formPanel.down('textfield[name=contrasenact]').getValue();
       contrasena = myapp.util.Md5.encode(contrasena),
       Ext.Ajax.request({
-        url: BASE_URL + 'seguridad/Usuario/existecontrasena',
+        url: BASE_URL+'seguridad/usuario/existecontrasena',
         method:'POST',
         params: { 
           contrasena:contrasena
@@ -99,7 +104,7 @@ Ext.define('myapp.controller.seguridad.Contrasena', {
             Ext.Msg.alert( 'Error','Contraseña invalida');; 
             formPanel.down('textfield[name=pass]').disable(true);
             formPanel.down('textfield[name=confcontrasena]').disable(true);
-            formPanel1.down('button[name=guardar]').disable(true);
+            formPanel1.down('button[name=guardar]').disable(false);
           } else{
             formPanel.down('textfield[name=pass]').enable(true);
             formPanel.down('textfield[name=confcontrasena]').enable(true);

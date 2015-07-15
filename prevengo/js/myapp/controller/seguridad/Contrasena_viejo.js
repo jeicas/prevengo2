@@ -1,10 +1,10 @@
-Ext.define('myapp.controller.registrar.ContrasenaController', {
+Ext.define('myapp.controller.seguridad.Contrasena', {
   extend: 'Ext.app.Controller',
- views: [
-    'registrar.Contrasena'
+  views: [
+    'seguridad.Contrasena'
   ],
   refs:[{
-    ref: 'contrasena',
+    ref: 'contrasenaForm',
     selector: '#contrasenawindow #contrasenaform'
   }],
   requires: [
@@ -20,14 +20,15 @@ Ext.define('myapp.controller.registrar.ContrasenaController', {
         specialkey: this.onTextfieldSpecialKey1,
          change: this.onActivarBoton
       },
-      
+      "contrasena  textfield": {
+       // change: this.onActivarBoton
+      }, 
       "contrasena toolbar button#guardar":  {
         click: this.onButtonClickSubmit
       },
     });
   },
 onActivarBoton: function (button, e, options){
-       console.log('onActivarBoton');  
    var win = button.up('window'),
    formPanel = button.up('form');
     if (formPanel.getForm().isValid()) {
@@ -76,16 +77,13 @@ onActivarBoton: function (button, e, options){
     } 
   },     
   onTextfieldSpecialKey1: function(field, e, options) {
-         console.log('onTextfieldSpecialKey1');  
     var win = field.up('window'),
     formPanel = win.down('form'),
     formPanel1= win.down('toolbar');
     formPanel1.down('button[name=guardar]').enable(true);
   },
   onTextfieldSpecialKey: function(field, e, options) {
-      console.log('onTextfieldSpecialKey');
     if (e.getKey() == e.ENTER || e.getKey() == e.TAB){
-         console.log('onTextfieldSpecialKey');  
       var win = field.up('window'),
       formPanel = win.down('form'),
       formPanel1= win.down('toolbar'),
@@ -104,7 +102,7 @@ onActivarBoton: function (button, e, options){
             Ext.Msg.alert( 'Error','Contraseña invalida');; 
             formPanel.down('textfield[name=pass]').disable(true);
             formPanel.down('textfield[name=confcontrasena]').disable(true);
-            formPanel1.down('button[name=guardar]').disable(false);
+            formPanel1.down('button[name=guardar]').disable(true);
           } else{
             formPanel.down('textfield[name=pass]').enable(true);
             formPanel.down('textfield[name=confcontrasena]').enable(true);

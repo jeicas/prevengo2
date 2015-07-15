@@ -173,8 +173,12 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         record = grid.getSelectionModel().getSelection();
 
         if (record[0]) {
-            if (record[0].get('estatus') != 'Completado') {
-                var win = Ext.create('myapp.view.evento.WinEvento');
+            if (record[0].get('estatus') == 'Completado' || record[0].get('estatus') == 'Expirado' || record[0].get('estatus') == 'Cancelado') {
+              Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                    msg: 'El evento no se puede editar porque está ' + record[0].get('estatus'),
+                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+            } else {
+                  var win = Ext.create('myapp.view.evento.WinEvento');
                 win.down('textfield[name=txtTitulo]').setValue(record[0].get('titulo'));
                 win.down('textfield[name=txtDescripcion]').setValue(record[0].get('descripcion'));
                 win.down('combobox[name=cmbAgente]').setValue(record[0].get('agente'));
@@ -186,11 +190,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                 win.down('numberfield[name=txtPresupuesto]').setValue(record[0].get('presupuesto'));
                 win.setTitle("Actualizar Evento");
                 win.show();
-
-            } else {
-                Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                    msg: 'El evento no se puede editar porque ya ha finalizado',
-                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+                
             }
         } else {
             Ext.MessageBox.show({title: 'Informaci&oacute;n',
@@ -236,11 +236,11 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                 buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
         }
     },
-    onClickCerrarEvento: function (grid, record,rowIndex) {
+    onClickCerrarEvento: function (grid, record, rowIndex) {
         var grid = this.getListaEventos();
-        store= grid.getStore();
+        store = grid.getStore();
         rec = store.getAt(rowIndex);
-        console.log('seleccion'+rec.get('titulo'));
+        console.log('seleccion' + rec.get('titulo'));
         if (rec.get('estatus') == 'En Ejecución') {
             Ext.Msg.show({
                 title: 'Confirmar',
@@ -280,24 +280,24 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             });
         }
         else {
-            if (rec.get('estatus')=='Cancelado'){
-                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha sido cancelado",
-                buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
-            }else
-            
-             if (rec.get('estatus')=='Completado'){
-                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha finalizado",
-                buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
-            }else
+            if (rec.get('estatus') == 'Cancelado') {
+                Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                    msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha sido cancelado",
+                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+            } else
+
+            if (rec.get('estatus') == 'Completado') {
+                Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                    msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha finalizado",
+                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+            } else
             {
-                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                msg: "El Evento " + rec.get('titulo') + " no lo puede finalizar, porque el plan de accion no ha sido completado",
-                buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+                Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                    msg: "El Evento " + rec.get('titulo') + " no lo puede finalizar, porque el plan de accion no ha sido completado",
+                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
             }
-           
-    }
+
+        }
     },
     //==============Funciones de la ventana Evento=====================================
 
@@ -351,9 +351,61 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         }
         else
         {
-            var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
-            loadingMask.show();
             record = grid.getSelectionModel().getSelection();
+//Validaciones de los combos
+            storeAct = win.down("combobox[name=cmbAgente]").getStore();
+            valor = win.down("combobox[name=cmbAgente]").getValue();
+            for (i = 0; i < storeAct.data.items.length; ++i){
+                if (storeAct.data.items[i].data['nombre'] == valor) {
+                    cmbAgente = storeAct.data.items[i].data['id'];
+                    i = length + 1;
+                     }
+                if (storeAct.data.items[i].data['id'] == valor){
+                    cmbAgente = storeAct.data.items[i].data['id'];
+                    i = length + 1;
+                    }
+               }
+
+            storeTE = win.down("combobox[name=cmbTipoEvento]").getStore();
+            valor4 = win.down("combobox[name=cmbTipoEvento]").getValue();
+            for (i = 0; i < storeTE.data.items.length; ++i){
+                if (storeTE.data.items[i].data['nombre'] == valor4) {
+                    cmbTipoEvento = storeTE.data.items[i].data['id'];
+                    i = length + 1;
+                }
+                if (storeTE.data.items[i].data['id'] == valor4) {
+                    cmbTipoEvento = storeTE.data.items[i].data['id'];
+                    i = length + 1;
+                }
+            }
+
+            storeAl = win.down("combobox[name=cmbAlcance]").getStore();
+            valor1 = win.down("combobox[name=cmbAlcance]").getValue();
+            for (i = 0; i < storeAl.data.items.length; ++i){
+                if (storeAl.data.items[i].data['nombre'] == valor1) {
+                    cmbAlcance = storeAl.data.items[i].data['id'];
+                    i = length + 1;
+                }
+                if (storeAl.data.items[i].data['id'] == valor1){
+                    cmbAlcance = storeAl.data.items[i].data['id'];
+                    i = length + 1;
+                }
+            }
+            storeS = win.down("combobox[name=cmbSector]").getStore();
+            valor3 = win.down("combobox[name=cmbSector]").getValue();
+            for (i = 0; i < storeS.data.items.length; ++i){
+                if (storeS.data.items[i].data['nombre'] == valor3) {
+                    cmbSector = storeS.data.items[i].data['id'];
+                    i = length + 1;
+                }
+                if (storeS.data.items[i].data['id'] == valor3){
+
+                    cmbSector = storeS.data.items[i].data['id'];
+                    i = length + 1;
+                }
+            }
+//Validaciones de los combos
+
             Ext.Ajax.request({//AQUI ENVIO LA DATA 
                 url: BASE_URL + 'evento/evento/actualizarEvento',
                 method: 'POST',
@@ -362,16 +414,16 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                     txtTitulo: win.down('textfield[name=txtTitulo]').getValue(),
                     txtDescripcion: win.down('textfield[name=txtDescripcion]').getValue(),
                     txtPresupuesto: win.down('textfield[name=txtPresupuesto]').getValue(),
-                    cmbAgente: win.down('combobox[name=cmbAgente]').getValue(),
-                    cmbAlcance: win.down('combobox[name=cmbAlcance]').getValue(),
-                    cmbSector: win.down('combobox[name=cmbSector]').getValue(),
-                    cmbTipoEvento: win.down('combobox[name=cmbTipoEvento]').getValue(),
+                    cmbAgente: cmbAgente,
+                    cmbAlcance: cmbAlcance,
+                    cmbSector: cmbSector,
+                    cmbTipoEvento: cmbTipoEvento,
                     dtfFechaT: win.down('datefield[name=dtfFechaT]').getValue(),
                     dtfFechaPA: win.down('datefield[name=dtfFechaPA]').getValue(),
                 },
                 success: function (result, request) {
                     result = Ext.JSON.decode(result.responseText);
-                    loadingMask.hide();
+
 
                     if (result.success) {
                         grid.getView().refresh();
@@ -381,12 +433,11 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                     }
                     else {
                         Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
-                        // myapp.util.Util.showErrorMsg(result.msg);
+                      
                     }
                 },
                 failure: function (form, action) {
                     var result = action.result;
-                    loadingMask.hide();
                     Ext.MessageBox.show({title: 'Alerta', msg: "Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador", buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
 
                 }

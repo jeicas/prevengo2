@@ -356,7 +356,7 @@ Ext.define('myapp.controller.registrar.EmpleadoController', {
                     Ext.ComponentQuery.query('#empleado  button[name=guardar]')[0].setDisabled(true);
                
                 }else{
-                    console.log(record.data);
+                    
                     if (record.data.cmbdepartamento!=record.data.departamentoUsuario){
                         Ext.Msg.alert('Información.', 'Este empleado pertenece a la dependencia '+record.data.nombredepartamento+',<br> si desea agregarlo el estatus debe estar inactivo', function(btn){
                         if (btn == 'ok'){

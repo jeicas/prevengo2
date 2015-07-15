@@ -29,6 +29,7 @@
     } 
   }
     function obtenerId($cedula,$nacionalidad){
+          $db_generica = $this->load->database('bdgenerica', TRUE);
         $sql="SELECT usuario.id FROM usuario,empleado
             WHERE usuario.cedula=? 
             AND usuario.nacionalidad=?
@@ -43,6 +44,7 @@
     }  
 
   function tipousuario() {
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     $query1 = $this->db->query("SELECT * FROM tipousuario");
     $tipo=array();  
     if ($query1->num_rows() > 0){
@@ -55,42 +57,50 @@
     } 
   }
   function insertusuario($datausuario){
+        $db_generica = $this->load->database('bdgenerica', TRUE);
       $this->db->set($datausuario);
     $this->db->insert('usuario');
    //return  mysql_insert_id();
     return $this->db->insert_id();
   }
   function insertpersona($datapersona){
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     return $this->db->insert('persona', $datapersona);
   }
   function updateusuario($datausuario){
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     $this->db->set($datausuario);
     $this->db->where('id', $datausuario['id']);
     return $this->db->update('usuario');
   }
   function updatepersona($datapersona){
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     $this->db->set($datapersona);
     $this->db->where('cedula', $datapersona['cedula']);
     $this->db->where('nacionalidad', $datapersona['nacionalidad']);
     return $this->db->update('persona');
   }
   function updateempleado($dataempleado){
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     $this->db->set('foto',$dataempleado['foto']);
     $this->db->where('cedula', $dataempleado['cedula']);
     $this->db->where('nacionalidad', $dataempleado['nacionalidad']);
     return $this->db->update('empleado');
   }
   function deletePersona($datopersona){
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     $this->db->where('cedula', $datopersona['cedula']);
     $this->db->where('nacionalidad', $datopersona['nacionalidad']);
     return $this->db->delete('persona'); 
     
   }
   function deleteUsuario($datousuario){
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     $this->db->where('id', $datousuario['id']);
     return $this->db->delete('usuario'); 
   }
   function existeusuario($cedula, $nacionalidad) {
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     $query =$this->db->query("SELECT * FROM usuario where cedula ='$cedula' and nacionalidad='$nacionalidad' ");
     if ($query->num_rows() > 0){
       $tipo = $query;
@@ -100,7 +110,8 @@
     return $tipo;
   }
   function existecontrasena($cedula, $nacionalidad,$contrasena) {
-    $query =$this->db->query("SELECT * FROM usuario where cedula ='$cedula' and nacionalidad='$nacionalidad' and password='$contrasena'");
+       $db_generica = $this->load->database('bdgenerica', TRUE);
+    $query =$this->db->query("SELECT * FROM usuario where cedula ='$cedula' and nacionalidad='$nacionalidad' and clave='$contrasena'");
     if ($query->num_rows() > 0){
       $tipo = $query;
     }else{
@@ -109,6 +120,7 @@
     return $tipo;
   }
   function updatecontrasena($datacontrasena){
+        $db_generica = $this->load->database('bdgenerica', TRUE);
     $this->db->set($datacontrasena);
      $this->db->where('cedula', $datacontrasena['cedula']);
     $this->db->where('nacionalidad', $datacontrasena['nacionalidad']); 

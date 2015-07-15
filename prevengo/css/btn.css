@@ -160,7 +160,7 @@
     color:#0B0B0A;
 }
 .price-fallPendi .x-change-cell {
-    background-color: #70EB7C;
+    background-color: #BDBDBD;
     color:#0B0B0A;
 }
 .price-riseEEjecucion .x-change-cell {
@@ -268,12 +268,15 @@
 .icon-eliminar{
   background-image:url('../imagen/btn/eliminar.png') !important;
 }
+.icon-reporte{
+  background-image:url('../imagen/btn/graficos-icono.png') !important;
+}
 .icon-aceptar{
   background-image:url('../imagen/btn/accept.png') !important;
 }
 .icon-nuevoAvance{
   background-image:url('../imagen/btn/pencil_add.png') !important;
-}
+}   
 .icon-responsable{
   background-image:url('../imagen/btn/icon-responsable.png') !important;
 }
@@ -281,7 +284,7 @@
   background-image:url('../imagen/btn/Button-Add-icon.png') !important;}
   
 .price{
-   background-image:url('../imagen/btn/background.png') !important;
+   background-image: url('../imagen/logo/Imagen20.png') !important;
    color:white;
    font-weight: bold;
    font-size: 26px;
@@ -321,6 +324,20 @@
   -7px 0px 1px rgba(0,0,0,0.5),
   0px 0px 6px rgba(0,0,0,.2);
 }
+
+.usuario{
+  font-family: 'Helvetica Neue',Helvetica, sans-serif;
+  line-height: 1em;
+  color: #151515;
+  font-weight:bold;
+  font-size: 15px;
+
+ 
+}
+
+
+
+
 /*.Three-Dee{
 font-family: Courier, monospace;
 line-height: 1em;

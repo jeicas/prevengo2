@@ -289,6 +289,58 @@ class Avance extends CI_Controller {
 
             foreach ($avances->result_array() as $row) {
 
+                
+                switch ($row['extension']) {
+                    case 'html': {
+                            $direccion = $row['anexo'];
+                            $imagen = "../../imagen/btn/web-icono.jpg";
+                        }
+                        break;
+                    case 'jpg': {
+                            $imagen = "../../imagen/btn/imagen-icono.jpg";
+                            $direccion = "../../anexosAvance/" . $row['anexo'] . ".jpeg";
+                        }
+                        break;
+                    case 'jpeg': {
+                            $imagen = "../../imagen/btn/imagen-icono.jpg";
+                            $direccion = "../../anexosAvance/" . $row['anexo'] . ".jpeg";
+                        }
+                        break;
+                    case 'png': {
+                            $imagen = "../../imagen/btn/imagen-icono.jpg";
+                            $direccion = "../../anexosAvance/" . $row['anexo'] . "." . $row['extension'];
+                        }
+                        break;
+                    case 'gif': {
+                            $imagen = "../../imagen/btn/imagen-icono.jpg";
+                            $direccion = "../../anexosAvance/" . $row['anexo'] . "." . $row['extension'];
+                        }
+                        break;
+                    case 'mp3': {
+                            $imagen = "../../imagen/btn/audio-icono.jpg";
+                            $direccion = "../../anexosAvance/" . $row['anexo'] . "." . $row['extension'];
+                        }
+                        break;
+                  
+                    
+                    case 'pdf': {
+                            $imagen = "../../imagen/btn/documento-icono.png";
+                            $direccion = "../../anexosAvance/" . $row['anexo'] . "." . $row['extension'];
+                        }
+                        break;
+                    case 'doc': {
+                            $imagen = "../../imagen/btn/documento-icono.png";
+                            $direccion = "../../anexosAvance/" . $row['anexo'] . "." . $row['extension'];
+                        }
+                        break;
+                    default: {
+                            $imagen = "../../imagen/btn/icono-x.png";
+                            $direccion = "";
+                        }
+                }
+                
+
+                
                 if ($row['tipo'] == 0) {
                     $tipo = 'Final';
                 } else {
@@ -320,8 +372,7 @@ class Avance extends CI_Controller {
                         break;
                 }
                 
-                
-
+               
                 $eventAct = "  Actividad: " . $row['actividad'] . "<br> <font color=#3F77E6> Evento: " . $row['evento'] . "</font></br>";
 
                 $data[] = array(
@@ -339,6 +390,8 @@ class Avance extends CI_Controller {
                     'nombre' => $row['nombre'],
                     'apellido' => $row['apellido'],
                     'observacion' => $observacion,
+                    'anexo' => $imagen,
+                    'direccion' => $direccion,
                     'estatus' => $estatus,
                     
                 );

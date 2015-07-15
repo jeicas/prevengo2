@@ -29,7 +29,9 @@ Ext.define('myapp.controller.Menu', {
 
       Ext.each(records, function(root){
        header.items.items[4].setText(records[0].get('usuario'));
-       
+       header.items.items[3].setText('Bienvenido: ');
+          
+      
         var menu = Ext.create('myapp.view.menu.Item',{
           title: root.get('text'),
           iconCls: root.get('iconCls'),
@@ -59,8 +61,8 @@ Ext.define('myapp.controller.Menu', {
     );
     if(record.get('text')!='Cerrar sesión'){
       if(record.get('text')=='Cambio de clave'){
-        console.log('clave');
-        Ext.create('myapp.view.registrar.Contrasena');
+        
+        Ext.create('myapp.view.seguridad.Contrasena');
       }else{
     		if (!newTab){ 
           this.getController(record.raw.controller);

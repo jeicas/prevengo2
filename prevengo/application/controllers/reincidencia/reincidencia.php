@@ -169,7 +169,7 @@ class Reincidencia extends CI_Controller {
                   
                     $this->guardar_Imagen_Reincidencia($nombrefoto, $fotoType, $fotoTmp_name);
                    
-                    if ($fotoType == "image/gif" || $fotoType == "image/jpeg" || $fotoType == "image/png" || $fotoType == "application/pdf" ){
+                    if ($fotoType == "image/gif" || $fotoType == "image/jpeg" || $fotoType == "image/png" || $fotoType == "application/pdf" || $fotoType == "audio/mp3" ){
                           $dataAnexo = array(
                         'reincidencia' => $result,
                         'direccion' => $nombrefoto,
@@ -257,10 +257,13 @@ class Reincidencia extends CI_Controller {
             'id' => $id,
             'estatus' => $estatus,
         );
-
+       $dataAne = array(
+            'reincidencia' => $id,
+            'estatus' => $estatus,
+        );
 
         $result = $this->reincidencia_model->eliminarReincidencia($data);
-
+        $resultAne = $this->anexo_model->eliminarAnexo($dataAne);
         if ($result) {
             echo json_encode(array(
                 "success" => true,

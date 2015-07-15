@@ -5,11 +5,13 @@ name	 : "myapp",
 appFolder : BASE_PATH+"js/myapp",
 controllers	: [
 'myapp.controller.Menu'
-,'myapp.controller.actividad.ListaPlanEventoController'
+,'myapp.controller.actividad.ListaPlanEventoController',
+'myapp.controller.seguridad.Contrasena'
 ],
 requires: [
 'myapp.view.login.Login',
 'myapp.controller.login.Login',
+'myapp.controller.seguridad.Contrasena',
 
 'myapp.vtypes.Validadores'
 ],

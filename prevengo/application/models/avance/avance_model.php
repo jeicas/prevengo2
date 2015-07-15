@@ -52,7 +52,7 @@ class Avance_model extends CI_Model {
         $sql = "SELECT av.descripcion AS descripcion, 
                      evento.titulo AS evento, 
                      actividad.descripcion AS actividad,
-                      av.id AS idAvance, 
+                     av.id AS idAvance, 
                      av.actividad AS idActividad, 
                      av.tipo AS tipo,
                      av.fecharegistro AS fecha, 
@@ -60,6 +60,8 @@ class Avance_model extends CI_Model {
                      av.costo AS costo, 
                      av.observacion AS observacion,
                      av.estatus AS estatus,
+                     anexo.direccion as anexo,
+                     anexo.tipoarchivo as extension,
                      bdgenerica.usuario.id AS idUs,
                      bdgenerica.persona.nombre AS nombre, 
                      bdgenerica.persona.apellido AS apellido 
@@ -68,9 +70,12 @@ class Avance_model extends CI_Model {
                 INNER JOIN actividad ON actividad.id= av.actividad 
                 INNER JOIN evento ON actividad.evento=evento.id 
                 INNER JOIN bdgenerica.usuario ON av.usuario= bdgenerica.usuario.id 
+                LEFT JOIN anexo on av.id =anexo.avance
                 INNER JOIN bdgenerica.persona ON bdgenerica.usuario.cedula=bdgenerica.persona.cedula
                 WHERE av.estatus !=1    
-                ORDER BY av.fecharegistro, av.tipo ASC";
+                ORDER BY av.fecharegistro, av.tipo ASC
+
+";
 
 
         $query = $this->db->query($sql);

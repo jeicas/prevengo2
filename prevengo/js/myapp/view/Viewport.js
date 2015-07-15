@@ -22,8 +22,8 @@ Ext.define('myapp.view.Viewport', {
 			'text':'Base',
 		},{
 			xtype: 'appheader',
-			width: 150,
-			height: 120, 
+			width: 100,
+			height: 130, 
 			region: 'north'
 		},{
 			xtype: 'mainpanel',

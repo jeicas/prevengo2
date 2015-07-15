@@ -1,143 +1,73 @@
-Ext.define('myapp.view.reportes.ReporteFechas',{
-    extend: 'Ext.window.Window',
-    alias: 'widget.reportefechas',
-    itemId:'reportefechas',
-    autoShow: true,
-    width:540,
-    modal:true,
-    layout: {
-        align: 'center',
-        type: 'vbox'
-    },
-    initComponent: function() {
-        var me = this;
-        me.items = me.buildItem();
-        me.callParent();
-    },
-    buildItem : function(){
-        return [{ 
-            items: [{
-            xtype: 'form',
-            bodyPadding: 10,
-            width:530,
-            border:false,
-                items: [{
-                    xtype: 'datefield',
-                    width: 460,
-                    fieldLabel: 'Dia',
-                    format: "Y/m/d",
-                    name:'dia',
-                    editable: false,
-                    margins : '0 0 0 10',
-                    value:new Date(), // <-- a default value
-                    labelWidth: 150,
-                    hidden:false
-                },{
-                    xtype: 'datefield',
-                    width: 460,
-                    fieldLabel: 'Mes: Desde',
-                    format: "Y/m/d",
-                    name:'mesdesde',
-                    editable: false,
-                    margins : '0 0 0 10',
-                    value:new Date(), // <-- a default value
-                    labelWidth: 150,
-                    hidden:false
-                },{
-                    xtype: 'datefield',
-                    width: 460,
-                    fieldLabel: 'Hasta',
-                    name:'meshasta',
-                    margins : '0 0 0 10',
-                    value:new Date(), // <-- a default value
-                    fieldLabel: 'Hasta',
-                    format: "Y/m/d",
-                    editable: false,
-                    maxValue: new Date(),
-                    allowBlank: false,
-                    labelWidth: 150
-                },{
-                    xtype: 'combobox',
-                    width: 500,
-                    fieldLabel: 'Fecha',
-                    labelWidth: 150,
-                    margins:'0 2 20 0',
-                    name: 'cmbfechades',
-                    store: Ext.create('myapp.store.reportes.Fechadesde'),
-                    valueField: 'fecha',
-                    displayField: 'fecha',
-                    queryMode: 'local',
-                    emptyText:' ',
-                    triggerAction: 'all',
-                    //forceSelection: true,
-                    editable:true,
-                },{
-                    xtype: 'combobox',
-                    width: 500,
-                    fieldLabel: 'Hasta',
-                    labelWidth: 150,
-                     margins:'0 2 20 0',
-                    name: 'cmbfechahas',
-                    store: Ext.create('myapp.store.reportes.Fechahasta'),
-                    valueField: 'fecha',
-                    displayField: 'fecha',
-                    queryMode: 'local',
-                    emptyText:' ',
-                    triggerAction: 'all',
-                    editable:true,
-                },{
-                    xtype: 'combobox',
-                    width:500,
-                    labelWidth:150,
-                    disabled:false,
-                    name: 'cmbsemanas',
-                    margins:'3 6 3 30',
-                    displayField: 'nombre',
-                    valueField: 'id',
-                    queryMode: 'local',
-                    triggerAction: 'all',
-                    emptyText:'Seleccione',
-                    store: Ext.create('myapp.store.autorizacion.TipoAutorizacionStore'),
-                    allowBlank: false,
-                    forceSelection:true,
-                    fieldLabel: 'Tipo de Autorizacion'
-                },{
-                    xtype: 'combobox',
-                    width:500,
-                    labelWidth:150,
-                    disabled:false,
-                    name: 'cmbmeses',
-                    margins:'3 6 3 30',
-                    displayField: 'nombre',
-                    valueField: 'id',
-                    queryMode: 'local',
-                    triggerAction: 'all',
-                    emptyText:'Seleccione',
-                    store: Ext.create('myapp.store.empleado.Departamento'),
-                    allowBlank: false,
-                    forceSelection:true,
-                    fieldLabel: 'Departamento'
-                }],
-                dockedItems: [{
-                    xtype: 'toolbar',
-                    dock: 'bottom',
-                    ui: 'footer',
-                    items: [{
-                       xtype: 'tbfill'
-                    },{
-                        xtype: 'button',
-                        name: 'generarreportefechas',
-                        iconCls: 'generar',
-                        text: "Generar reporte"
-                    },{
-                        xtype: 'button',
-                        text: 'Limpiar',
-                        iconCls:'limpiar',
-                        tooltip: 'Limpiar',
-                        name: 'limpiarreportefechas',
-                    }]
-                }]
-            }]
+Ext.define('myapp.view.reportes.ReporteFechas', {
+    extend: 'Ext.chart.Chart',
+    alias: 'widget.reporteFechas',
+    animate: true,
+    store: Ext.create('myapp.store.reporte.ReportePorTipoEventoStore'), // #1
+    shadow: true,
+    insetPadding: 60,
+    theme: 'Base:gradients',
+    axes: [{
+            type: 'Numeric', // #2
+            position: 'left',
+            fields: ['cantidad0','cantidad1'], // #3
+            label: {
+                renderer: Ext.util.Format.numberRenderer('0,0')
+            },
+            title: 'Cantidad',
+            grid: true,
+            minimum: 0
+        }, {
+            type: 'Category', // #4
+            position: 'bottom',
+            fields: ['nombre'], // #5
+            title: 'Tipo de Eventos'
+        }],
+    series: [{
+            type: 'column', // #6
+            axis: 'left',
+            highlight: true,
+            tips: {
+                trackMouse: true,
+                width: 140,
+                height: 28,
+                renderer: function (storeItem, item) {
+                    
+                    
+                      switch (storeItem.get('estatus')) {
+                    case '1':
+                        this.setTitle('Pendiente' + storeItem.get('cantidad0'))
+                        break;
+                    case '2':
+                       this.setTitle('En Ejecucion' + storeItem.get('cantidad0'))
+                        break;
+                    case '3':
+                        this.setTitle('Cancelado' + storeItem.get('cantidad0'))
+                        break;
+                    case '4':
+                       this.setTitle('Sin Plan' + storeItem.get('cantidad0'))
+                        break;
+                    case '5':
+                       this.setTitle('Expirado' + storeItem.get('cantidad0'))
+                        break;
+
+                    default:
+                       this.setTitle('Completado' + storeItem.get('cantidad0'))
+                        break;
+                }
+                   
+                   
+
+                }
+            },
+            label: {
+                display: 'insideEnd',
+                'text-anchor': 'middle',
+                field: 'nombre',
+                renderer: Ext.util.Format.numberRenderer('10'),
+                orientation: 'vertical',
+                color: '#333'
+            },
+            xField: 'nombre', // #7
+            yField: ['cantidad0','cantidad1'] // #8
         }]
-    }
 });

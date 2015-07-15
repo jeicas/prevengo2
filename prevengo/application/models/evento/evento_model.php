@@ -1,4 +1,7 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Evento_model extends CI_Model {
 
@@ -38,10 +41,9 @@ class Evento_model extends CI_Model {
                             
                              group by idEv
                              order by fechaEv ASC");
-       
-            return $query;
-            
-       }
+
+        return $query;
+    }
 
     public function cargarListaEventoTodo() {
 
@@ -63,10 +65,10 @@ class Evento_model extends CI_Model {
                              inner join sector on sector.id=evento.sector
                              
                              order by fechaEv  ASC");
-       
-            return $query;
-            
-       }
+
+        return $query;
+    }
+
     public function cargarListaEventosResponsable() {
 
         $query = $this->db->query("Select evento.id as idEvent, 
@@ -102,12 +104,11 @@ class Evento_model extends CI_Model {
                                      ON bdgenerica.empleado.division= bdgenerica.division.id
                            where evento.estatus in (1,2,4)
                            group by evento.titulo");
-        
-            return $query;
-            
-       }
-       
-       public function cargarListaEventosSinResponsable($id) {
+
+        return $query;
+    }
+
+    public function cargarListaEventosSinResponsable($id) {
 
         $query = $this->db->query("Select evento.id as idEvent, 
                                     evento.titulo as titulo, 
@@ -118,11 +119,11 @@ class Evento_model extends CI_Model {
                             from evento
                            where evento.estatus in (1,2) and evento.id!=$id
                            group by evento.titulo");
-        
-            return $query;     
-       }
-       
-        public function cargarListaEventosSinResponsableTodos() {
+
+        return $query;
+    }
+
+    public function cargarListaEventosSinResponsableTodos() {
 
         $query = $this->db->query("Select evento.id as idEvent, 
                                     evento.titulo as titulo, 
@@ -133,32 +134,72 @@ class Evento_model extends CI_Model {
                             from evento
                            where evento.estatus in (1,2) 
                            group by evento.titulo");
+
+        return $query;
+    }
+
+    public function cambiarEstatus($data) {
+        $this->db->set('estatus', $data['estatus']);
+        $this->db->where('id', $data['id']);
+        return $this->db->update('evento');
+    }
+
+    public function guardarEvento($data) {
+
+        return $this->db->insert('evento', $data);
+    }
+
+    public function actualizarEvento($data) {
+        $this->db->set($data);
+        $this->db->where('id', $data['id']);
+        return $this->db->update('evento');
+    }
+
+    public function cargarCantidadEventoPorTipo() {
+
+        $query = $this->db->query("SELECT TE.id, TE.nombre, E.estatus,COUNT(E.tipoevento) AS cantidad
+                                   FROM  tipoevento TE
+                                   LEFT JOIN evento AS E ON E.tipoevento = TE.id
+                                   GROUP BY TE.id");
+
+        return $query;
+    }
         
-            return $query;     
-       }
-       
-       
+   public function cargarCantidadEventoCompletadosPorTipo($tipo) {
 
-
-      public function  cambiarEstatus($data){         
-         $this->db->set('estatus',$data['estatus']);
-         $this->db->where('id',$data['id']);
-         return  $this->db->update('evento');
+        $query = $this->db->query("SELECT E.tipoevento as tipo,
+                                     If(e.estatus='1',count(e.estatus),0) as pediente,
+                                     If(e.estatus='2',count(e.estatus),0) as ejecucion,
+                                    If(e.estatus='0',count(e.estatus),0) as completado 
+                                     FROM  evento E where E.tipoevento=$tipo and E.estatus in (0,1,2)
+                                        group by E.estatus");
+        
+        return $query;
+        
+        
     }
-    
-    
-      public function  guardarEvento($data){         
+
+          
+   public function cargarCantidadEventoPendientesPorTipo($tipo) {
+
+        $query = $this->db->query("SELECT  estatus, count(E.estatus) AS pendiente
+                                     FROM evento AS E 
+                                     WHERE E.tipoevento=$tipo AND E.estatus=1
+                                     GROUP BY id");
+
          
-         return  $this->db->insert('evento',$data);
+       return $query;
     }
-           
-    public function  actualizarEvento($data){         
-         $this->db->set($data);
-         $this->db->where('id',$data['id']);
-         return  $this->db->update('evento');
-    }
-    
-   
-    
+      public function cargarCantidadEventoEnEjecucionPorTipo($tipo) {
 
-}// fin de la clase
+        $query = $this->db->query("SELECT  estatus, count(E.estatus) AS ee
+                                     FROM evento AS E 
+                                     WHERE E.tipoevento=$tipo AND E.estatus=2
+                                     GROUP BY id");
+
+         
+      return $query;
+    }
+}
+
+// fin de la clase

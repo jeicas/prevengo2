@@ -77,12 +77,6 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
                 flex: 0.5,
                 tdCls: 'x-change-cell',
                 text: 'Estatus',
-            },
-            {
-                dataIndex: 'observacion',
-                flex: 0.5,
-                
-                text: 'Observacion',
             }
             ]
     },

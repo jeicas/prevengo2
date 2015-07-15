@@ -185,7 +185,7 @@ Ext.define('myapp.controller.registrar.UsuarioController', {
         var tipousuario=form.down("combobox[name=tipousuario]").getValue();
         var usuario=form.down("textfield[name=usuario]").getValue();
         var status=form.down("combobox[name=status]").getValue();
-        
+        console.log(tipousuario);
         me=this;
         if (form.getForm().isValid()) { 
                Ext.Ajax.request({ 

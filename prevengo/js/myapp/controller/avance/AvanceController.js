@@ -262,6 +262,7 @@ Ext.define('myapp.controller.avance.AvanceController', {
                     win.setTitle("Observacion: ");
                     win.down("label[name=lblDescripcion]").setText('Su avance ha sido rechazado.');
                     win.down("textareafield[name=txtDescripcion]").setValue(item.data.observacion);
+                    win.down("textareafield[name=txtDescripcion]").setReadOnly(true);
                     win.show();
                 } else
                 {

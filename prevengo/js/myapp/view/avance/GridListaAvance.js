@@ -107,7 +107,7 @@ Ext.define('myapp.view.avance.GridListaAvance', {
             },
             {
                 dataIndex: 'tipo',
-                flex: 1,
+                flex: 0.3,
                 text: 'Tipo',
                 items: {
                     xtype: 'textfield',
@@ -206,6 +206,28 @@ Ext.define('myapp.view.avance.GridListaAvance', {
                         buffer: 500
                     }
                 }
+            },{
+                dataIndex: 'anexo',
+                flex: 0.5,
+                text: 'Anexo',
+                renderer: function(value, metadata, record){
+				return '<img width="50" height="50" src="'+ value +'">';
+			}
+              
+            }, 
+            {
+                dataIndex: 'direccion',
+                flex: 0.5,
+                text: 'Direccion',
+               renderer  : function(myValue, metadata,record) {
+                   if (myValue==''){
+                        return '';
+                   }else{
+                       return '<a target="_blank" href="'+myValue+'">'+'<img width="80" height="50" src="../../imagen/btn/icono-ver.png"></a>';
+                   }
+                            
+                        }
+              
             },
             {
                 flex: 0.5,

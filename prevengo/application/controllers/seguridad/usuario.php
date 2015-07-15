@@ -188,7 +188,7 @@ class Usuario extends CI_Controller {
             $datacontrasena = array(
                 'cedula' =>         $cedula,
                 'nacionalidad' =>    $nacionalidad,
-                'password' => $this->input->post('confcontrasena')
+                'clave' => $this->input->post('confcontrasena')
             );
             ($resultado=$this->usuario_model->updatecontrasena($datacontrasena));
             if($resultado){
