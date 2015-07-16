@@ -20,21 +20,41 @@ class EventoReportes extends CI_Controller {
         if ($resultdbd){
         foreach ($resultdbd->result_array() as $row) {
             
-            
+            $cantidad=$cantidad1=$cantidad2=0;
             $resultdbd1 = $this->evento_model->cargarCantidadEventoCompletadosPorTipo($row['id']);
+             
             foreach ($resultdbd1->result_array() as $row1){
-                $dat[] = array( 
-                    'cantidad0' =>$row2['completado'], 
-                    'cantidad1' =>$row2['pendiente'], 
-                    'cantidad2' =>$row2['ejecucion'], 
-                   );
+                
+                for ($i =0; $i<count($resultdbd1); ++$i){
+                    if ($row1['completado']!=0)
+                    {
+                         $cantidad =$row1['completado'];
+                    }else{
+                         if ($row1['pendiente']!=0)
+                         {
+                              $cantidad1 =$row1['pendiente'];
+                         }
+                         else 
+                         {
+                              if ($row1['ejecucion']!=0)
+                              {
+                                $cantidad2 =$row1['ejecucion'];
+                              }
+                         }
+                    } 
+                       
+                }
              }
            
              
-              $data[] = ['nombre' => $row['nombre'],
+              $data[] = [
+                  'cantidad' => $row['cantidad'],
+                  'tipo' =>$row['id'],
+                  'nombre' => $row['nombre'],
                     'estatus' => $row['estatus'], 
-                    'cantidad0'=>$row1['completado'], 
-                    'cantidad1'=>$row2['pendiente'],
+                    'Completado'=>$cantidad, 
+                    'Pendiente'=>$cantidad1,
+                    'En Ejecucion'=>$cantidad2, 
                     ];
        
             }
