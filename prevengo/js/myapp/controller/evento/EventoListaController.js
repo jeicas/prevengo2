@@ -240,7 +240,6 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         var grid = this.getListaEventos();
         store = grid.getStore();
         rec = store.getAt(rowIndex);
-        console.log('seleccion' + rec.get('titulo'));
         if (rec.get('estatus') == 'En Ejecución') {
             Ext.Msg.show({
                 title: 'Confirmar',
@@ -249,6 +248,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                 icon: Ext.Msg.QUESTION,
                 fn: function (buttonId) {
                     if (buttonId == 'yes') {
+                        
                         Ext.Ajax.request({//AQUI ENVIO LA DATA 
                             url: BASE_URL + 'evento/evento/cerrarEvento',
                             method: 'POST',
@@ -280,22 +280,11 @@ Ext.define('myapp.controller.evento.EventoListaController', {
             });
         }
         else {
-            if (rec.get('estatus') == 'Cancelado') {
+        console.log('Else'+rec.get('estatus'));
                 Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                    msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha sido cancelado",
+                    msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha sido "+rec.get('estatus') ,
                     buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
-            } else
-
-            if (rec.get('estatus') == 'Completado') {
-                Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                    msg: "El Evento " + rec.get('titulo') + " no lo puede completar, porque ha finalizado",
-                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
-            } else
-            {
-                Ext.MessageBox.show({title: 'Informaci&oacute;n',
-                    msg: "El Evento " + rec.get('titulo') + " no lo puede finalizar, porque el plan de accion no ha sido completado",
-                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
-            }
+         
 
         }
     },

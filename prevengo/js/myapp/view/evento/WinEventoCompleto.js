@@ -4,8 +4,11 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
     itemId: 'winEventoCompleto',
     title: 'Evento',
     height: 790,
-    width: 691,
+    width: 1080,
     modal: true,
+    requires: [
+        ' Ext.chart.*',
+    ],
     layout: {
         type: 'fit'
     },
@@ -96,7 +99,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                 fieldLabel: 'Descripción',
                                 name: 'descripcion'
                             },
-                             {
+                            {
                                 xtype: 'textareafield',
                                 x: 330,
                                 y: 130,
@@ -181,14 +184,12 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
 
                     },
                     {
-                       xtype: 'container',
+                        xtype: 'container',
                         x: 270,
                         y: 240,
                         height: 490,
                         width: 400,
                         layout: 'absolute',
-                       
-                       
                         items: [
                             {
                                 xtype: 'fieldset',
@@ -222,18 +223,18 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                             {
                                                 dataIndex: 'avance',
                                                 text: 'Avance',
-                                                flex:0.7
-                                                
+                                                flex: 0.7
+
                                             },
                                             {
                                                 dataIndex: 'tipoEvento',
                                                 text: 'Tipo',
-                                                flex:0.4
+                                                flex: 0.4
                                             },
                                             {
                                                 dataIndex: 'ejecutor',
                                                 text: 'Ejecutor',
-                                                flex:0.5
+                                                flex: 0.5
                                             }
                                         ],
                                         viewConfig: {
@@ -260,6 +261,72 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                     }
 
                                 ]
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'container',
+                        x: 670,
+                        y: 240,
+                        height: 490,
+                        width: 400,
+                        items: [
+                            {
+                                xtype: 'chart',
+                                alias: 'widget.GraficoNivelEjecucion',
+                                animate: true,
+                                themes: 'Category1',
+                                shadow: true,
+                                height: 400,
+                                width: 400,
+                                store: Ext.create('myapp.store.reporte.CalcularNivelEjecucionStore'),
+                                axes: [{
+                                        type: 'Numeric',
+                                        position: 'left',
+                                        fields: ['ejecutadas', 'porejecutar'],
+                                        label: {
+                                            renderer: Ext.util.Format.numberRenderer('0,0')
+                                        }
+                                    }, {
+                                        type: 'Category',
+                                        position: 'bottom',
+                                        fields: ['name'],
+                                        grid: true,
+                                       
+                                        label: {
+                                            rotate: {
+                                                degrees: 70
+                                            }
+                                        }
+                                    }],
+                                series: [{
+                                        type: 'bar',
+                                        axis: 'bottom',
+                                        highlight: true,
+                                        column: true,
+                                        xField: 'total',
+                                        yField: ['ejecutadas', 'porejecutar'],
+                                        stacked: true,
+                                        tips: {
+                                            trackMouse: true,
+                                            width: 80,
+                                            height: 28,
+                                            renderer: function (storeItem, item) {
+                                                this.setTitle('Cantidad: ' + String(item.value[1]));
+                                            }
+                                        }
+                                    }],
+                                items: [
+                                    {
+                                        type: 'text',
+                                        text: 'NIVEL DE EJECUCIÓN DEL PLAN',
+                                        font: '12px Arial',
+                                        width: 100,
+                                        height: 30,
+                                        x: 100, //the sprite x position
+                                        y: 10  //the sprite y position
+                                    }
+                                ],
                             }
                         ]
                     }

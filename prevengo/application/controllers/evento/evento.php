@@ -321,7 +321,7 @@ class Evento extends CI_Controller {
             } else {
                 echo json_encode(array(
                     "success" => false,
-                    "msg" => "Eno lo puede finalizar, porque el plan de accion no ha sido completado" //no se modifico en la base de datos
+                    "msg" => "no lo puede finalizar, porque el plan de accion no ha sido completado" //no se modifico en la base de datos
                 ));
             }
         }

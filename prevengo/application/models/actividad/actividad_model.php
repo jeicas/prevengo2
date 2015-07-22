@@ -53,7 +53,7 @@ class Actividad_model extends CI_Model{
                                   from prevengo.actividad
                                     
                                     where  prevengo.actividad.evento=$idEvento 					 												   
-                                          and actividad.estatus!=0";
+                                          and actividad.estatus in (1,2,3,6)";
 
      $query = $this->db->query($sql);
        return $query;
@@ -244,5 +244,16 @@ public function  cambiarEstatus($data){
         
         $query = $this->db->query($sql);
          return $query;   
+    }
+    
+       public function cargarCantidadPlan($id) {
+
+        $query = $this->db->query("SELECT  count(*) as total, "
+                . "              (SELECT  count(a.estatus) FROM  actividad a where a.evento=$id and a.estatus =0) as completado,
+                                 (SELECT  count(a.estatus) FROM  actividad a where a.evento=$id and a.estatus !=0) as completado1    
+                                     FROM  actividad E where E.evento=$id");
+
+         
+      return $query;
     }
 }// fin de la clase

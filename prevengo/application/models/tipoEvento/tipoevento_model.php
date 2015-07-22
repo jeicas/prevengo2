@@ -21,7 +21,6 @@ class TipoEvento_model extends CI_Model {
         }
     }
     
-    
         public function guardarTipoEvento($data){
         return $this->db->insert('tipoevento',$data);
       }
@@ -29,6 +28,11 @@ class TipoEvento_model extends CI_Model {
          $this->db->set($data);
          $this->db->where('id',$data['id']);
          return  $this->db->update('tipoevento');
-    }  
+    } 
+    
+     public function contarTiposEventos(){
+           $query = $this->db->query("SELECT *  FROM `tipoevento` where estatus=1");
+        return $query;
+    }
 
 }// fin de la clase

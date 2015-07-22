@@ -178,7 +178,19 @@ class Evento_model extends CI_Model {
         
         
     }
+  public function cargarCantidadEventoPorTipos() {
 
+        $query = $this->db->query("SELECT (E.tipoevento) as tipo,
+                                     If(e.estatus='1',count(e.estatus),0) as pendiente,
+                                     If(e.estatus='2',count(e.estatus),0) as ejecucion,
+                                     If(e.estatus='0',count(e.estatus),0) as completado 
+                                     FROM  evento E where E.estatus in (0,1,2)
+                                        group by E.estatus");
+        
+        return $query;
+        
+        
+    }
           
    public function cargarCantidadEventoPendientesPorTipo($tipo) {
 
@@ -196,6 +208,17 @@ class Evento_model extends CI_Model {
                                      FROM evento AS E 
                                      WHERE E.tipoevento=$tipo AND E.estatus=2
                                      GROUP BY id");
+
+         
+      return $query;
+    }
+    
+    public function cargarCantidadPlan($id) {
+
+        $query = $this->db->query("SELECT  count(*) as total, "
+                . "              (SELECT  count(a.estatus) FROM  actividad a where a.evento=$id and a.estatus =0) as completado,
+                                 (SELECT  count(a.estatus) FROM  actividad a where a.evento=$id and a.estatus !=0) as completado1    
+                                     FROM  actividad E where E.evento=$id");
 
          
       return $query;

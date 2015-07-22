@@ -3,6 +3,7 @@ Ext.define('myapp.controller.reportes.ReporteGraficoTipoEventoController', {
   views: [
     'reportes.ReporteGraficoTipoEvento',
    
+   
   ],
   requires: [
     'myapp.util.Util' ,
