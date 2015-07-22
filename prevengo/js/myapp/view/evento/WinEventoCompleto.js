@@ -8,6 +8,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
     modal: true,
     requires: [
         ' Ext.chart.*',
+        'myapp.view.reportes.GraficoNivelEjecucion'
     ],
     layout: {
         type: 'fit'
@@ -271,63 +272,43 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                         height: 490,
                         width: 400,
                         items: [
+                            
+                           
                             {
-                                xtype: 'chart',
-                                alias: 'widget.GraficoNivelEjecucion',
-                                animate: true,
-                                themes: 'Category1',
-                                shadow: true,
-                                height: 400,
-                                width: 400,
-                                store: Ext.create('myapp.store.reporte.CalcularNivelEjecucionStore'),
-                                axes: [{
-                                        type: 'Numeric',
-                                        position: 'left',
-                                        fields: ['ejecutadas', 'porejecutar'],
-                                        label: {
-                                            renderer: Ext.util.Format.numberRenderer('0,0')
-                                        }
-                                    }, {
-                                        type: 'Category',
-                                        position: 'bottom',
-                                        fields: ['name'],
-                                        grid: true,
-                                       
-                                        label: {
-                                            rotate: {
-                                                degrees: 70
-                                            }
-                                        }
-                                    }],
-                                series: [{
-                                        type: 'bar',
-                                        axis: 'bottom',
-                                        highlight: true,
-                                        column: true,
-                                        xField: 'total',
-                                        yField: ['ejecutadas', 'porejecutar'],
-                                        stacked: true,
-                                        tips: {
-                                            trackMouse: true,
-                                            width: 80,
-                                            height: 28,
-                                            renderer: function (storeItem, item) {
-                                                this.setTitle('Cantidad: ' + String(item.value[1]));
-                                            }
-                                        }
-                                    }],
-                                items: [
-                                    {
-                                        type: 'text',
-                                        text: 'NIVEL DE EJECUCIÓN DEL PLAN',
-                                        font: '12px Arial',
-                                        width: 100,
-                                        height: 30,
-                                        x: 100, //the sprite x position
-                                        y: 10  //the sprite y position
-                                    }
-                                ],
-                            }
+                                xtype: 'GraficoNivelEjecucion',
+                               
+                            }, 
+                             {
+                        xtype: 'grid',
+                        height:58,
+                        width: 320,
+                        name: 'gridCalcularNivel',
+                        columnLines: true,
+                        store:  Ext.create('myapp.store.reporte.CalcularNivelEjecucionStore'),
+                        columns: [
+                           
+                             {
+                                dataIndex: 'name1',
+                                text: '', 
+                                 flex: 1
+                            },
+                            {
+                                dataIndex: 'ejecutadas',
+                                text: 'Ejecutadas', 
+                                 flex: 1.3
+                            }, 
+                             {
+                                dataIndex: 'porejecutar',
+                                text: 'Por Ejecutar', 
+                                 flex: 1.3
+                            },
+                            {
+                                dataIndex: 'total',
+                                text: 'Total', 
+                                 flex: 0.7
+                            },
+                        ]
+                    }
                         ]
                     }
                 ]

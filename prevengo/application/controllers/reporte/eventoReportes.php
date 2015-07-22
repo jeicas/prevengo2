@@ -73,7 +73,7 @@ class EventoReportes extends CI_Controller {
 
     public function calcularAvanceTotal() {
         $total = $cantidad = $cantidad1 = $cantidad2 = 0;
-
+        // $calificacion='';
         $resultdbd = $this->tipoevento_model->contarTiposEventos();
 
         $resultdbd1 = $this->evento_model->cargarCantidadEventoPorTipos();
@@ -122,7 +122,7 @@ class EventoReportes extends CI_Controller {
             if ($avanceTotal > 35 && $avanceTotal <= 50) {
                 $calificacion = 'Deficiente';
             }
-            if ($avanceTotal > 0 && $avanceTotal <= 35) {
+            if ($avanceTotal >= 0 && $avanceTotal <= 35) {
                 $calificacion = 'Grave';
             }
 
@@ -144,7 +144,7 @@ class EventoReportes extends CI_Controller {
     }
 
     public function calcularNivelEjecucion() {
-        $id = 3;//$this->input->get('idEv');
+        $id =$this->input->get('id');
         $result = $this->actividad_model->cargarCantidadPlan($id);
 
         if ($result->num_rows() > 0) {
@@ -155,7 +155,7 @@ class EventoReportes extends CI_Controller {
                      'total' => $row['total'],
                     'ejecutadas' => $row['completado'],
                     'porejecutar' => $row['completado1'],
-                    'name' => 'Acciones',
+                    'name1' => 'Acciones',
                     
                     
                 );

@@ -167,12 +167,12 @@ class Evento_model extends CI_Model {
         
    public function cargarCantidadEventoCompletadosPorTipo($tipo) {
 
-        $query = $this->db->query("SELECT (E.tipoevento) as tipo,
-                                     If(e.estatus='1',count(e.estatus),0) as pendiente,
+        $query = $this->db->query("SELECT (e.tipoevento) as tipo,
+                                     If(e.estatus='1' || e.estatus='4',count(e.estatus),0) as pendiente,
                                      If(e.estatus='2',count(e.estatus),0) as ejecucion,
                                      If(e.estatus='0',count(e.estatus),0) as completado 
-                                     FROM  evento E where E.tipoevento=$tipo and E.estatus in (0,1,2)
-                                        group by E.estatus");
+                                     FROM  evento as e where e.tipoevento=$tipo and e.estatus in (0,1,2,4)
+                                        group by e.estatus");
         
         return $query;
         
@@ -180,12 +180,12 @@ class Evento_model extends CI_Model {
     }
   public function cargarCantidadEventoPorTipos() {
 
-        $query = $this->db->query("SELECT (E.tipoevento) as tipo,
-                                     If(e.estatus='1',count(e.estatus),0) as pendiente,
+        $query = $this->db->query("SELECT (e.tipoevento) as tipo,
+                                     If(e.estatus='1' || e.estatus='4',count(e.estatus),0) as pendiente,
                                      If(e.estatus='2',count(e.estatus),0) as ejecucion,
                                      If(e.estatus='0',count(e.estatus),0) as completado 
-                                     FROM  evento E where E.estatus in (0,1,2)
-                                        group by E.estatus");
+                                     FROM  evento as e where e.estatus in (0,1,2,4)
+                                        group by e.estatus");
         
         return $query;
         

@@ -3,7 +3,7 @@ Ext.define('myapp.view.reportes.ReporteGraficoTipoEvento', {
     alias: 'widget.reporteGraficoTipoEvento',
     requires: [
         'Ext.chart.CartesianChart',
-        'myapp.view.reportes.GraficoNivelEjecucion'
+        'myapp.view.reportes.GraficoTipoEvento'
     ],
     layout: {
         type: 'fit'
@@ -17,7 +17,7 @@ Ext.define('myapp.view.reportes.ReporteGraficoTipoEvento', {
     buildItem: function () {
         return [
             {
-                xtype: 'GraficoNivelEjecucion',
+                xtype: 'GraficoTipoEvento',
             }
 
 
@@ -55,7 +55,7 @@ Ext.define('myapp.view.reportes.ReporteGraficoTipoEvento', {
                     }, {
                         xtype: 'grid',
                         height: 135,
-                        width: 515,
+                        width: 590,
                         store: Ext.create('myapp.store.reporte.ReportePorTipoEventoStore'),
                         columns: [
                             {
@@ -75,9 +75,14 @@ Ext.define('myapp.view.reportes.ReporteGraficoTipoEvento', {
                             },
                             {
                                 dataIndex: 'En Ejecucion',
-                                text: 'En Ejecucion',  
+                                text: 'En Ejecución',  
                                 flex: 0.6
                             }, 
+                            {
+                                dataIndex: 'cantidad',
+                                text: 'Total',  
+                                flex: 0.4
+                            },
                              {
                                 dataIndex: 'avance',
                                 text: 'Avance', 

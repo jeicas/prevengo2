@@ -13,10 +13,12 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         'maestroValor.WinMaestroTipoEvento',
         'maestroValor.WinMaestroAlcance',
         'maestroNombre.WinMaestroSector',
-        'maestroNombre.WinMaestroAgente'
+        'maestroNombre.WinMaestroAgente', 
+        'reportes.GraficoNivelEjecucion'
     ],
     requires: [
-        'myapp.util.Util'
+        'myapp.util.Util', 
+        
     ],
     refs: [
         {
@@ -50,6 +52,10 @@ Ext.define('myapp.controller.evento.EventoListaController', {
         {
             ref: 'WinMaestroAlcance',
             selector: 'winMaestroAlcance'
+        },
+         {
+            ref: 'GraficoNivelEjecucion',
+            selector: 'GraficoNivelEjecucion'
         },
     ],
     init: function (application) {
@@ -158,8 +164,19 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 
         store3 = win.down('gridpanel[name=gridPlanDeAccion]').getStore();
         store3.proxy.extraParams.id = record[0].get('idEv');
-
         store3.load();
+        
+        
+        // carga la grafica 
+        
+          store4 = win.down('GraficoNivelEjecucion').getStore();
+          store4.proxy.extraParams.id = record[0].get('idEv');
+          store4.load();
+        
+          store5 = win.down('grid[name=gridCalcularNivel]').getStore();
+          store5.proxy.extraParams.id = record[0].get('idEv');
+          store5.load(); 
+          
         win.down('textfield[name=responsable]').setValue(record[0].get('nombrecompleto'));
         win.show();
 
