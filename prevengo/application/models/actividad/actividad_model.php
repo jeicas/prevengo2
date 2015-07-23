@@ -246,6 +246,47 @@ public function  cambiarEstatus($data){
          return $query;   
     }
     
+    
+      public function eventoActividadAvance2($id) // carga la lista del avances y actividades de un evento. 
+    {
+        $sql="select actividad.id as idAct,
+       actividad.descripcion as actDescripcion, 
+       actividad.estatus as actEstatus, 
+       responsable.nombre as nombreAct, 
+       responsable.apellido as apellidoAct, 
+       avance.descripcion as avDescripcion,
+       avance.tipo as tipoAvance,
+       avance.fecharegistro as fecha, 
+       ejecutor.nombre as nombreAva,
+       ejecutor.apellido as apellidoAva
+
+     from actividad 
+       
+       left join  avance on avance.actividad=actividad.id
+       
+      left join bdgenerica.usuario as usuAct on usuAct.id= actividad.usuario
+      left  join bdgenerica.usuario as usuAva on usuAva.id=avance.usuario 
+         
+        left join bdgenerica.persona as ejecutor on usuAva.cedula= ejecutor.cedula
+       left  join bdgenerica.persona as responsable on usuAct.cedula= responsable.cedula
+         where actividad.evento=$id
+         group by idAct
+        order by idAct ASC";
+        
+        $query = $this->db->query($sql);
+         return $query;   
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
        public function cargarCantidadPlan($id) {
 
         $query = $this->db->query("SELECT  count(*) as total, "

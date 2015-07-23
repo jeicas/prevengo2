@@ -38,10 +38,12 @@ class Comisionado extends CI_Controller {
                 'data' => array_splice($data, $this->input->get("start"), $this->input->get("limit"))
             );
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -95,10 +97,12 @@ class Comisionado extends CI_Controller {
                 'cuanto' => $cuanto,
             );  
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     
        

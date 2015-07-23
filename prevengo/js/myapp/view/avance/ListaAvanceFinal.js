@@ -21,6 +21,7 @@ Ext.define('myapp.view.consultar.ListaAvanceFinal', {
             enableGroupingMenu: false
        }],
     store: Ext.create('myapp.store.avance.AvanceFinalStore'),
+    emptyText: 'No hay Avances por Evaluar',
     viewConfig: {
        
     },

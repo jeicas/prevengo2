@@ -629,10 +629,102 @@ class Actividad extends CI_Controller {
             );
             echo json_encode($output);
         } else {
-            echo json_encode(array(
-                "success" => false,
-                "msj" => "no hay información para mostrar"
-            ));
+            $output = array(
+                'success' => true,
+                
+            );
+            
+            echo json_encode($output);
+        }
+        
+    }
+    
+    
+      public function listaActivadesAvancesPorEvento2() {
+        $id = $this->input->get('id');
+        $eventos = $this->actividad_model->eventoActividadAvance2($id);
+
+        if ($eventos->num_rows() > 0) {
+
+            foreach ($eventos->result_array() as $row) {
+
+                switch ($row['actEstatus']) {
+                    case '1':
+                        $estatus = "<font color=#2E9AFE> Pendiente </font>";
+                        break;
+                    case '2':
+                        $estatus = '<font color=#FF8000> En Ejecución  </font>';
+                        break;
+                    case '3':
+                        $estatus = '<font color=#DF01D7> En Revisión  </font>';
+                        break;
+                    case '4':
+                        $estatus = '<font color=#FF0000> Cancelado  </font>';
+                        break;
+                    case '5':
+                        $estatus = '<font color=#FF0000> Expirado  </font>';
+                        break;
+                    case '6':
+                        $estatus = 'En Espera';
+                        break;
+
+                    default:
+                        $estatus = '<font color=#01DF3A> Completado </font>';
+                        break;
+                }
+
+
+                switch ($row['tipoAvance']) {
+                    case '1':
+                        $tipoE = "Parcial";
+                        break;
+                    case '2':
+                        $tipoE = ' ';
+                        break;
+
+                    default:
+                        $tipoE = 'Final';
+                        break;
+                }
+                
+                if ($row['nombreAva'] && $row['apellidoAva']=='NULL'){
+                    $ejecutor='';
+                }else 
+                {
+                    $ejecutor=$row['nombreAva'] . " " . $row['apellidoAva'];
+                }
+                 
+                if ($row['actDescripcion']=='NULL'){
+                    $descripcion='';
+                }else 
+                {
+                    $descripcion=$row['actDescripcion'];
+                }
+                
+
+                $data[] = array(
+                    'idAct' => $row['idAct'],
+                    'actividad' => " Plan de Accion:" .$descripcion . " <br> <font color=#3F77E6> Estado: " . $estatus . "</font></br>",
+                    'responsable' => $row['nombreAct'] . " " . $row['apellidoAct'],
+                    'avance' => $row['avDescripcion'],
+                    'tipoEvento' => $tipoE,
+                    'fecha' => $row['fecha'],
+                    'ejecutor' =>$ejecutor ,
+                    'estatus' => $estatus,
+                );
+            }
+            $output = array(
+                'success' => true,
+                'total' => count($data),
+                'data' => array_splice($data, $this->input->get("start"), $this->input->get("limit"))
+            );
+            echo json_encode($output);
+        } else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 

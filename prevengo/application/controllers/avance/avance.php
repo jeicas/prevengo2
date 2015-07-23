@@ -402,10 +402,12 @@ class Avance extends CI_Controller {
                 'data' => array_splice($data, $this->input->get("start"), $this->input->get("limit"))
             );
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -439,11 +441,12 @@ class Avance extends CI_Controller {
                 'data' => array_splice($data, $this->input->get("start"), $this->input->get("limit"))
             );
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false,
-                "msg" => "No hay datos para mostrar"
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -475,11 +478,12 @@ class Avance extends CI_Controller {
                 "success" => true,
                 "msg" => "El avance esta ha sido rechazado exitosamente." //modificado en la base de datos
             ));
-        } else {
-            echo json_encode(array(
-                "success" => false,
-                "msg" => "No se pudo rechazar el avance." //no se modifico en la base de datos
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -531,10 +535,12 @@ class Avance extends CI_Controller {
                 'cuanto' => $cuanto,
             );  
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     
        
@@ -559,10 +565,12 @@ class Avance extends CI_Controller {
                 'cuanto' => $cuanto,
             );  
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     
        

@@ -89,10 +89,12 @@ class Reincidencia extends CI_Controller {
                 'data' => array_splice($data, $this->input->get("start"), $this->input->get("limit"))
             );
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -110,10 +112,12 @@ class Reincidencia extends CI_Controller {
                 'cuanto' => $row['cuantos'],
             );
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -204,12 +208,12 @@ class Reincidencia extends CI_Controller {
                 "success" => true,
                 "msg" => "Se Guardo con Éxito."//modificado en la base de datos
             ));
-        } else {
-
-            echo json_encode(array(
-                "success" => false,
-                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados " //no se modifico en la base de datos
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 

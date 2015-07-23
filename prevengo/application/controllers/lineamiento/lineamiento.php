@@ -37,9 +37,11 @@ class Lineamiento extends CI_Controller {
             );
             echo json_encode($output);
         } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -59,9 +61,11 @@ class Lineamiento extends CI_Controller {
             );  
             echo json_encode($output);
         } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
        
     }//fin registrar
@@ -90,11 +94,11 @@ class Lineamiento extends CI_Controller {
                 "msg" => "Se Guardo con Éxito." //modificado en la base de datos
             ));
         } else {
-
-            echo json_encode(array(
-                "success" => false,
-                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
-            ));
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }//fin registrar
 
@@ -150,12 +154,12 @@ public function eliminarLineamiento() {
                 "success" => true,
                 "msg" => "Se  elimino con Éxito el lineamiento." //modificado en la base de datos
             ));
-        } else {
-
-            echo json_encode(array(
-                "success" => false,
-                "msg" => "No se pudo Guardar, por favor verifique los datos suministrados" //no se modifico en la base de datos
-            ));
+        }else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 

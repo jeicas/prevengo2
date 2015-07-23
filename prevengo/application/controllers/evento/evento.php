@@ -75,9 +75,11 @@ class Evento extends CI_Controller {
             );
             echo json_encode($output);
         } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -137,9 +139,11 @@ class Evento extends CI_Controller {
             );
             echo json_encode($output);
         } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
@@ -200,10 +204,12 @@ class Evento extends CI_Controller {
                 'data' => array_splice($data, $this->input->get("start"), $this->input->get("limit"))
             );
             echo json_encode($output);
-        } else {
-            echo json_encode(array(
-                "success" => false
-            ));
+        }  else {
+            $output = array(
+                'success' => true,  
+            );
+            
+            echo json_encode($output);
         }
     }
 
