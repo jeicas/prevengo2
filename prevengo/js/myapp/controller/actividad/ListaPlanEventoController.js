@@ -70,6 +70,9 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                 record = grid.getSelectionModel().getSelection();
 
         if (record[0]) {
+             if (record[0].get('estatus') == 'Sin Iniciar'
+                    || record[0].get('estatus') == 'En Espera') {
+              
             var editWindow = Ext.create('myapp.view.actividad.WinActividad');
             editWindow.setTitle("Actualizar Actividad");
             editWindow.down('textfield[name=descripcion]').setValue(record[0].get('descripcion'));
@@ -83,6 +86,14 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
             }
                 
              else {tieneDepende=null;}
+            }
+            
+             else {
+                Ext.MessageBox.show({title: 'Informaci&oacute;n',
+                    msg: "El Plan " + record[0].get('descripcion') + " no lo puede editar, porque su estatus es: " + record[0].get('estatus'),
+                    buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO});
+            }
+           
         }
         else {
             Ext.MessageBox.show({title: 'Informaci&oacute;n',

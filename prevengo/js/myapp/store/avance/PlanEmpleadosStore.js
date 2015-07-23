@@ -9,5 +9,5 @@ Ext.define('myapp.store.avance.PlanEmpleadosStore', {
             root: 'data'
         }
     },
-    autoLoad: true
+    //autoLoad: true
 });
