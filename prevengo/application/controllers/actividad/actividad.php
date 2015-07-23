@@ -170,7 +170,7 @@ class Actividad extends CI_Controller {
 
         if ($resultdbd->num_rows() > 0) {
             foreach ($resultdbd->result_array() as $row) {
-                    
+
                 switch ($row['estatus']) {
                     case '1':
                         $estatus = 'Pendiente';
@@ -198,7 +198,7 @@ class Actividad extends CI_Controller {
                     'idEvento' => $row['idEvento'],
                     'evento' => $row['evento'],
                     'descripcion' => $row['descripcion'],
-                     'estatus' => $estatus,
+                    'estatus' => $estatus,
                     'fecha' => $row['fecha'],
                 );
             }
@@ -631,16 +631,13 @@ class Actividad extends CI_Controller {
         } else {
             $output = array(
                 'success' => true,
-                
             );
-            
+
             echo json_encode($output);
         }
-        
     }
-    
-    
-      public function listaActivadesAvancesPorEvento2() {
+
+    public function listaActivadesAvancesPorEvento2() {
         $id = $this->input->get('id');
         $eventos = $this->actividad_model->eventoActividadAvance2($id);
 
@@ -678,38 +675,47 @@ class Actividad extends CI_Controller {
                     case '1':
                         $tipoE = "Parcial";
                         break;
-                    case '2':
-                        $tipoE = ' ';
+                    case '0':
+                        $tipoE = 'Final';
                         break;
 
                     default:
-                        $tipoE = 'Final';
+                        $tipoE = '';
                         break;
                 }
-                
-                if ($row['nombreAva'] && $row['apellidoAva']=='NULL'){
-                    $ejecutor='';
-                }else 
-                {
-                    $ejecutor=$row['nombreAva'] . " " . $row['apellidoAva'];
-                }
-                 
-                if ($row['actDescripcion']=='NULL'){
-                    $descripcion='';
-                }else 
-                {
-                    $descripcion=$row['actDescripcion'];
-                }
-                
 
+                if ($row['nombreAva'] && $row['apellidoAva'] == 'NULL') {
+                    $ejecutor = '';
+                } else {
+                    $ejecutor = $row['nombreAva'] . " " . $row['apellidoAva'];
+                }
+
+                if ($row['actDescripcion'] == 'NULL') {
+                    $descripcion = '';
+                } else {
+                    $descripcion = $row['actDescripcion'];
+                }
+
+                if ($row['actDescripcion'] == 'NULL') {
+                    $descripcion = '';
+                } else {
+                    $descripcion = $row['actDescripcion'];
+                }
+                
+                 if ($row['fecha'] == 'NULL') {
+                    $fecha = '';
+                } else {
+                    $fecha = $row['fecha'];
+                }
+                
                 $data[] = array(
                     'idAct' => $row['idAct'],
-                    'actividad' => " Plan de Accion:" .$descripcion . " <br> <font color=#3F77E6> Estado: " . $estatus . "</font></br>",
+                    'actividad' => " Plan de Accion:" . $descripcion . " <br> <font color=#3F77E6> Estado: " . $estatus . "</font></br>",
                     'responsable' => $row['nombreAct'] . " " . $row['apellidoAct'],
                     'avance' => $row['avDescripcion'],
                     'tipoEvento' => $tipoE,
-                    'fecha' => $row['fecha'],
-                    'ejecutor' =>$ejecutor ,
+                    'fecha' => $fecha,
+                    'ejecutor' => $ejecutor,
                     'estatus' => $estatus,
                 );
             }
@@ -721,9 +727,9 @@ class Actividad extends CI_Controller {
             echo json_encode($output);
         } else {
             $output = array(
-                'success' => true,  
+                'success' => true,
             );
-            
+
             echo json_encode($output);
         }
     }

@@ -209,7 +209,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                         width: 330,
                                         name: 'gridPlanDeAccion',
                                         columnLines: true,
-                                        store: Ext.create('myapp.store.actividad.ActividadAvanceStore'),
+                                        store: Ext.create('myapp.store.actividad.ActividadAvance2Store'),
                                         emptyText: 'No tiene Plan de accion',
                                         title: 'Plan de Acción',
                                         features: [{
