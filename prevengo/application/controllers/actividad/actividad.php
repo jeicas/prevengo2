@@ -729,7 +729,6 @@ class Actividad extends CI_Controller {
             $output = array(
                 'success' => true,
             );
-
             echo json_encode($output);
         }
     }

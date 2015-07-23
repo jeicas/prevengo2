@@ -182,7 +182,7 @@ public function  cambiarEstatus($data){
                      ac.descripcion AS descripcion 
                  FROM actividad AS ac 
                  inner join evento on evento.id=ac.evento
-                 WHERE ac.estatus in (1,2,4) AND evento.estatus!=4 and
+                 WHERE ac.estatus in (1,2,3,6) AND evento.estatus!=4 and
                         ac.evento=$id";
 
           $query = $this->db->query($sql);
@@ -203,7 +203,7 @@ public function  cambiarEstatus($data){
                      ac.descripcion AS descripcion 
                  FROM actividad AS ac 
                  inner join evento on evento.id=ac.evento
-                 WHERE ac.estatus in (1,2,4) AND evento.estatus!=4 and
+                 WHERE ac.estatus  in (1,2,3,6) AND evento.estatus!=4 and
                         ac.evento=$idEv and ac.id!=$idAct";
 
           $query = $this->db->query($sql);
