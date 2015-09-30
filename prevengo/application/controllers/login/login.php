@@ -34,6 +34,7 @@ class Login extends CI_Controller {
           'idusuario'  => $row['id'],
           'cedula'=> $row['cedula'],
           'usuario'=> $row['usuario'],
+          'tipousuario'=> $row['tipou'],
           'login_ok' => TRUE,
           'usuario_id'  => $_POST['user'],
           'password'=> $_POST['pass'],

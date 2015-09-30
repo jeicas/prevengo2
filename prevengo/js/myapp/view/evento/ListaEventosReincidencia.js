@@ -106,6 +106,9 @@ Ext.define('myapp.view.evento.ListaEventosReincidencia', {
                 dataIndex: 'titulo',
                 flex: 1,
                 text: 'Titulo',
+                  renderer: function(v){ 
+                             return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')
+                         },
                 items: {
                     xtype: 'textfield',
                     flex: 1,

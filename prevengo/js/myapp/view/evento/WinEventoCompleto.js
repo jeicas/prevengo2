@@ -106,6 +106,7 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                                 y: 130,
                                 width: 300,
                                 fieldLabel: 'Observación',
+                                
                                 name: 'observacion'
                             }
                         ]
@@ -129,6 +130,9 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                             {
                                 dataIndex: 'descripcion',
                                 flex: 1,
+                                 renderer: function(v){ 
+                             return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')
+                         },
                                 text: 'Descripción'
                             }
                         ]
@@ -179,6 +183,9 @@ Ext.define('myapp.view.evento.WinEventoCompleto', {
                             {
                                 dataIndex: 'descripcion',
                                 flex: 1,
+                                 renderer: function(v){ 
+                             return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')
+                         },
                                 text: 'Descripción'
                             }
                         ]

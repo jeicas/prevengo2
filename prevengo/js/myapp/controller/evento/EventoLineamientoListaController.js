@@ -23,8 +23,8 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
             selector: 'listaLineamientoPorEvento'
         },
         {
-            ref: 'WinDescripcion',
-            selector: 'winDescripcion'
+            ref: 'WinDescripcionLineamiento',
+            selector: 'winDescripcionLineamiento'
         },
     ],
     init: function (application) {
@@ -41,10 +41,10 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
             "listaLineamientoPorEvento button[name=btnEliminarLineamiento]": {
                 click: this.onClickEliminarLineamiento
             },
-            "winDescripcion button[name=btnGuardar]": {
+            "winDescripcionLineamiento button[name=btnGuardar]": {
                 click: this.onClickGuardarLineamiento
             },
-            "winDescripcion button[name=btnLimpiar]": {
+            "winDescripcionLineamiento button[name=btnLimpiar]": {
                 click: this.onClickLimpiarLineamiento
             },
         });
@@ -129,7 +129,7 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
     // ====================funciones de la ventana listaLineamientoPorEvento================
     onClickNuevoLineamiento: function (button, e, options) {
         nuevo = true;
-        win = Ext.create('myapp.view.descripcion.WinDescripcion');
+        win = Ext.create('myapp.view.descripcion.WinDescripcionLineamiento');
         win.setTitle("Nuevo Lineamiento");
         win.show();
 
@@ -141,7 +141,7 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
 
         if (record[0]) {
 
-            var win = Ext.create('myapp.view.descripcion.WinDescripcion');
+            var win = Ext.create('myapp.view.descripcion.WinDescripcionLineamiento');
             win.down('textfield[name=txtDescripcion]').setValue(record[0].get('descripcion'));
             win.setTitle("Actualizar Lineamiento");
             win.show();
@@ -208,7 +208,7 @@ Ext.define('myapp.controller.evento.EventoLineamientoListaController', {
 
         grid = this.getListaEventosLineamientos();
         grid2 = this.getListaLineamientoPorEvento();
-        winO = this.getWinDescripcion();
+        winO = this.getWinDescripcionLineamiento();
         if (nuevo) {
             var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
             loadingMask.show();

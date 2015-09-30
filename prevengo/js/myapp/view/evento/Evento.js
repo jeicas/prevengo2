@@ -67,8 +67,8 @@ Ext.define('myapp.view.evento.Evento', {
                         emptyText     :'Seleccione',
                         queryMode     : 'local',
                         allowBlank    : false,
-                        forceSelection: true,
-                        triggerAction : 'all'
+                        //forceSelection: true,
+                        //triggerAction : 'all'
                     },
                     {
                         xtype: 'combobox',

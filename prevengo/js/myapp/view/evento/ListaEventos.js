@@ -111,11 +111,15 @@ Ext.define('myapp.view.evento.ListaEventos', {
                 dataIndex: 'titulo',
                 flex: 1,
                 text: 'Titulo',
+                 renderer: function(v){ 
+                             return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')
+                         },
                 items: {
                     xtype: 'textfield',
                     flex: 1,
                     margin: 2,
                     enableKeyEvents: true,
+                     
                     listeners: {
                         keyup: function () {
                             var store = this.up('grid').store;

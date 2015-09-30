@@ -27,6 +27,9 @@ Ext.define('myapp.view.evento.ListaLineamientoPorEvento', {
             }, {
                 dataIndex: 'descripcion',
                 flex: 1.5,
+                renderer: function(v){ 
+                             return ('<SPAN class="ajustar-texto-grid">'+v+'</SPAN>')
+                         },
                 text: 'Descripcion',
               
             }

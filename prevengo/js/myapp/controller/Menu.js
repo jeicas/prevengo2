@@ -26,10 +26,11 @@ Ext.define('myapp.controller.Menu', {
       var menuPanel = Ext.ComponentQuery.query('mainmenu')[0];
       var header = Ext.ComponentQuery.query('appheader')[0];
       
-
+         console.log(header);
+         console.log(header.items.items[4].items.items[0].items.items[0]);
       Ext.each(records, function(root){
-       header.items.items[4].setText(records[0].get('usuario'));
-       header.items.items[3].setText('Bienvenido: ');
+       header.items.items[4].items.items[0].items.items[1].setText(records[0].get('usuario'));
+       header.items.items[4].items.items[0].items.items[0].setText('BIENVENIDO');
           
       
         var menu = Ext.create('myapp.view.menu.Item',{

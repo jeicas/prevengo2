@@ -334,7 +334,9 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                     result = Ext.JSON.decode(result.responseText);
 
                     loadingMask.hide();
-
+                      
+                    
+                      
                     if (result.success) {
                         grid.getView().refresh();
                         grid.getStore().load();
@@ -361,7 +363,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
 //Validaciones de los combos
             storeAct = win.down("combobox[name=cmbAgente]").getStore();
             valor = win.down("combobox[name=cmbAgente]").getValue();
-            console.log('Agente con '+ valor);
+            
             for (i = 0; i < storeAct.data.items.length; ++i){
                  console.log('entra con'+valor);
                 if (storeAct.data.items[i].data['nombre'] == valor) {
@@ -374,7 +376,7 @@ Ext.define('myapp.controller.evento.EventoListaController', {
                     }
                      }
               
-               }
+               }console.log(cmbAgente);
                
             storeTE = win.down("combobox[name=cmbTipoEvento]").getStore();
             valor4 = win.down("combobox[name=cmbTipoEvento]").getValue();
